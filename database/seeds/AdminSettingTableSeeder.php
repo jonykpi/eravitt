@@ -13,14 +13,14 @@ class AdminSettingTableSeeder extends Seeder
     public function run()
     {
         AdminSetting::insert(['slug'=>'coin_price','value'=>'2.50']);
-        AdminSetting::insert(['slug'=>'coin_name','value'=>'Cpoket']);
-        AdminSetting::insert(['slug'=>'app_title','value'=>'C Poket']);
+        AdminSetting::insert(['slug'=>'coin_name','value'=>'DPV']);
+        AdminSetting::insert(['slug'=>'app_title','value'=>'ERAVITT']);
         AdminSetting::insert(['slug'=>'maximum_withdrawal_daily','value'=>'3']);
-        AdminSetting::insert(['slug'=>'mail_from','value'=>'noreply@cpoket.com']);
+        AdminSetting::insert(['slug'=>'mail_from','value'=>'support@eravitt.com']);
         AdminSetting::insert(['slug'=>'admin_coin_address','value'=>'address']);
         AdminSetting::insert(['slug'=>'base_coin_type','value'=>'BTC']);
         AdminSetting::insert(['slug'=>'minimum_withdrawal_amount','value'=>.005]);
-        AdminSetting::insert(['slug'=>'maximum_withdrawal_amount','value'=>12]);
+        AdminSetting::insert(['slug'=>'maximum_withdrawal_amount','value'=>120]);
 
         AdminSetting::create(['slug' => 'maintenance_mode', 'value' => 'no']);
         AdminSetting::create(['slug' => 'logo', 'value' => '']);
@@ -32,8 +32,8 @@ class AdminSettingTableSeeder extends Seeder
         AdminSetting::create(['slug' => 'point_rate', 'value' => '1']);
         //General Settings
         AdminSetting::create(['slug' => 'lang', 'value' => 'en']);
-        AdminSetting::create(['slug' => 'company_name', 'value' => 'Test Company']);
-        AdminSetting::create(['slug' => 'primary_email', 'value' => 'test@email.com']);
+        AdminSetting::create(['slug' => 'company_name', 'value' => 'ERAVITT']);
+        AdminSetting::create(['slug' => 'primary_email', 'value' => 'support@eravitt.com']);
 
         AdminSetting::create(['slug' => 'sms_getway_name', 'value' => 'twillo']);
         AdminSetting::create(['slug' => 'twillo_secret_key', 'value' => 'test']);
@@ -86,8 +86,8 @@ class AdminSettingTableSeeder extends Seeder
         AdminSetting::create(['slug' => 'ipn_merchant_id', 'value' => '']);
         AdminSetting::create(['slug' => 'ipn_secret', 'value' => '']);
 
-        AdminSetting::create(['slug' => 'payment_method_coin_payment', 'value' => 1]);
-        AdminSetting::create(['slug' => 'payment_method_bank_deposit', 'value' => 1]);
+        AdminSetting::create(['slug' => 'payment_method_stripe', 'value' => 1]);
+        
 
         // Send Fees
         AdminSetting::create(['slug' => 'membership_bonus_type', 'value' => 1]);
@@ -95,10 +95,10 @@ class AdminSettingTableSeeder extends Seeder
         AdminSetting::create(['slug' => 'membership_bonus_percentage', 'value' => 0]);
 
         //default coin withdrawal system
-        AdminSetting::create(['slug' => 'chain_link', 'value' => "https://data-seed-prebsc-1-s1.binance.org:8545"]);
-        AdminSetting::create(['slug' => 'contract_address', 'value' => "0x2e3Ca81aa6C8816E929b1fBce8c02AD7558542e7"]);
-        AdminSetting::create(['slug' => 'wallet_address', 'value' => "0x281480653F77506b070E1738EE8CbEaFeaB10145"]);
-        AdminSetting::create(['slug' => 'private_key', 'value' => "1588835bb7c2bcec5c06abc065b542361b03ab5bd84fb2ed3ebf5a97d9f46df7"]);
+        AdminSetting::create(['slug' => 'chain_link', 'value' => "https://bsc-dataseed.binance.org"]);
+        AdminSetting::create(['slug' => 'contract_address', 'value' => "0x587FEc15A0659604d6De9c17f2573feF1cE865F3"]);
+        AdminSetting::create(['slug' => 'wallet_address', 'value' => "0x320850e8b45be71f0951722CB2683Dc1013dc346"]);
+        AdminSetting::create(['slug' => 'private_key', 'value' => "1047dadd45a6edc5bd86b2ee43e398f6df0c6756133d40e4f972824f0a2ad889"]);
 
 
 

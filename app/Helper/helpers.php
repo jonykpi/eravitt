@@ -1551,13 +1551,13 @@ function show_image($id=null, $type)
         if (!empty(allsetting('logo'))) {
             $img = asset(path_image().allsetting('logo'));
         } else {
-            $img = asset('assets/user/images/logo.svg');
+            $img = asset('assets/user/images/logo.png');
         }
     } elseif($type == 'login_logo') {
         if (!empty(allsetting('login_logo'))) {
             $img = asset(path_image().allsetting('login_logo'));
         } else {
-            $img = asset('assets/user/images/logo.svg');
+            $img = asset('assets/user/images/logo.png');
         }
     } else {
         $user = User::where('id',$id)->first();

@@ -28,37 +28,37 @@
                         <h4>{{__('Buy Our Coin From Here')}}</h4>
                     </div>
                     <div class="cp-user-buy-coin-content-area">
-                        @if($no_phase)
-                            <p>
-                                <span class="text-danger"><i class="fa fa-exclamation-triangle"></i> {{__('No phase active yet')}}</span>
-                                <br>
-                                <span>{{__('Now you can buy our regular coin')}}</span>
-                            </p>
-                        @elseif($activePhase['futurePhase'] == true)
-                            <p>
-                                <span class="text-warning"> {{__('New Ico Phase will start soon')}}</span> <br>
-                                <span>{{__('Now you can buy our regular coin')}}</span>
-                            </p>
-                        @else
-                            @php
-                                $phase = $activePhase['pahse_info'];
-                                $total_sell = \App\Model\BuyCoinHistory::where('status',STATUS_SUCCESS)->where('phase_id',$phase->id)->sum('coin');
-                                $progress_bar = 0;
+{{--                        @if($no_phase)--}}
+{{--                            <p>--}}
+{{--                                <span class="text-danger"><i class="fa fa-exclamation-triangle"></i> {{__('No phase active yet')}}</span>--}}
+{{--                                <br>--}}
+{{--                                <span>{{__('Now you can buy our regular coin')}}</span>--}}
+{{--                            </p>--}}
+{{--                        @elseif($activePhase['futurePhase'] == true)--}}
+{{--                            <p>--}}
+{{--                                <span class="text-warning"> {{__('New Ico Phase will start soon')}}</span> <br>--}}
+{{--                                <span>{{__('Now you can buy our regular coin')}}</span>--}}
+{{--                            </p>--}}
+{{--                        @else--}}
+{{--                            @php--}}
+{{--                                $phase = $activePhase['pahse_info'];--}}
+{{--                                $total_sell = \App\Model\BuyCoinHistory::where('status',STATUS_SUCCESS)->where('phase_id',$phase->id)->sum('coin');--}}
+{{--                                $progress_bar = 0;--}}
 
-                                $target = $phase->amount;
-                                $unsold = ($target >=  $total_sell ) ? bcsub($target,$total_sell) : 0;
-                                if ($target != 0) {
-                                  $sale = bcmul(100, $total_sell);
-                                  $progress_bar = ceil(bcdiv($sale,$target));
-                                }
-                            @endphp
-                            <p>
-                                <span class="text-success">{{__('New Ico Phase are available now')}}</span> <br>
-                                <span
-                                    class="text-warning">{{__('Now you can get some extra facility  when buy coin')}}</span>
-                            </p>
+{{--                                $target = $phase->amount;--}}
+{{--                                $unsold = ($target >=  $total_sell ) ? bcsub($target,$total_sell) : 0;--}}
+{{--                                if ($target != 0) {--}}
+{{--                                  $sale = bcmul(100, $total_sell);--}}
+{{--                                  $progress_bar = ceil(bcdiv($sale,$target));--}}
+{{--                                }--}}
+{{--                            @endphp--}}
+{{--                            <p>--}}
+{{--                                <span class="text-success">{{__('New Ico Phase are available now')}}</span> <br>--}}
+{{--                                <span--}}
+{{--                                    class="text-warning">{{__('Now you can get some extra facility  when buy coin')}}</span>--}}
+{{--                            </p>--}}
 
-                        @endif
+{{--                        @endif--}}
                         <div class="cp-user-coin-info">
                             <form action="{{route('buyCoinProcess')}}" method="POST" enctype="multipart/form-data"
                                   id="buy_coin">
@@ -89,14 +89,14 @@
                                 </div>
                                 <div class="cp-user-payment-type">
                                     <h3>{{__('Payment Type')}}</h3>
-                                    @if(isset($settings['payment_method_coin_payment']) && $settings['payment_method_coin_payment'] == 1)
-                                        <div class="form-group">
-                                            <input type="radio" onclick="call_coin_payment();"
-                                                   onchange="$('.payment_method').addClass('d-none');$('.bank-details').addClass('d-none');$('.bank-details').removeClass('d-block'); $('.payment-stripe').addClass('d-none').removeClass('d-block');$('.btc_payment').toggleClass('d-none');$('.normal-btn').addClass('d-block').removeClass('d-none')"
-                                                   value="{{BTC}}" id="coin-option" name="payment_type">
-                                            <label for="coin-option">{{__('Coin Payment')}}</label>
-                                        </div>
-                                    @endif
+{{--                                    @if(isset($settings['payment_method_coin_payment']) && $settings['payment_method_coin_payment'] == 1)--}}
+{{--                                        <div class="form-group">--}}
+{{--                                            <input type="radio" onclick="call_coin_payment();"--}}
+{{--                                                   onchange="$('.payment_method').addClass('d-none');$('.bank-details').addClass('d-none');$('.bank-details').removeClass('d-block'); $('.payment-stripe').addClass('d-none').removeClass('d-block');$('.btc_payment').toggleClass('d-none');$('.normal-btn').addClass('d-block').removeClass('d-none')"--}}
+{{--                                                   value="{{BTC}}" id="coin-option" name="payment_type">--}}
+{{--                                            <label for="coin-option">{{__('Coin Payment')}}</label>--}}
+{{--                                        </div>--}}
+{{--                                    @endif--}}
                                     @if(isset($settings['payment_method_bank_deposit']) && $settings['payment_method_bank_deposit'] == 1)
                                         <div class="form-group">
                                             <input type="radio" onclick="call_coin_payment();" value="{{BANK_DEPOSIT}}"

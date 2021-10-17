@@ -3,6 +3,7 @@
 @section('style')
 @endsection
 @section('content')
+
     <div class="row">
         <div class="col-12">
             <!-- TradingView Widget BEGIN -->
@@ -43,8 +44,9 @@
         </div>
 
     </div>
+
     <div class="row mt-4">
-        <div class="col-xl-4 col-md-6 col-12 mb-xl-0 mb-4">
+        <div class="col-xl-6 col-md-6 col-12 mb-xl-0 mb-6">
             <div class="card status-card status-card-bg-blue">
                 <div class="card-body">
                     <div class="status-card-inner">
@@ -59,22 +61,22 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 col-md-6 col-12 mb-xl-0 mb-4">
-            <div class="card status-card status-card-bg-green">
-                <div class="card-body">
-                    <div class="status-card-inner">
-                        <div class="content">
-                            <p>{{__('Total Blocked Coin')}}</p>
-                            <h3>{{number_format(get_blocked_coin(Auth::id()),2)}}</h3>
-                        </div>
-                        <div class="icon">
-                            <img src="{{asset('assets/user/images/status-icons/funds.svg')}}" class="img-fluid" alt="">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-4 col-md-6 col-12">
+{{--        <div class="col-xl-4 col-md-6 col-12 mb-xl-0 mb-4">--}}
+{{--            <div class="card status-card status-card-bg-green">--}}
+{{--                <div class="card-body">--}}
+{{--                    <div class="status-card-inner">--}}
+{{--                        <div class="content">--}}
+{{--                            <p>{{__('Total Blocked Coin')}}</p>--}}
+{{--                            <h3>{{number_format(get_blocked_coin(Auth::id()),2)}}</h3>--}}
+{{--                        </div>--}}
+{{--                        <div class="icon">--}}
+{{--                            <img src="{{asset('assets/user/images/status-icons/funds.svg')}}" class="img-fluid" alt="">--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+        <div class="col-xl-6 col-md-6 col-12">
             <div class="card status-card status-card-bg-read">
                 <div class="card-body">
                     <div class="status-card-inner">

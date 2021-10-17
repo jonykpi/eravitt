@@ -24,11 +24,11 @@
                     <div class="table-title">
                         <h3>{{ $title }}</h3>
                     </div>
-                    <div class="right d-flex align-items-center">
-                        <div class="add-btn-new mb-2">
-                            <a class="add-btn theme-btn" href="{{route('adminCoinList',['update'=> 'coinPayment'])}}">{{__('Adjust Coin With CoinPayment')}}</a>
-                        </div>
-                    </div>
+{{--                    <div class="right d-flex align-items-center">--}}
+{{--                        <div class="add-btn-new mb-2">--}}
+{{--                            <a class="add-btn theme-btn" href="{{route('adminCoinList',['update'=> 'coinPayment'])}}">{{__('Adjust Coin With CoinPayment')}}</a>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
                 </div>
                 <div class="table-area">
                     <div>

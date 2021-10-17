@@ -15,17 +15,17 @@ class CoinSeeder extends Seeder
      */
     public function run()
     {
-        Coin::create(['name'=>'Bitcoin', 'type'=>'BTC']);
-        Coin::create(['name'=>'Tether USD', 'type'=>'USDT']);
-        Coin::create(['name'=>'Ether', 'type'=>'ETH']);
-        Coin::create(['name'=>'Litecoin', 'type'=>'LTC']);
-        Coin::create(['name'=>'Ether', 'type'=>'DOGE']);
-        Coin::create(['name'=>'Bitcoin Cash', 'type'=>'BCH']);
-        Coin::create(['name'=>'Dash', 'type'=>'DASH']);
+//        Coin::create(['name'=>'Bitcoin', 'type'=>'BTC']);
+//        Coin::create(['name'=>'Tether USD', 'type'=>'USDT']);
+//        Coin::create(['name'=>'Ether', 'type'=>'ETH']);
+//        Coin::create(['name'=>'Litecoin', 'type'=>'LTC']);
+//        Coin::create(['name'=>'Ether', 'type'=>'DOGE']);
+//        Coin::create(['name'=>'Bitcoin Cash', 'type'=>'BCH']);
+//        Coin::create(['name'=>'Dash', 'type'=>'DASH']);
 
         try {
             Coin::updateOrCreate(['type' => DEFAULT_COIN_TYPE], ['type' => DEFAULT_COIN_TYPE, 'name' => settings('coin_name')]);
-            Coin::updateOrCreate(['type' => "LTCT"], ['type' => 'LTCT', 'name' => 'Ltct coin']);
+//            Coin::updateOrCreate(['type' => "LTCT"], ['type' => 'LTCT', 'name' => 'Ltct coin']);
             $users = User::select('*')->get();
             if (isset($users[0])) {
                 foreach ($users as $user) {

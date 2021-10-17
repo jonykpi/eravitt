@@ -9,13 +9,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta property="og:type" content="article" />
     <meta property="og:title" content="{{allsetting('app_title')}}"/>
-    <meta property="og:image" content="{{asset('assets/user/images/logo.svg')}}">
+    <meta property="og:image" content="{{asset('assets/user/images/logo.png')}}">
     <meta property="og:site_name" content="Cpoket"/>
     <meta property="og:url" content="{{url()->current()}}"/>
     <meta property="og:type" content="{{allsetting('app_title')}}"/>
     <meta itemscope itemtype="{{ url()->current() }}/{{allsetting('app_title')}}" />
     <meta itemprop="headline" content="{{allsetting('app_title')}}" />
-    <meta itemprop="image" content="{{asset('assets/user/images/logo.svg')}}" />
+    <meta itemprop="image" content="{{asset('assets/user/images/logo.png')}}" />
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{asset('assets/user/css/bootstrap.min.css')}}">
     <!-- metismenu CSS -->
@@ -87,29 +87,7 @@
                             <p class="cp-user-usd"><span>{{number_format($balance['available_used'],2)}}</span> {{__('USD')}}</p>
                         </div>
                     </li>
-                    <li class="cp-user-available-balance">
-                        <p class="cp-user-title">{{__('Blocked Coin')}}</p>
-                        <div class="cp-user-content">
-                            <p class="cp-user-btc"><span>{{number_format(get_blocked_coin(Auth::id()),2)}}</span> {{allsetting('coin_name')}}</p>
-                        </div>
-                    </li>
-                    <li class="cp-user-pending-withdrawal">
-                        <p class="cp-user-title">{{__('Membership Status')}}</p>
-                        <div class="cp-user-content">
-                            <p class="cp-user-btc">
-                                @if(!empty($clubInfo['club_id']))
-                                <span>
-                                    @if(!empty($clubInfo['plan_image']))
-                                        <img src="{{ $clubInfo['plan_image'] }}" class="img-fluid" alt="">
-                                    @endif
-                                </span>
-                                {{ $clubInfo['plan_name'] }}
-                                @else
-                                    <span class="text-warning">{{__("No Membership yet")}}</span>
-                                @endif
-                            </p>
-                        </div>
-                    </li>
+
                 </ul>
             </div>
             <div class="col-xl-2 col-lg-3 col-md-3">
@@ -259,33 +237,33 @@
                         <li class="@if(isset($sub_menu) && $sub_menu == 'my_pocket') cp-user-submenu-active @endif">
                             <a href="{{route('myPocket')}}">{{__('My Pocket')}}</a>
                         </li>
-                        <li class="@if(isset($sub_menu) && $sub_menu == 'swap_history') cp-user-submenu-active @endif">
-                            <a href="{{route('coinSwapHistory')}}">{{__('Swap History')}}</a>
-                        </li>
+{{--                        <li class="@if(isset($sub_menu) && $sub_menu == 'swap_history') cp-user-submenu-active @endif">--}}
+{{--                            <a href="{{route('coinSwapHistory')}}">{{__('Swap History')}}</a>--}}
+{{--                        </li>--}}
                     </ul>
                 </li>
-                <li class="@if(isset($menu) && $menu == 'coin_swap') cp-user-active-page @endif">
-                    <a href="{{route('coinSwap')}}">
-                        <span class="cp-user-icon">
-                            <img src="{{asset('assets/user/images/sidebar-icons/buy_coin.svg')}}" class="img-fluid cp-user-side-bar-icon" alt="">
-                            <img src="{{asset('assets/user/images/sidebar-icons/hover/buy_coin.svg')}}" class="img-fluid cp-user-side-bar-icon-hover" alt="">
-                        </span>
-                        <span class="cp-user-name">{{__('Swap Coin')}}</span>
-                    </a>
-                </li>
-                <li class="@if(isset($menu) && $menu == 'member') cp-user-active-page mm-active  @endif">
-                    <a class="arrow-icon" href="#" aria-expanded="true">
-                        <span class="cp-user-icon">
-                            <img src="{{asset('assets/user/images/sidebar-icons/Membership.svg')}}" class="img-fluid cp-user-side-bar-icon" alt="">
-                            <img src="{{asset('assets/user/images/sidebar-icons/hover/Membership-1.svg')}}" class="img-fluid cp-user-side-bar-icon-hover" alt="">
-                        </span>
-                        <span class="cp-user-name">{{__('Membership Club')}}</span>
-                    </a>
-                    <ul class="@if(isset($menu) && $menu == 'member')  mm-show  @endif">
-                        <li class="@if(isset($sub_menu) && $sub_menu == 'coin_transfer') cp-user-submenu-active @endif"><a href="{{route('membershipClubPlan')}}">{{__('Transfer Coin')}}</a></li>
-                        <li class="@if(isset($sub_menu) && $sub_menu == 'my_membership') cp-user-submenu-active @endif"><a href="{{route('myMembership')}}">{{__('My Membership')}}</a></li>
-                    </ul>
-                </li>
+{{--                <li class="@if(isset($menu) && $menu == 'coin_swap') cp-user-active-page @endif">--}}
+{{--                    <a href="{{route('coinSwap')}}">--}}
+{{--                        <span class="cp-user-icon">--}}
+{{--                            <img src="{{asset('assets/user/images/sidebar-icons/buy_coin.svg')}}" class="img-fluid cp-user-side-bar-icon" alt="">--}}
+{{--                            <img src="{{asset('assets/user/images/sidebar-icons/hover/buy_coin.svg')}}" class="img-fluid cp-user-side-bar-icon-hover" alt="">--}}
+{{--                        </span>--}}
+{{--                        <span class="cp-user-name">{{__('Swap Coin')}}</span>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
+{{--                <li class="@if(isset($menu) && $menu == 'member') cp-user-active-page mm-active  @endif">--}}
+{{--                    <a class="arrow-icon" href="#" aria-expanded="true">--}}
+{{--                        <span class="cp-user-icon">--}}
+{{--                            <img src="{{asset('assets/user/images/sidebar-icons/Membership.svg')}}" class="img-fluid cp-user-side-bar-icon" alt="">--}}
+{{--                            <img src="{{asset('assets/user/images/sidebar-icons/hover/Membership-1.svg')}}" class="img-fluid cp-user-side-bar-icon-hover" alt="">--}}
+{{--                        </span>--}}
+{{--                        <span class="cp-user-name">{{__('Membership Club')}}</span>--}}
+{{--                    </a>--}}
+{{--                    <ul class="@if(isset($menu) && $menu == 'member')  mm-show  @endif">--}}
+{{--                        <li class="@if(isset($sub_menu) && $sub_menu == 'coin_transfer') cp-user-submenu-active @endif"><a href="{{route('membershipClubPlan')}}">{{__('Transfer Coin')}}</a></li>--}}
+{{--                        <li class="@if(isset($sub_menu) && $sub_menu == 'my_membership') cp-user-submenu-active @endif"><a href="{{route('myMembership')}}">{{__('My Membership')}}</a></li>--}}
+{{--                    </ul>--}}
+{{--                </li>--}}
                 <li class="@if(isset($menu) && $menu == 'profile') cp-user-active-page @endif">
                     <a href="{{route('userProfile')}}">
                             <span class="cp-user-icon">
@@ -323,9 +301,9 @@
                 </li>
             </ul>
         </nav>
-        <div class="nav-bottom-img">
-            <img src="{{asset('assets/user/images/sidebar-coin-img.svg')}}" alt="">
-        </div>
+{{--        <div class="nav-bottom-img">--}}
+{{--            <img src="{{asset('assets/user/images/sidebar-coin-img.svg')}}" alt="">--}}
+{{--        </div>--}}
     </div><!-- /sidebar menu -->
 
 </div>

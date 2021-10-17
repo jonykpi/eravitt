@@ -14,7 +14,7 @@
 Route::group(['middleware'=> 'installation'],function () {
     Route::group(['middleware'=> 'default_lang'],function () {
 
-        Route::get('/', 'HomeController@home')->name('home');
+        Route::get('/', 'AuthController@login')->name('home');
         Route::get('login', 'AuthController@login')->name('login');
         Route::get('sign-up', 'AuthController@signUp')->name('signUp');
         Route::post('sign-up-process', 'AuthController@signUpProcess')->name('signUpProcess');

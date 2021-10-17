@@ -135,15 +135,15 @@
                                                                     </a>
                                                                 </li>
                                                             @endif
-                                                            <li class="menu-toggler">
-                                                                <a title="{{__('Swap')}}"
-                                                                   data-to_coin_type="{{$wallet->coin_type}}"
-                                                                   data-from_wallet_id="{{$wallet->id}}">
-                                                                    <img
-                                                                        src="{{asset('assets/user/images/wallet-table-icons/swap.svg')}}"
-                                                                        class="img-fluid" alt="Swap">
-                                                                </a>
-                                                            </li>
+{{--                                                            <li class="menu-toggler">--}}
+{{--                                                                <a title="{{__('Swap')}}"--}}
+{{--                                                                   data-to_coin_type="{{$wallet->coin_type}}"--}}
+{{--                                                                   data-from_wallet_id="{{$wallet->id}}">--}}
+{{--                                                                    <img--}}
+{{--                                                                        src="{{asset('assets/user/images/wallet-table-icons/swap.svg')}}"--}}
+{{--                                                                        class="img-fluid" alt="Swap">--}}
+{{--                                                                </a>--}}
+{{--                                                            </li>--}}
                                                         </ul>
                                                     </td>
                                                 </tr>

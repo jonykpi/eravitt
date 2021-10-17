@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta property="og:type" content="article" />
     <meta property="og:title" content="{{allsetting('app_title')}}"/>
-    <meta property="og:image" content="{{asset('assets/admin/images/logo.svg')}}">
+    <meta property="og:image" content="{{asset('assets/admin/user/images/logo.png')}}">
     <meta property="og:site_name" content="Cpoket"/>
     <meta property="og:url" content="{{url()->current()}}"/>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
@@ -17,7 +17,7 @@
     {{--    <meta property="og:type" content="{{allsetting('app_title')}}"/>--}}
 {{--    <meta itemscope itemtype="{{ url()->current() }}/{{allsetting('app_title')}}" />--}}
 {{--    <meta itemprop="headline" content="{{allsetting('app_title')}}" />--}}
-    <meta itemprop="image" content="{{asset('assets/admin/images/logo.svg')}}" />
+    <meta itemprop="image" content="{{asset('assets/admin/user/images/logo.png')}}" />
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{asset('assets/admin/css/bootstrap.min.css')}}">
     <!-- metismenu CSS -->
@@ -99,9 +99,9 @@
                         <li class="@if(isset($sub_menu) && $sub_menu == 'personal') submenu-active @endif">
                             <a href="{{route('adminWalletList')}}">{{__('Personal Pockets')}}</a>
                         </li>
-                        <li class="@if(isset($sub_menu) && $sub_menu == 'co') submenu-active @endif">
-                            <a href="{{route('adminCoWallets')}}">{{__(' Multi-signature Pockets')}}</a>
-                        </li>
+{{--                        <li class="@if(isset($sub_menu) && $sub_menu == 'co') submenu-active @endif">--}}
+{{--                            <a href="{{route('adminCoWallets')}}">{{__(' Multi-signature Pockets')}}</a>--}}
+{{--                        </li>--}}
                     </ul>
                 </li>
                 <li class="@if(isset($menu) && $menu == 'transaction') active-page @endif">
@@ -122,10 +122,10 @@
                     </ul>
                 </li>
                 <li class="@if(isset($menu) && $menu == 'phase') active-page @endif">
-                    <a href="#" aria-expanded="true">
-                        <span class="icon"><img src="{{asset('assets/admin/images/sidebar-icons/phase.svg')}}" class="img-fluid" alt=""></span>
-                        <span class="name">{{__('Ico Phase')}}</span>
-                    </a>
+{{--                    <a href="#" aria-expanded="true">--}}
+{{--                        <span class="icon"><img src="{{asset('assets/admin/images/sidebar-icons/phase.svg')}}" class="img-fluid" alt=""></span>--}}
+{{--                        <span class="name">{{__('Ico Phase')}}</span>--}}
+{{--                    </a>--}}
                     <ul class="@if(isset($menu) && $menu == 'phase')  mm-show  @endif">
                         <li class="@if(isset($sub_menu) && $sub_menu == 'phase_list') submenu-active @endif">
                             <a href="{{route('adminPhaseList')}}">{{__('Ico Phase List')}}</a>
@@ -159,26 +159,26 @@
                         <span class="name">{{__('Profile')}}</span>
                     </a>
                 </li>
-                <li class="@if(isset($menu) && $menu == 'club') active-page @endif">
-                    <a href="#" aria-expanded="true">
-                        <span class="icon"><img src="{{asset('assets/admin/images/sidebar-icons/Membership.svg')}}" class="img-fluid" alt=""></span>
-                        <span class="name">{{__('Membership Club')}}</span>
-                    </a>
-                    <ul class="@if(isset($menu) && $menu == 'club')  mm-show  @endif">
-                        <li class="@if(isset($sub_menu) && $sub_menu == 'member_list') submenu-active @endif">
-                            <a href="{{route('membershipList')}}">{{__('Member List')}}</a>
-                        </li>
-                        <li class="@if(isset($sub_menu) && $sub_menu == 'plan_list') submenu-active @endif">
-                            <a href="{{ route('planList') }}">{{__('Plan List')}}</a>
-                        </li>
-                        <li class="@if(isset($sub_menu) && $sub_menu == 'transaction_history') submenu-active @endif">
-                            <a href="{{ route('coinTransactionHistory') }}">{{__('Transaction History')}}</a>
-                        </li>
-                        <li class="@if(isset($sub_menu) && $sub_menu == 'bonus') submenu-active @endif">
-                            <a href="{{ route('clubBonusDistribution') }}">{{__('Bonus Distribution')}}</a>
-                        </li>
-                    </ul>
-                </li>
+{{--                <li class="@if(isset($menu) && $menu == 'club') active-page @endif">--}}
+{{--                    <a href="#" aria-expanded="true">--}}
+{{--                        <span class="icon"><img src="{{asset('assets/admin/images/sidebar-icons/Membership.svg')}}" class="img-fluid" alt=""></span>--}}
+{{--                        <span class="name">{{__('Membership Club')}}</span>--}}
+{{--                    </a>--}}
+{{--                    <ul class="@if(isset($menu) && $menu == 'club')  mm-show  @endif">--}}
+{{--                        <li class="@if(isset($sub_menu) && $sub_menu == 'member_list') submenu-active @endif">--}}
+{{--                            <a href="{{route('membershipList')}}">{{__('Member List')}}</a>--}}
+{{--                        </li>--}}
+{{--                        <li class="@if(isset($sub_menu) && $sub_menu == 'plan_list') submenu-active @endif">--}}
+{{--                            <a href="{{ route('planList') }}">{{__('Plan List')}}</a>--}}
+{{--                        </li>--}}
+{{--                        <li class="@if(isset($sub_menu) && $sub_menu == 'transaction_history') submenu-active @endif">--}}
+{{--                            <a href="{{ route('coinTransactionHistory') }}">{{__('Transaction History')}}</a>--}}
+{{--                        </li>--}}
+{{--                        <li class="@if(isset($sub_menu) && $sub_menu == 'bonus') submenu-active @endif">--}}
+{{--                            <a href="{{ route('clubBonusDistribution') }}">{{__('Bonus Distribution')}}</a>--}}
+{{--                        </li>--}}
+{{--                    </ul>--}}
+{{--                </li>--}}
                 <li class="@if(isset($menu) && $menu == 'setting') active-page @endif">
                     <a href="#" aria-expanded="true">
                         <span class="icon"><img src="{{asset('assets/admin/images/sidebar-icons/settings.svg')}}" class="img-fluid" alt=""></span>
@@ -188,22 +188,22 @@
                         <li class="@if(isset($sub_menu) && $sub_menu == 'general') submenu-active @endif">
                             <a href="{{route('adminSettings')}}">{{__('General Settings')}}</a>
                         </li>
-                        <li class="@if(isset($sub_menu) && $sub_menu == 'feature') submenu-active @endif">
-                            <a href="{{route('adminFeatureSettings')}}">{{__('Feature Settings')}}</a>
-                        </li>
+{{--                        <li class="@if(isset($sub_menu) && $sub_menu == 'feature') submenu-active @endif">--}}
+{{--                            <a href="{{route('adminFeatureSettings')}}">{{__('Feature Settings')}}</a>--}}
+{{--                        </li>--}}
                         <li class="@if(isset($sub_menu) && $sub_menu == 'payment-method') submenu-active @endif">
                             <a href="{{route('adminPaymentSetting')}}">{{__('Payment Method')}}</a>
                         </li>
 
-                        <li class="@if(isset($sub_menu) && $sub_menu == 'bank') submenu-active @endif">
-                            <a href="{{ route('bankList') }}">{{__('Bank Management')}}</a>
-                        </li>
-                        <li class="@if(isset($sub_menu) && $sub_menu == 'custom_pages') submenu-active @endif">
-                            <a href="{{ route('adminCustomPageList') }}">{{__('Custom Pages')}}</a>
-                        </li>
-                        <li class="@if(isset($sub_menu) && $sub_menu == 'landing') submenu-active @endif">
-                            <a href="{{ route('adminLandingSetting') }}">{{__('Landing Settings')}}</a>
-                        </li>
+{{--                        <li class="@if(isset($sub_menu) && $sub_menu == 'bank') submenu-active @endif">--}}
+{{--                            <a href="{{ route('bankList') }}">{{__('Bank Management')}}</a>--}}
+{{--                        </li>--}}
+{{--                        <li class="@if(isset($sub_menu) && $sub_menu == 'custom_pages') submenu-active @endif">--}}
+{{--                            <a href="{{ route('adminCustomPageList') }}">{{__('Custom Pages')}}</a>--}}
+{{--                        </li>--}}
+{{--                        <li class="@if(isset($sub_menu) && $sub_menu == 'landing') submenu-active @endif">--}}
+{{--                            <a href="{{ route('adminLandingSetting') }}">{{__('Landing Settings')}}</a>--}}
+{{--                        </li>--}}
                         <li class="@if(isset($sub_menu) && $sub_menu == 'config') submenu-active @endif">
                             <a href="{{ route('adminConfiguration') }}">{{__('Configuration')}}</a>
                         </li>
