@@ -87,7 +87,7 @@ class AdminSettingTableSeeder extends Seeder
         AdminSetting::create(['slug' => 'ipn_secret', 'value' => '']);
 
         AdminSetting::create(['slug' => 'payment_method_stripe', 'value' => 1]);
-        
+
 
         // Send Fees
         AdminSetting::create(['slug' => 'membership_bonus_type', 'value' => 1]);
