@@ -43,6 +43,9 @@ class btcDepositeRequest extends FormRequest
         }
         if ($this->payment_type == STRIPE){
             $check['stripeToken'] =  ['required'];
+            $check['country'] =  ['required'];
+            $check['city'] =  ['required'];
+            $check['billing_address'] =  ['required'];
         }
         if ($this->payment_type == BANK_DEPOSIT){
 

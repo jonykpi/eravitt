@@ -433,13 +433,24 @@ class CoinRepository
             }
 
             Stripe::setApiKey($stripe_secret);
+
             $charge = Charge::create ([
+                'shipping'=>[
+                    "name"=>"Jhon dhoe",
+                    "address"=>[
+                        "city"=>$request->city,
+                        "country"=>$request->country,
+                        "line1"=>$request->billing_address
+                    ]
+                ],
                 "amount" => $coin_price_doller * 100,
                 "currency" => "usd",
                 "source" => $request->stripeToken,
                 "description" => "Payment from ".Auth::user()->email. ' for '.$coin_price_doller. ' usd'
             ]);
+
         } catch (\Exception $e) {
+
             $response = ['success' => false, 'message' => $e->getMessage(), 'data' => (object)[]];
             return $response;
         }
@@ -448,7 +459,7 @@ class CoinRepository
             if (isset($charge) && $charge['status'] == 'succeeded') {
                 $btc_transaction = new BuyCoinHistory();
                 $btc_transaction->type = STRIPE;
-                $btc_transaction->address = 'N/A';
+                $btc_transaction->address = $request->billing_address;
                 $btc_transaction->user_id = Auth::id();
                 $btc_transaction->doller = $coin_price_doller;
                 $btc_transaction->btc = $coin_price_btc;

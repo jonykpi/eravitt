@@ -218,6 +218,29 @@
                                             <label class='control-label'>{{__('Expiration Year')}}</label>
                                             <input class='form-control card-expiry-year' placeholder='YYYY' size='4' type='text'>
                                         </div>
+
+                                        <div class='col-xs-12 col-md-12 form-group expiration required'>
+                                            <label class='control-label'>{{__('Country')}}</label>
+                                            <select name="country" class="form-control" id="">
+                                                @foreach(code_to_country() as $ky=> $country)
+
+                                                    <option {{$ky== "IN" ? "selected" : "" }} value="{{$ky}}">{{$country}}</option>
+                                                @endforeach
+
+                                            </select>
+
+                                        </div>
+
+                                        <div class='col-xs-12 col-md-12 form-group expiration required'>
+                                            <label class='control-label'>{{__('CITY')}}</label>
+                                            <input class='form-control card-expiry-month' placeholder='kolkata' name="city" type='text'>
+                                        </div>
+                                        <div class='col-xs-12 col-md-12 form-group expiration required'>
+                                            <label class='control-label'>{{__('Billing address')}}</label>
+                                            <input class='form-control card-expiry-month' placeholder='1127, Main Market' name="billing_address" type='text'>
+                                        </div>
+
+
                                     </div>
 
                                     <div class='form-row row'>
@@ -406,6 +429,7 @@
                     e.preventDefault();
                     Stripe.setPublishableKey($form.data('stripe-publishable-key'));
                     Stripe.createToken({
+                        name:"test",
                         number: $('.card-number').val(),
                         cvc: $('.card-cvc').val(),
                         exp_month: $('.card-expiry-month').val(),
