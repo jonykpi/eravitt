@@ -253,12 +253,12 @@ class SettingsController extends Controller
     {
         if ($request->post()) {
             $rules = [
-                'minimum_withdrawal_amount' => 'required|numeric',
-                'maximum_withdrawal_amount' => 'required|numeric',
-                'max_send_limit' => 'required|numeric',
-                'send_fees_type' => 'required|numeric',
-                'send_fees_fixed' => 'required|numeric',
-                'send_fees_percentage' => 'required|numeric',
+//                'minimum_withdrawal_amount' => 'required|numeric',
+//                'maximum_withdrawal_amount' => 'required|numeric',
+//                'max_send_limit' => 'required|numeric',
+//                'send_fees_type' => 'required|numeric',
+//                'send_fees_fixed' => 'required|numeric',
+//                'send_fees_percentage' => 'required|numeric',
             ];
 
             $validator = Validator::make($request->all(), $rules);
