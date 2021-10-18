@@ -25,7 +25,7 @@ class CoinSeeder extends Seeder
 
         try {
             Coin::updateOrCreate(['type' => DEFAULT_COIN_TYPE], ['type' => DEFAULT_COIN_TYPE, 'name' => settings('coin_name')]);
-//            Coin::updateOrCreate(['type' => "LTCT"], ['type' => 'LTCT', 'name' => 'Ltct coin']);
+
             $users = User::select('*')->get();
             if (isset($users[0])) {
                 foreach ($users as $user) {
