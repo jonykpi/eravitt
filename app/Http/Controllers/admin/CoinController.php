@@ -305,7 +305,7 @@ class CoinController extends Controller
             }
             dispatch(new AdjustWalletJob())->onQueue('default');
             $data['coins'] = Coin::where('status', '<>', STATUS_DELETED)->orderBy('id','asc')->get();
-
+dd(  $data['coins']);
             return view('admin.coin-order.coin', $data);
 
         } catch (\Exception $e) {
