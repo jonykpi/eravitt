@@ -360,7 +360,8 @@ class CoinController extends Controller
         $input['name'] = $request->name;
         $input['is_deposit'] = isset($request->is_deposit) ? 1 : 0;
         $input['is_withdrawal'] = isset($request->is_withdrawal) ? 1 : 0;
-        $input['status'] = isset($request->status) ? 1 : 0;
+      //  $input['status'] = isset($request->status) ? 1 : 0;
+        $input['status'] = 1;
         $input['trade_status'] = isset($request->trade_status) ? 1 : 0;
         $input['is_wallet'] = isset($request->is_wallet) ? 1 : 0;
         $input['is_buy'] = isset($request->is_buy) ? 1 : 0;
