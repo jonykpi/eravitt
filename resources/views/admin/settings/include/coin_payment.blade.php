@@ -50,30 +50,30 @@
             {{--                                    </div>--}}
         </div>
         <hr>
-        <div class="header-bar">
-            <div class="table-title">
-                <h3>{{__('Stripe Details')}}</h3>
-            </div>
-        </div>
-        <div class="row">
+{{--        <div class="header-bar">--}}
+{{--            <div class="table-title">--}}
+{{--                <h3>{{__('Stripe Details')}}</h3>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--        <div class="row">--}}
 
-            <div class="col-lg-6 col-12 mt-20">
-                <div class="form-group">
-                    <label for="#">{{__('STRIPE PUBLISHABLE KEY')}}</label>
-                    <input class="form-control" type="text" name="STRIPE_KEY"
-                           autocomplete="off" placeholder=""
-                           value="{{isset(settings()['STRIPE_KEY']) ? settings()['STRIPE_KEY'] : ''}}">
-                </div>
-            </div>
-            <div class="col-lg-6 col-12 mt-20">
-                <div class="form-group">
-                    <label for="#">{{__('STRIPE SECRET KEY')}}</label>
-                    <input class="form-control" type="text" name="STRIPE_SECRET"
-                           autocomplete="off" placeholder=""
-                           value="{{isset(settings()['STRIPE_SECRET']) ? settings()['STRIPE_SECRET'] : ''}}">
-                </div>
-            </div>
-        </div>
+{{--            <div class="col-lg-6 col-12 mt-20">--}}
+{{--                <div class="form-group">--}}
+{{--                    <label for="#">{{__('STRIPE PUBLISHABLE KEY')}}</label>--}}
+{{--                    <input class="form-control" type="text" name="STRIPE_KEY"--}}
+{{--                           autocomplete="off" placeholder=""--}}
+{{--                           value="{{isset(settings()['STRIPE_KEY']) ? settings()['STRIPE_KEY'] : ''}}">--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--            <div class="col-lg-6 col-12 mt-20">--}}
+{{--                <div class="form-group">--}}
+{{--                    <label for="#">{{__('STRIPE SECRET KEY')}}</label>--}}
+{{--                    <input class="form-control" type="text" name="STRIPE_SECRET"--}}
+{{--                           autocomplete="off" placeholder=""--}}
+{{--                           value="{{isset(settings()['STRIPE_SECRET']) ? settings()['STRIPE_SECRET'] : ''}}">--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
         <div class="row">
             <div class="col-lg-2 col-12 mt-20">
                 <button type="submit" class="button-primary theme-btn">{{__('Update')}}</button>

@@ -249,60 +249,60 @@ class CoinController extends Controller
     {
         try {
             $data['title'] = __('Coin List');
-//            if (isset($request->update) && $request->update == "coinPayment") {
-//                $coinpayment = new CoinPaymentsAPI();
-//
-//                $api_rate = $coinpayment->GetRates('');
-//                if ( ($api_rate['error'] == "ok") ) {
-//                    $active_coins = [];
-//                    foreach($api_rate['result'] as $key => $result) {
-//                        if ($result['accepted'] == 1) {
-//                            $active_coins[$key] = [
-//                                'coin_type' => $key,
-//                                'name' => $result['name'],
-//                                'accepted' => $result['accepted']
-//                            ];
-//                        }
-//                    }
-//                    if (isset($active_coins)) {
-//                        foreach($active_coins as $key => $active) {
-//                            Coin::updateOrCreate(['type' => $active['coin_type']], ['name' => $active['name'], 'type' => $active['coin_type'], 'status' => STATUS_ACTIVE,'unique_code'=>uniqid().date('').time(),]);
-//                        }
-//                    } else {
-//                        Coin::updateOrCreate(['type' => 'BTC'], ['name' => 'Bitcoin', 'type' => 'BTC', 'status' => STATUS_ACTIVE, 'unique_code'=>uniqid().date('').time(),]);
-//                    }
-//                    $dbCoins = Coin::where('status', '<>', STATUS_DELETED)->orderBy('id','asc')->get();
-//                    $db_coins =[];
-//                    foreach ($dbCoins as $dbc) {
-//                        $db_coins[$dbc->type] = [
-//                            'coin_type' => $dbc->type,
-//                            'name' => $dbc->name,
-//                            'accepted' => $dbc->status
-//                        ];
-//                    }
-//                    if (isset($active_coins) && isset($db_coins)) {
-//                        $inactive_coins = array_diff_key($db_coins, $active_coins);
-//                    }
-//                    if (isset($inactive_coins)) {
-//                        foreach ($inactive_coins as $key => $value) {
-//                            if ($key == DEFAULT_COIN_TYPE || $key == COIN_TYPE_LTCT) {
-//
-//                            } else {
-//                                Coin::where('type', $key)->update(['status' => STATUS_DELETED]);
-//                            }
-//                        }
-//                    }
-//                    $data['coins'] = Coin::where('status', '<>', STATUS_DELETED)->orderBy('id','asc')->get();
-//                    dispatch(new AdjustWalletJob())->onQueue('default');
-//
-//                    return view('admin.coin-order.coin', $data);
-//                } else {
-//                    $data['coins'] = Coin::where('status', '<>', STATUS_DELETED)->orderBy('id','asc')->get();
-//                    dispatch(new AdjustWalletJob())->onQueue('default');
-//
-//                    return view('admin.coin-order.coin', $data);
-//                }
-//            }
+            if (isset($request->update) && $request->update == "coinPayment") {
+                $coinpayment = new CoinPaymentsAPI();
+
+                $api_rate = $coinpayment->GetRates('');
+                if ( ($api_rate['error'] == "ok") ) {
+                    $active_coins = [];
+                    foreach($api_rate['result'] as $key => $result) {
+                        if ($result['accepted'] == 1) {
+                            $active_coins[$key] = [
+                                'coin_type' => $key,
+                                'name' => $result['name'],
+                                'accepted' => $result['accepted']
+                            ];
+                        }
+                    }
+                    if (isset($active_coins)) {
+                        foreach($active_coins as $key => $active) {
+                            Coin::updateOrCreate(['type' => $active['coin_type']], ['name' => $active['name'], 'type' => $active['coin_type'], 'status' => STATUS_ACTIVE,'unique_code'=>uniqid().date('').time(),]);
+                        }
+                    } else {
+                        Coin::updateOrCreate(['type' => 'BTC'], ['name' => 'Bitcoin', 'type' => 'BTC', 'status' => STATUS_ACTIVE, 'unique_code'=>uniqid().date('').time(),]);
+                    }
+                    $dbCoins = Coin::where('status', '<>', STATUS_DELETED)->orderBy('id','asc')->get();
+                    $db_coins =[];
+                    foreach ($dbCoins as $dbc) {
+                        $db_coins[$dbc->type] = [
+                            'coin_type' => $dbc->type,
+                            'name' => $dbc->name,
+                            'accepted' => $dbc->status
+                        ];
+                    }
+                    if (isset($active_coins) && isset($db_coins)) {
+                        $inactive_coins = array_diff_key($db_coins, $active_coins);
+                    }
+                    if (isset($inactive_coins)) {
+                        foreach ($inactive_coins as $key => $value) {
+                            if ($key == DEFAULT_COIN_TYPE || $key == COIN_TYPE_LTCT) {
+
+                            } else {
+                                Coin::where('type', $key)->update(['status' => STATUS_DELETED]);
+                            }
+                        }
+                    }
+                    $data['coins'] = Coin::where('status', '<>', STATUS_DELETED)->orderBy('id','asc')->get();
+                    dispatch(new AdjustWalletJob())->onQueue('default');
+
+                    return view('admin.coin-order.coin', $data);
+                } else {
+                    $data['coins'] = Coin::where('status', '<>', STATUS_DELETED)->orderBy('id','asc')->get();
+                    dispatch(new AdjustWalletJob())->onQueue('default');
+
+                    return view('admin.coin-order.coin', $data);
+                }
+            }
             dispatch(new AdjustWalletJob())->onQueue('default');
             $data['coins'] = Coin::where('status', '=', STATUS_SUCCESS)->orderBy('id','asc')->get();
 

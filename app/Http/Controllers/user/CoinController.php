@@ -35,6 +35,7 @@ class CoinController extends Controller
             $data['title'] = __('Buy Coin');
             $data['settings'] = allsetting();
             $data['banks'] = Bank::where(['status' => STATUS_ACTIVE])->get();
+
             if(env('APP_ENV') == 'local') {
                 $data['coins'] = Coin::where(['status' => STATUS_ACTIVE])->where('type', '<>', DEFAULT_COIN_TYPE)->get();
             } else {

@@ -228,9 +228,9 @@ function paymentTypes($input = null)
 function paymentMethods($input = null)
 {
     $output = [
-//        BTC => __('Coin Payment'),
-//        BANK_DEPOSIT => __('Bank Deposit'),
-        STRIPE => __('Credit card')
+        BTC => __('Coin Payment'),
+////        BANK_DEPOSIT => __('Bank Deposit'),
+//        STRIPE => __('Credit card')
     ];
     if (is_null($input)) {
         return $output;

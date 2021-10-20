@@ -89,30 +89,30 @@
                                 </div>
                                 <div class="cp-user-payment-type">
                                     <h3>{{__('Payment Type')}}</h3>
-{{--                                    @if(isset($settings['payment_method_coin_payment']) && $settings['payment_method_coin_payment'] == 1)--}}
+                                    @if(isset($settings['payment_method_coin_payment']) && $settings['payment_method_coin_payment'] == 1)
+                                        <div class="form-group">
+                                            <input type="radio" onclick="call_coin_payment();"
+                                                   onchange="$('.payment_method').addClass('d-none');$('.bank-details').addClass('d-none');$('.bank-details').removeClass('d-block'); $('.payment-stripe').addClass('d-none').removeClass('d-block');$('.btc_payment').toggleClass('d-none');$('.normal-btn').addClass('d-block').removeClass('d-none')"
+                                                   value="{{BTC}}" id="coin-option" name="payment_type">
+                                            <label for="coin-option">{{__('Coin Payment')}}</label>
+                                        </div>
+                                    @endif
+{{--                                    @if(isset($settings['payment_method_bank_deposit']) && $settings['payment_method_bank_deposit'] == 1)--}}
 {{--                                        <div class="form-group">--}}
-{{--                                            <input type="radio" onclick="call_coin_payment();"--}}
-{{--                                                   onchange="$('.payment_method').addClass('d-none');$('.bank-details').addClass('d-none');$('.bank-details').removeClass('d-block'); $('.payment-stripe').addClass('d-none').removeClass('d-block');$('.btc_payment').toggleClass('d-none');$('.normal-btn').addClass('d-block').removeClass('d-none')"--}}
-{{--                                                   value="{{BTC}}" id="coin-option" name="payment_type">--}}
-{{--                                            <label for="coin-option">{{__('Coin Payment')}}</label>--}}
+{{--                                            <input type="radio" onclick="call_coin_payment();" value="{{BANK_DEPOSIT}}"--}}
+{{--                                                   onchange="$('.payment_method').addClass('d-none');$('.bank-details').addClass('d-block');$('.bank-details').removeClass('d-none');$('.payment-stripe').addClass('d-none').removeClass('d-block');$('.bank_payment').toggleClass('d-none');$('.normal-btn').addClass('d-block').removeClass('d-none')"--}}
+{{--                                                   id="f-option" name="payment_type">--}}
+{{--                                            <label for="f-option">{{__('Bank Deposit')}}</label>--}}
 {{--                                        </div>--}}
 {{--                                    @endif--}}
-                                    @if(isset($settings['payment_method_bank_deposit']) && $settings['payment_method_bank_deposit'] == 1)
-                                        <div class="form-group">
-                                            <input type="radio" onclick="call_coin_payment();" value="{{BANK_DEPOSIT}}"
-                                                   onchange="$('.payment_method').addClass('d-none');$('.bank-details').addClass('d-block');$('.bank-details').removeClass('d-none');$('.payment-stripe').addClass('d-none').removeClass('d-block');$('.bank_payment').toggleClass('d-none');$('.normal-btn').addClass('d-block').removeClass('d-none')"
-                                                   id="f-option" name="payment_type">
-                                            <label for="f-option">{{__('Bank Deposit')}}</label>
-                                        </div>
-                                    @endif
-                                    @if(isset($settings['payment_method_stripe']) && $settings['payment_method_stripe'] == 1)
-                                        <div class="form-group">
-                                            <input type="radio" onclick="call_coin_payment();" value="{{STRIPE}}"
-                                                   onchange="$('.normal-btn').addClass('d-none');$('.payment_method').addClass('d-none');$('.bank-details').addClass('d-none');$('.payment-stripe').addClass('d-block');$('.payment-stripe').removeClass('d-none');$('.payment-stripe-div').toggleClass('d-none');"
-                                                   id="stripe-option" name="payment_type">
-                                            <label for="stripe-option">{{__('Credit Card')}}</label>
-                                        </div>
-                                    @endif
+{{--                                    @if(isset($settings['payment_method_stripe']) && $settings['payment_method_stripe'] == 1)--}}
+{{--                                        <div class="form-group">--}}
+{{--                                            <input type="radio" onclick="call_coin_payment();" value="{{STRIPE}}"--}}
+{{--                                                   onchange="$('.normal-btn').addClass('d-none');$('.payment_method').addClass('d-none');$('.bank-details').addClass('d-none');$('.payment-stripe').addClass('d-block');$('.payment-stripe').removeClass('d-none');$('.payment-stripe-div').toggleClass('d-none');"--}}
+{{--                                                   id="stripe-option" name="payment_type">--}}
+{{--                                            <label for="stripe-option">{{__('Credit Card')}}</label>--}}
+{{--                                        </div>--}}
+{{--                                    @endif--}}
                                 </div>
 
                                 <div class="check-box-list btc_payment payment_method d-none">
