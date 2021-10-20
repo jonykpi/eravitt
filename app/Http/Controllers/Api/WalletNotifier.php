@@ -112,6 +112,10 @@ class WalletNotifier extends Controller
                         Log::info(json_encode($depositCreate));
 
                         if (($depositCreate)) {
+
+                            Notification::create(['user_id'=>$wallet->user_id, 'title'=>$walletAddress->coin_type." deposited", 'notification_body'=>$request->amount.$walletAddress->coin_type." deposited successfully"]);
+
+
                             Log::info('Balance before deposit '.$wallet->balance);
                             $wallet->increment('balance', $depositCreate->amount);
                             Log::info('Balance after deposit '.$wallet->balance);
@@ -143,7 +147,7 @@ class WalletNotifier extends Controller
                     if (!empty($buy_coin->phase_id)) {
                         $bonus = $affiliate_servcice->storeAffiliationHistoryForBuyCoin($buy_coin);
                     }
-                    Notification::create(['user_id'=>$buy_coin->user_id, 'title'=>"Buy coin", 'notification_body'=>$buy_coin->coin.allsetting('coin_name')." deposited successfully"]);
+                    Notification::create(['user_id'=>$buy_coin->user_id, 'title'=>allsetting('coin_name')." deposited", 'notification_body'=>$buy_coin->coin.allsetting('coin_name')." deposited successfully"]);
 
                 }else{
                     Log::info('Buy history not found');
