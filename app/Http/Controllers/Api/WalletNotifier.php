@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Model\BuyCoinHistory;
 use App\Model\DepositeTransaction;
+use App\Model\Notification;
 use App\Model\Wallet;
 use App\Model\WalletAddressHistory;
 use App\Repository\AffiliateRepository;
@@ -131,7 +132,7 @@ class WalletNotifier extends Controller
                 $data = ['success'=>false,'message'=>'Wallet address not found'];
                 Log::info('Wallet address not found id db trying to buy coin');
 
-                $buy_coin = BuyCoinHistory::where("address",$request->address)->where("status",STATUS_PENDING)->first();
+                $buy_coin = BuyCoinHistory::where("address",$request->address)->where("btc","<=",$request->amount)->where("status",STATUS_PENDING)->first();
                 if (!empty($buy_coin)){
                     $buy_coin->status = STATUS_SUCCESS;
                     $buy_coin->save();
@@ -142,11 +143,11 @@ class WalletNotifier extends Controller
                     if (!empty($buy_coin->phase_id)) {
                         $bonus = $affiliate_servcice->storeAffiliationHistoryForBuyCoin($buy_coin);
                     }
+                    Notification::create(['user_id'=>$buy_coin->user_id, 'title'=>"Buy coin", 'notification_body'=>$buy_coin->coin.allsetting('coin_name')." deposited successfully"]);
 
                 }else{
                     Log::info('Buy history not found');
                 }
-
 
             }
 
