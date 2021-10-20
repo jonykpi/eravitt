@@ -5,6 +5,7 @@ use App\Model\BuyCoinHistory;
 use App\Model\DepositeTransaction;
 use App\Model\Wallet;
 use App\Model\WalletAddressHistory;
+use App\Repository\AffiliateRepository;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -128,7 +129,25 @@ class WalletNotifier extends Controller
                 }
             } else {
                 $data = ['success'=>false,'message'=>'Wallet address not found'];
-                Log::info('Wallet address not found id db');
+                Log::info('Wallet address not found id db trying to buy coin');
+
+                $buy_coin = BuyCoinHistory::where("address",$request->address)->where("status",STATUS_PENDING)->first();
+                if (!empty($buy_coin)){
+                    $buy_coin->status = STATUS_SUCCESS;
+                    $buy_coin->save();
+
+                    $affiliate_servcice = new AffiliateRepository();
+                    $primary = get_primary_wallet($buy_coin->user_id, 'Default');
+                    $primary->increment('balance', $buy_coin->coin);
+                    if (!empty($buy_coin->phase_id)) {
+                        $bonus = $affiliate_servcice->storeAffiliationHistoryForBuyCoin($buy_coin);
+                    }
+
+                }else{
+                    Log::info('Buy history not found');
+                }
+
+
             }
 
             DB::commit();
