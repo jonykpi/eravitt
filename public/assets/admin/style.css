@@ -2431,17 +2431,17 @@ table.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] > td:first-child, 
     color: #fff;
 }
 
-table.dataTable thead .sorting:before, 
-table.dataTable thead .sorting_asc:before, 
-table.dataTable thead .sorting_desc:before, 
-table.dataTable thead .sorting_asc_disabled:before, 
+table.dataTable thead .sorting:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_desc:before,
+table.dataTable thead .sorting_asc_disabled:before,
 table.dataTable thead .sorting_desc_disabled:before{
   display: none;
 }
-table.dataTable thead .sorting:after, 
-table.dataTable thead .sorting_asc:after, 
-table.dataTable thead .sorting_desc:after, 
-table.dataTable thead .sorting_asc_disabled:after, 
+table.dataTable thead .sorting:after,
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_desc:after,
+table.dataTable thead .sorting_asc_disabled:after,
 table.dataTable thead .sorting_desc_disabled:after{
   display: none;
 }
@@ -2512,4 +2512,59 @@ table.dataTable thead .sorting_desc_disabled:after{
 .btn.btn-update:hover{
     background-position: 100% !important;
     color: #fff;
+}
+
+ /*new changes*/
+
+.auth-box {
+    margin-top: 50px;
+}
+
+.user-form-new .form-group {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.user-form-new .form-group .eye {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.user-form-new .form-group .form-control-password {
+    padding-right: 35px;
+}
+
+.user-form-new .form-group label {
+    color: #ffffff;
+}
+.user-form-new .form-control {
+    height: 55px;
+    box-shadow: none;
+    border-color: #e6e6e6;
+    border-radius: 15px;
+    background: #EDEDED;
+}
+
+
+.login-sidebar-img {
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+.login-sidebar-img img {
+    /*margin: auto;*/
+    max-height: 100%;
+    min-height: 655px;
+    width: 100%;
+}
+
+
+.checkBoxRefCode {
+    border: 1px solid #DCDFF2;
+    border-radius: 3px;
+    box-shadow: none;
+    color: #212E55;
 }

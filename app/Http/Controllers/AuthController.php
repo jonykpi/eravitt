@@ -113,7 +113,7 @@ class AuthController extends Controller
         }
         if (!empty($user)){
             $this->sendVerifyemail($user, $mail_key);
-            return redirect()->route('login')->with('success',__('Email send successful,please verify your email'));
+            return redirect()->route('login')->with('success',__('Signup successful,please verify your email'));
 
         } else {
             return redirect()->back()->with('dismiss',__('Something went wrong'));

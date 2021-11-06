@@ -2,6 +2,7 @@
 namespace App\Repository;
 use App\Model\Admin\Bank;
 use App\Model\AdminSetting;
+use App\Model\CoinBalanceHistory;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -21,6 +22,7 @@ class SettingRepository
             }
             if (isset($request->coin_price)) {
                 AdminSetting::where('slug', 'coin_price')->update(['value' => $request->coin_price]);
+                $this->updateCoinPrice($request->coin_price);
             }
             if (isset($request->coin_name)) {
                 AdminSetting::where('slug', 'coin_name')->update(['value' => $request->coin_name]);
@@ -312,6 +314,17 @@ class SettingRepository
         }
         DB::commit();
         return $response;
+    }
+
+    public function updateCoinPrice($price)
+    {
+        $previousPrice = CoinBalanceHistory::orderBy('id', 'desc')->first();
+        if(isset($previousPrice)) {
+            $pevPrice = $previousPrice->price;
+        } else {
+            $pevPrice = $price;
+        }
+        CoinBalanceHistory::updateOrCreate(['price' => $price],['price' => $price, 'previous_price' => $pevPrice, 'updated_by' => Auth::id()]);
     }
 
 }

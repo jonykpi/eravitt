@@ -2,7 +2,9 @@
 
 use App\Model\ActivityLog;
 use App\Model\AdminSetting;
+use App\Model\BuyCoinHistory;
 use App\Model\Coin;
+use App\Model\CoinBalanceHistory;
 use App\Model\DepositeTransaction;
 use App\Model\MembershipBonusDistributionHistory;
 use App\Model\MembershipClub;
@@ -2145,4 +2147,26 @@ function check_withdrawal_fees($amount, $fess_percentage)
 function get_wallet_coin($coin_id)
 {
     return Coin::find($coin_id);
+}
+
+function admin_coin_price()
+{
+    $currentPrice = 0;
+    $previousPrice = 0;
+    $buyPrice = 0;
+    $price = CoinBalanceHistory::orderBy('id', 'desc')->first();
+    if (isset($price)) {
+        $currentPrice = $price->price;
+        $previousPrice = $price->previous_price;
+    }
+    $buy =  BuyCoinHistory::orderBy('id', 'desc')->first();
+    if (isset($buy)) {
+        $buyPrice = bcdiv($buy->doller,$buy->coin,8);
+    }
+
+    return [
+        'currentPrice' => $currentPrice,
+        'previousPrice' => $previousPrice,
+        'buyPrice' => $buyPrice,
+    ];
 }

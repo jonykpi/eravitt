@@ -398,7 +398,7 @@ class TransactionService
                     $fees = check_withdrawal_fees($amount, $wallet->withdrawal_fees);
 
                 } else {
-                    $fees = 0;
+                    $fees = check_withdrawal_fees($amount, $wallet->withdrawal_fees);
                     $receiverWallet = $walletAddress->wallet;
                     $receiverUser = $walletAddress->wallet->user;
                     $address_type = ADDRESS_TYPE_INTERNAL;
@@ -1083,7 +1083,7 @@ class TransactionService
                 ];
                 return $data;
             }
-            $fees = 0;
+            $fees = check_withdrawal_fees($request->amount, $wallet->withdrawal_fees);
 
         } else {
             $walletAddress = $this->isInternalAddress($address);
@@ -1105,7 +1105,7 @@ class TransactionService
                     ];
                     return $data;
                 }
-                $fees = 0;
+                $fees = check_withdrawal_fees($request->amount, $wallet->withdrawal_fees);
             } else {
                 $fees = check_withdrawal_fees($request->amount, $wallet->withdrawal_fees);
             }

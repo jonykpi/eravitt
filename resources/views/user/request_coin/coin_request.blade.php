@@ -11,8 +11,8 @@
                         <div class="col-md-12">
                             <div class="cp-user-card-header-area">
                                 <div class="cp-user-title">
-                                    <h4>{{__('Send/Request Default Coin')}}</h4>
-                                    <small class="text-warning">{{__('Note: Here you can send or receive default coin only. To send other coin go to pocket menu')}}</small>
+                                    <h4>{{__('Send/Request Coin')}}</h4>
+                                    <small class="text-warning">{{__('Note: Here you can send or receive '.settings('coin_name').' coin only. To send other coin go to pocket menu')}}</small>
                                 </div>
                             </div>
                             <div class="clap-wrap mt-5">
@@ -21,7 +21,7 @@
                                     <li class="nav-item" role="presentation">
                                         <a class="nav-link @if($qr == 'requests') active @endif" id="pills-transfer-1-tab" data-toggle="pill"
                                            href="#pills-transfer-1" role="tab" aria-controls="pills-transfer-1"
-                                           aria-selected="true">{{__('Default Coin Request')}}</a>
+                                           aria-selected="true">{{__(' Coin Request')}}</a>
                                     </li>
                                     <li class="nav-item" role="presentation">
                                         <a class="nav-link @if($qr == 'give') active @endif" id="pills-transfer-2-tab" data-toggle="pill"
@@ -34,7 +34,7 @@
                                          aria-labelledby="pills-transfer-1-tab">
                                         <div class="cp-user-card-header-area d-block">
                                             <div class="cp-user-title">
-                                                <h4>{{__('Send Default Coin Request To User Using Email Address')}}</h4>
+                                                <h4>{{__('Send Coin Request To User Using coin Address')}}</h4>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6">
@@ -43,11 +43,11 @@
                                                               action="{{route('sendCoinRequest')}}">
                                                             @csrf
                                                             <div class="form-group mt-4">
-                                                                <label>{{__('User Email')}}</label>
-                                                                <input name="email" type="email" placeholder="{{__('User Email')}}"
-                                                                       class="form-control " value="{{old('email')}}">
+                                                                <label>{{__('User Coin Address')}}</label>
+                                                                <input name="address" type="text" placeholder="{{__('Address')}}"
+                                                                       class="form-control " value="{{old('address')}}">
                                                                 <span class="text-warning" style="font-weight: 700;">{{__('Note : ')}}</span>
-                                                                <span class="text-warning">{{__('Input user email where you want to send request for coin.')}}</span>
+                                                                <span class="text-warning">{{__('Input user coin address where you want to send request for coin.')}}</span>
                                                             </div>
                                                             <div class="form-group mt-4">
                                                                 <label>{{__('Coin Amount')}}</label>
@@ -74,7 +74,7 @@
 
                                         <div class="cp-user-card-header-area">
                                             <div class="cp-user-title">
-                                                <h4>{{__('Send Coin To User From Your Default Coin Wallet To User Primary Default Coin Wallet Using Email Address')}}</h4>
+                                                <h4>{{__('Send Coin To User From Your  '.settings('coin_name').' Coin Wallet To User Primary Default Coin Wallet Using Email Address')}}</h4>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -84,7 +84,7 @@
                                                           onsubmit="return submitResult();">
                                                         @csrf
                                                         <div class="form-group mt-4">
-                                                            <label>{{__('Select Your Default Coin Wallet')}}</label>
+                                                            <label>{{__('Select Your '.settings('coin_name').' Coin Wallet')}}</label>
                                                             <div class="cp-select-area">
                                                                 <select name="wallet_id" class="form-control" id="">
                                                                     <option value="">{{__('Select')}}</option>
@@ -113,7 +113,7 @@
                                                             <input name="email" type="email" placeholder="{{__('User Email')}}"
                                                                    class="form-control ">
                                                             <span class="text-warning" style="font-weight: 700;">{{__('Note : ')}}</span>
-                                                            <span class="text-warning">{{__('Input user email where you want to send coin. Coin will send to his/her primary wallet.')}}</span>
+                                                            <span class="text-warning">{{__('Input user coin address where you want to send coin. Coin will send to his/her primary wallet.')}}</span>
                                                         </div>
 
                                                         <div class="form-group m-0">

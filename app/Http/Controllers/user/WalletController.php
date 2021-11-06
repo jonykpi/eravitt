@@ -53,6 +53,8 @@ class WalletController extends Controller
             ->orderBy('id', 'ASC')->get();
         $data['coins'] = Coin::where('status', STATUS_ACTIVE)->get();
         $data['title'] = __('My Pocket');
+        $defaultWallet =  Wallet::where(['coin_type' => DEFAULT_COIN_TYPE, 'user_id' => Auth::id()])->first();
+        $data['defaultCoinAddress'] = WalletAddressHistory::firstOrCreate(['wallet_id' => $defaultWallet->id],['address' => randomString(4).$defaultWallet->id.uniqid().date('').time().randomString(4)]);
 
         return view('user.pocket.index', $data);
     }

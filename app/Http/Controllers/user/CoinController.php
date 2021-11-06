@@ -290,9 +290,10 @@ class CoinController extends Controller
     // send coin request
     public function sendCoinRequest(Request $request)
     {
+        $defaultCoin = Coin::where(['type' => DEFAULT_COIN_TYPE])->first();
         $rules = [
-            'email' => 'required|exists:users,email',
-            'amount' => ['required','numeric','min:'.settings("minimum_withdrawal_amount"),'max:'.settings('maximum_withdrawal_amount')]
+            'address' => 'required|exists:wallet_address_histories,address',
+            'amount' => ['required','numeric','min:'.$defaultCoin->minimum_withdrawal,'max:'.$defaultCoin->maximum_withdrawal]
         ];
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {

@@ -50,6 +50,7 @@
 
 <body class="cp-user-body-bg">
 @php $clubInfo = get_plan_info(Auth::id()) @endphp
+@php $adminCoin = admin_coin_price() @endphp
 <!-- top bar -->
 <div class="cp-user-top-bar">
     <div class="cp-user-sidebar-toggler">
@@ -73,6 +74,7 @@
             @endphp
             <div class="col-xl-8 col-lg-7 col-md-9">
                 <ul class="cp-user-top-bar-status-area">
+                    @if(isset($profilePage))
                     <li class="cp-user-date-time">
                         <p class="cp-user-title">{{__('Date & Time')}}</p>
                         <div class="cp-user-content">
@@ -80,6 +82,26 @@
                             <p class="cp-user-today"><span>{{__('Today')}} :</span> {{date("F j, Y, g:i a")}}</p>
                         </div>
                     </li>
+                    @else
+                        <li class="cp-user-available-balance">
+                            <p class="cp-user-title">{{__('Previous Rate')}}</p>
+                            <div class="cp-user-content">
+                                <p class="cp-user-usd"><span>{{number_format($adminCoin['previousPrice'],2)}}</span> {{__('USD')}}</p>
+                            </div>
+                        </li>
+                        <li class="cp-user-available-balance">
+                            <p class="cp-user-title">{{__('Current Rate')}}</p>
+                            <div class="cp-user-content">
+                                <p class="cp-user-usd"><span>{{number_format($adminCoin['currentPrice'],2)}}</span> {{__('USD')}}</p>
+                            </div>
+                        </li>
+                        <li class="cp-user-available-balance">
+                            <p class="cp-user-title">{{__('Buying Rate')}}</p>
+                            <div class="cp-user-content">
+                                <p class="cp-user-usd"><span>{{number_format($adminCoin['buyPrice'],2)}}</span> {{__('USD')}}</p>
+                            </div>
+                        </li>
+                    @endif
                     <li class="cp-user-available-balance">
                         <p class="cp-user-title">{{__('Available Balance')}}</p>
                         <div class="cp-user-content">
@@ -212,16 +234,16 @@
                         </li>
 
                         <li class="@if(isset($sub_menu) && $sub_menu == 'give_coin') cp-user-submenu-active @endif">
-                            <a href="{{route('requestCoin')}}">{{__('Send/Request Default Coin')}}</a>
+                            <a href="{{route('requestCoin')}}">{{__('Send/Request Coin')}}</a>
                         </li>
                         <li class="@if(isset($sub_menu) && $sub_menu == 'give_request_history') cp-user-submenu-active @endif">
-                            <a href="{{route('giveCoinHistory')}}">{{__('Send History For Default Coin')}}</a>
+                            <a href="{{route('giveCoinHistory')}}">{{__('Coin Send History')}}</a>
                         </li>
                         <li class="@if(isset($sub_menu) && $sub_menu == 'received_history') cp-user-submenu-active @endif">
-                            <a href="{{route('receiveCoinHistory')}}">{{__('Receive History For Default Coin')}}</a>
+                            <a href="{{route('receiveCoinHistory')}}">{{__('Coin Receive History')}}</a>
                         </li>
                         <li class="@if(isset($sub_menu) && $sub_menu == 'pending_request') cp-user-submenu-active @endif">
-                            <a href="{{route('pendingRequest')}}">{{__('Pending Request For Default Coin')}}</a>
+                            <a href="{{route('pendingRequest')}}">{{__('Pending Coin Request')}}</a>
                         </li>
                     </ul>
                 </li>
@@ -231,11 +253,11 @@
                             <img src="{{asset('assets/user/images/sidebar-icons/Wallet.svg')}}" class="img-fluid cp-user-side-bar-icon" alt="">
                             <img src="{{asset('assets/user/images/sidebar-icons/hover/Wallet.svg')}}" class="img-fluid cp-user-side-bar-icon-hover" alt="">
                         </span>
-                        <span class="cp-user-name">{{__('Pocket')}}</span>
+                        <span class="cp-user-name">{{__('Wallets')}}</span>
                     </a>
                     <ul class="@if(isset($menu) && $menu == 'pocket')  mm-show  @endif">
                         <li class="@if(isset($sub_menu) && $sub_menu == 'my_pocket') cp-user-submenu-active @endif">
-                            <a href="{{route('myPocket')}}">{{__('My Pocket')}}</a>
+                            <a href="{{route('myPocket')}}">{{__('My Wallet')}}</a>
                         </li>
 {{--                        <li class="@if(isset($sub_menu) && $sub_menu == 'swap_history') cp-user-submenu-active @endif">--}}
 {{--                            <a href="{{route('coinSwapHistory')}}">{{__('Swap History')}}</a>--}}

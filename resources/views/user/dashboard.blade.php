@@ -46,13 +46,13 @@
     </div>
 
     <div class="row mt-4">
-        <div class="col-xl-6 col-md-6 col-12 mb-xl-0 mb-6">
+        <div class="col-xl-4 col-md-6 col-12 mb-xl-0 mb-6">
             <div class="card status-card status-card-bg-blue">
                 <div class="card-body">
                     <div class="status-card-inner">
                         <div class="content">
                             <p>{{__('Available Coin')}}</p>
-                            <h3>{{number_format($balance['available_coin'],2)}} </h3>
+                            <h3>{{number_format($balance['available_coin'],2)}} {{settings('coin_name')}}</h3>
                         </div>
                         <div class="icon">
                             <img src="{{asset('assets/user/images/status-icons/money.svg')}}" class="img-fluid" alt="">
@@ -61,28 +61,28 @@
                 </div>
             </div>
         </div>
-{{--        <div class="col-xl-4 col-md-6 col-12 mb-xl-0 mb-4">--}}
-{{--            <div class="card status-card status-card-bg-green">--}}
-{{--                <div class="card-body">--}}
-{{--                    <div class="status-card-inner">--}}
-{{--                        <div class="content">--}}
-{{--                            <p>{{__('Total Blocked Coin')}}</p>--}}
-{{--                            <h3>{{number_format(get_blocked_coin(Auth::id()),2)}}</h3>--}}
-{{--                        </div>--}}
-{{--                        <div class="icon">--}}
-{{--                            <img src="{{asset('assets/user/images/status-icons/funds.svg')}}" class="img-fluid" alt="">--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-        <div class="col-xl-6 col-md-6 col-12">
+        <div class="col-xl-4 col-md-6 col-12 mb-xl-0 mb-4">
+            <div class="card status-card status-card-bg-green">
+                <div class="card-body">
+                    <div class="status-card-inner">
+                        <div class="content">
+                            <p>{{__('Available Balance')}}</p>
+                            <h3>{{number_format($balance['available_used'],2)}} USD</h3>
+                        </div>
+                        <div class="icon">
+                            <img src="{{asset('assets/user/images/status-icons/funds.svg')}}" class="img-fluid" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-md-6 col-12">
             <div class="card status-card status-card-bg-read">
                 <div class="card-body">
                     <div class="status-card-inner">
                         <div class="content">
                             <p>{{__('Total Buy Coin')}}</p>
-                            <h3>{{number_format($total_buy_coin,2)}}</h3>
+                            <h3>{{number_format($total_buy_coin,2)}}  {{settings('coin_name')}}</h3>
                         </div>
                         <div class="icon">
                             <img src="{{asset('assets/user/images/status-icons/money.svg')}}" class="img-fluid" alt="">
@@ -99,11 +99,11 @@
                 <div class="card-body">
                     <div class="cp-user-card-header-area">
                         <div class="cp-user-title">
-                            <h4>{{__('Withdrawal')}}</h4>
+                            <h4>{{__('Deposit')}}</h4>
                         </div>
                     </div>
                     <p class="subtitle">{{__('Current Year')}}</p>
-                    <canvas id="withdrawalChart"></canvas>
+                    <canvas id="depositChart"></canvas>
                 </div>
             </div>
         </div>
@@ -112,11 +112,11 @@
                 <div class="card-body">
                     <div class="cp-user-card-header-area">
                         <div class="cp-user-title">
-                            <h4>{{__('Deposit')}}</h4>
+                            <h4>{{__('Withdrawal')}}</h4>
                         </div>
                     </div>
                     <p class="subtitle">{{__('Current Year')}}</p>
-                    <canvas id="depositChart"></canvas>
+                    <canvas id="withdrawalChart"></canvas>
                 </div>
             </div>
         </div>
@@ -149,7 +149,7 @@
                                             <div class="col-lg-6">
                                                 <div class="cp-user-card-header-area mb-0">
                                                     <div class="cp-user-title">
-                                                        <h4>{{__('All Deposit List')}}</h4>
+                                                        <h4>{{__('All List')}}</h4>
                                                     </div>
                                                 </div>
                                             </div>

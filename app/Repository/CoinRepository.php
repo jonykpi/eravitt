@@ -14,6 +14,7 @@ use App\Model\Bank;
 use App\Model\BuyCoinHistory;
 use App\Model\CoinRequest;
 use App\Model\Wallet;
+use App\Model\WalletAddressHistory;
 use App\Services\CoinPaymentsAPI;
 use App\User;
 use Illuminate\Support\Facades\Auth;
@@ -115,20 +116,25 @@ class CoinRepository
     public function sendCoinAmountRequest($request)
     {
         try {
-            $user = User::where(['email'=> $request->email, 'role'=> USER_ROLE_USER, 'status'=> STATUS_ACTIVE])->first();
-            if (isset($user)) {
-                if ($user->email == Auth::user()->email) {
-                    $response = ['success' => false, 'message' => __('You can not send request to your own email')];
+            $userAddress = WalletAddressHistory::leftjoin('wallets', 'wallets.id', '=', 'wallet_address_histories.wallet_id')
+                ->leftjoin('coins', 'coins.id', '=', 'wallets.coin_id')
+                ->where(['wallet_address_histories.address'=> $request->address])
+                ->select('wallet_address_histories.address', 'wallets.*', 'coins.withdrawal_fees')
+                ->first();
+            if (isset($userAddress)) {
+                if ($userAddress->user_id == Auth::id()) {
+                    $response = ['success' => false, 'message' => __('You can not send request to your own address')];
                     return $response;
                 }
                 $myWallet = get_primary_wallet(Auth::id(), 'Default');
-                $userWallet = get_primary_wallet($user->id, 'Default');
+                $userWallet = get_primary_wallet($userAddress->user_id, 'Default');
                 $data = [
                     'amount' => $request->amount,
-                    'sender_user_id' => $user->id,
+                    'sender_user_id' => $userAddress->user_id,
                     'sender_wallet_id' => $userWallet->id,
                     'receiver_user_id' => Auth::id(),
-                    'receiver_wallet_id' => $myWallet->id
+                    'receiver_wallet_id' => $myWallet->id,
+                    'fees' => check_withdrawal_fees($request->amount, $userAddress->withdrawal_fees)
                 ];
                 CoinRequest::create($data);
 

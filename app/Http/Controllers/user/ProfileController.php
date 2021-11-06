@@ -27,6 +27,7 @@ class ProfileController extends Controller
     //my profile
     public function userProfile(Request $request)
     {
+        $data['profilePage'] = 'profile';
         $data['title'] = __('My Profile');
         $data['user'] = User::where('id', Auth::id())->first();
         $data['clubInfos'] = get_plan_info(Auth::id());

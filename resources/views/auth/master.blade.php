@@ -35,8 +35,24 @@
 </head>
 
 <body class="body-bg">
-
-    @yield('content')
+<div class="container">
+    <div class="row mt-lg-5">
+        <div class="col-md-12">
+            <div class="row auth-box">
+                <div class="col-md-6">
+                    <div class="login-sidebar-img">
+                        <img src="{{asset('assets/img/login-sidebar.jpg')}}" alt="">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="user-form-new">
+                        @yield('content')
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- js file start -->
 

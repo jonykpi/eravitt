@@ -248,6 +248,7 @@ p {
 .cp-user-top-bar-status-area li .cp-user-title {
     font-size: 16px;
     text-transform: capitalize;
+    font-weight: 700;
 }
 
 .cp-user-top-bar-status-area li .cp-user-content p {

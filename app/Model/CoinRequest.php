@@ -13,7 +13,8 @@ class CoinRequest extends Model
         'receiver_user_id',
         'sender_wallet_id',
         'receiver_wallet_id',
-        'status'
+        'status',
+        'fees'
     ];
 
     public function sender()
