@@ -17,6 +17,7 @@
                                 <tr>
                                     <th>{{__('Requested User')}}</th>
                                     <th>{{__('Coin Amount')}}</th>
+                                    <th>{{__('Fees')}}</th>
                                     <th>{{__('Coin Name')}}</th>
                                     <th>{{__('Created At')}}</th>
                                     <th>{{__('Actions')}}</th>
@@ -55,6 +56,7 @@
             columns: [
                 {"data": "receiver_user_id","orderable": false},
                 {"data": "amount","orderable": false},
+                {"data": "fees","orderable": false},
                 {"data": "coin_type","orderable": false},
                 {"data": "created_at","orderable": false},
                 {"data": "action","orderable": false},

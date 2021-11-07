@@ -122,7 +122,7 @@
         </div>
     </div>
     <div class="row mt-4">
-        <div class="col-xl-12">
+        <div class="col-xl-6">
             <div class="card cp-user-custom-card">
                 <div class="card-body">
                     <div class="cp-user-card-header-area">
@@ -132,6 +132,19 @@
                     </div>
                     <p class="subtitle">{{__('Current Year')}}</p>
                     <canvas id="myBarChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6">
+            <div class="card cp-user-custom-card">
+                <div class="card-body">
+                    <div class="cp-user-card-header-area">
+                        <div class="cp-user-title">
+                            <h4>{{__('Coin Price Change Report')}}</h4>
+                        </div>
+                    </div>
+                    <p class="subtitle">{{__('Current Year')}}</p>
+                    <canvas id="coinPriceChart"></canvas>
                 </div>
             </div>
         </div>
@@ -182,7 +195,7 @@
                                                     <div id="deposit" class="tab-pane fade in active show text-center">
 
                                                         <div class="cp-user-transaction-history-table">
-                                                            <table class="table table-responsive" id="table">
+                                                            <table class="table" id="table">
                                                                 <thead>
                                                                 <tr>
                                                                     <th>{{__('Address')}}</th>
@@ -204,7 +217,7 @@
                                                     <!-- withdraw_table -->
 
                                                     <div class="cp-user-transaction-history-table">
-                                                            <table class="table table-responsive" id="withdraw_table">
+                                                            <table class="table" id="withdraw_table">
                                                                 <thead>
                                                                 <tr>
                                                                     <th>{{__('Address')}}</th>
@@ -471,9 +484,9 @@
                                 ticks: {
                                     fontColor: "#928F8F",
                                     fontStyle: "bold",
-                                    beginAtZero: false,
+                                    beginAtZero: true,
                                     // maxTicksLimit: 5,
-                                    // padding: 20,
+                                    padding: 20,
                                     // max: 1000
                                 },
                                 gridLines: {
@@ -488,10 +501,8 @@
                                     display: false
                                 },
                                 ticks: {
-                                    // padding: 20,
                                     fontColor: "#928F8F",
                                     fontStyle: "bold",
-                                    // max: 10000,
                                     autoSkip: false
                                 }
                             }]
@@ -520,6 +531,68 @@
                             fill: true,
                             borderWidth: 1,
                             data: {!! json_encode($monthly_buy_coin) !!}
+                        }]
+                    },
+                    options: {
+                        legend: {
+                            position: "bottom",
+                            display: true,
+                            labels: {
+                                fontColor: '#928F8F'
+                            }
+                        },
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    fontColor: "#928F8F",
+                                    fontStyle: "bold",
+                                    beginAtZero: true,
+                                    maxTicksLimit: 5,
+                                    padding: 20
+                                },
+                                gridLines: {
+                                    drawTicks: false,
+                                    display: false
+                                }
+                            }],
+                            xAxes: [{
+                                gridLines: {
+                                    zeroLineColor: "#3865f6"
+                                },
+                                ticks: {
+                                    padding: 20,
+                                    fontColor: "#928F8F",
+                                    fontStyle: "bold"
+                                }
+                            }]
+                        }
+                    }
+                });
+
+            </script>
+
+            <script>
+                // price chart
+                var ctx = document.getElementById('coinPriceChart').getContext("2d")
+                var coinPriceChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul","Aug", "Sep", "Oct", "Nov", "Dec"],
+                        datasets: [{
+                            label: "Coin Price Change",
+                            backgroundColor: "#007bff",
+                            borderColor: "#3865f6",
+                            pointBorderColor: "#3865f6",
+                            pointBackgroundColor: "#3865f6",
+                            pointHoverBackgroundColor: "#3865f6",
+                            pointHoverBorderColor: "#D1D1D1",
+                            pointBorderWidth: 10,
+                            pointHoverRadius: 10,
+                            pointHoverBorderWidth: 1,
+                            pointRadius: 3,
+                            fill: true,
+                            borderWidth: 1,
+                            data: {!! json_encode($monthly_coin_price) !!}
                         }]
                     },
                     options: {

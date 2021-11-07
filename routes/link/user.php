@@ -14,6 +14,7 @@ Route::group(['prefix'=>'user','namespace'=>'user','middleware'=> ['auth','user'
     Route::post('driving-licence-upload', 'ProfileController@driveUpload')->name('driveUpload');
     Route::get('referral', 'ReferralController@myReferral')->name('myReferral');
     Route::get('setting', 'SettingController@userSetting')->name('userSetting');
+
     Route::get('my-pocket', 'WalletController@myPocket')->name('myPocket');
     Route::get('swap-coin-details', 'WalletController@getCoinSwapDetails')->name('getCoinSwapDetails');
     Route::get('get-rate', 'WalletController@getRate')->name('getRate');
@@ -41,6 +42,7 @@ Route::group(['prefix'=>'user','namespace'=>'user','middleware'=> ['auth','user'
     Route::post('buy-coin', 'CoinController@buyCoin')->name('buyCoinProcess');
     Route::get('buy-coin-by-{address}', 'CoinController@buyCoinByAddress')->name('buyCoinByAddress');
     Route::get('buy-coin-history', 'CoinController@buyCoinHistory')->name('buyCoinHistory');
+    Route::post('login-with-epv', 'EPVController@LoginWithEpv')->name('LoginWithEpv');
 
     Route::get('my-membership', 'ClubController@myMembership')->name('myMembership');
     Route::get('membership-club-plans', 'ClubController@membershipClubPlan')->name('membershipClubPlan');

@@ -92,27 +92,27 @@
                                     @if(isset($settings['payment_method_coin_payment']) && $settings['payment_method_coin_payment'] == 1)
                                         <div class="form-group">
                                             <input type="radio" onclick="call_coin_payment();"
-                                                   onchange="$('.payment_method').addClass('d-none');$('.bank-details').addClass('d-none');$('.bank-details').removeClass('d-block'); $('.payment-stripe').addClass('d-none').removeClass('d-block');$('.btc_payment').toggleClass('d-none');$('.normal-btn').addClass('d-block').removeClass('d-none')"
+                                                   onchange="$('.payment_method').addClass('d-none'); $('.btc_payment').toggleClass('d-none');$('.normal-btn').addClass('d-block').removeClass('d-none')"
                                                    value="{{BTC}}" id="coin-option" name="payment_type">
                                             <label for="coin-option">{{__('Coin Payment')}}</label>
                                         </div>
                                     @endif
-{{--                                    @if(isset($settings['payment_method_bank_deposit']) && $settings['payment_method_bank_deposit'] == 1)--}}
-{{--                                        <div class="form-group">--}}
-{{--                                            <input type="radio" onclick="call_coin_payment();" value="{{BANK_DEPOSIT}}"--}}
-{{--                                                   onchange="$('.payment_method').addClass('d-none');$('.bank-details').addClass('d-block');$('.bank-details').removeClass('d-none');$('.payment-stripe').addClass('d-none').removeClass('d-block');$('.bank_payment').toggleClass('d-none');$('.normal-btn').addClass('d-block').removeClass('d-none')"--}}
-{{--                                                   id="f-option" name="payment_type">--}}
-{{--                                            <label for="f-option">{{__('Bank Deposit')}}</label>--}}
-{{--                                        </div>--}}
-{{--                                    @endif--}}
-{{--                                    @if(isset($settings['payment_method_stripe']) && $settings['payment_method_stripe'] == 1)--}}
-{{--                                        <div class="form-group">--}}
-{{--                                            <input type="radio" onclick="call_coin_payment();" value="{{STRIPE}}"--}}
-{{--                                                   onchange="$('.normal-btn').addClass('d-none');$('.payment_method').addClass('d-none');$('.bank-details').addClass('d-none');$('.payment-stripe').addClass('d-block');$('.payment-stripe').removeClass('d-none');$('.payment-stripe-div').toggleClass('d-none');"--}}
-{{--                                                   id="stripe-option" name="payment_type">--}}
-{{--                                            <label for="stripe-option">{{__('Credit Card')}}</label>--}}
-{{--                                        </div>--}}
-{{--                                    @endif--}}
+                                    @if(isset($settings['payment_method_epv']) && $settings['payment_method_epv'] == 1)
+                                        <div class="form-group">
+                                            <input type="radio" onclick="call_coin_payment();" value="{{EPV}}"
+                                                   onchange="$('.payment_method').addClass('d-none');$('.bank_payment').toggleClass('d-none');$('.normal-btn').addClass('d-block').removeClass('d-none')"
+                                                   id="f-option" name="payment_type">
+                                            <label for="f-option">{{__('EPV Payment')}}</label>
+                                        </div>
+                                    @endif
+                                    @if(isset($settings['payment_method_card']) && $settings['payment_method_card'] == 1)
+                                        <div class="form-group">
+                                            <input type="radio" onclick="call_coin_payment();" value="{{CARD}}"
+                                                   onchange="$('.payment_method').addClass('d-none');$('.bank_payment').toggleClass('d-none');$('.normal-btn').addClass('d-block').removeClass('d-none')"
+                                                   id="card" name="payment_type">
+                                            <label for="card">{{__('Payment With Card')}}</label>
+                                        </div>
+                                    @endif
                                 </div>
 
                                 <div class="check-box-list btc_payment payment_method d-none">
@@ -149,114 +149,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="check-box-list bank_payment payment_method d-none">
-                                    <div class="form-group">
-                                        <label>{{__('Select Bank')}}</label>
-                                        <div class="cp-select-area">
-                                            <select name="bank_id" class="bank-id form-control ">
-                                                <option value="">{{__('Select')}}</option>
-                                                @if(isset($banks[0]))
-                                                    @foreach($banks as $value)
-                                                        <option
-                                                            @if((old('bank_id') != null) && (old('bank_id') == $value->id)) @endif value="{{ $value->id }}">{{$value->bank_name}}</option>
-                                                        <span
-                                                            class="text-danger"><strong>{{ $errors->first('bank_id') }}</strong></span>
-                                                    @endforeach
-                                                @endif
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group buy_coin_address_input mt-4">
-                                        <div id="file-upload" class="section-p">
-                                            <input type="hidden" name="bank_deposit_id" value="">
-                                            <input type="file" placeholder="0.00" name="sleep" value="" id="file"
-                                                   ref="file" class="dropify"
-                                                   data-default-file="{{asset('assets/img/placeholder-image.png')}}"/>
-                                        </div>
-                                    </div>
-
-                                </div>
-
                                 <button id="buy_button" type="submit" class="btn normal-btn theme-btn">{{__('Buy Now')}}</button>
                             </form>
-
-                            <div class="payment-stripe payment-stripe-div  d-none card card-body dark-bg2">
-                                <form role="form" action="{{ route('buyCoinProcess') }}" method="post" class="require-validation"
-                                      data-cc-on-file="false"
-                                      data-stripe-publishable-key="{{ isset(settings()['STRIPE_KEY']) ? settings()['STRIPE_KEY'] : ''}}"
-                                      id="payment-form">
-                                    @csrf
-                                    @if(isset($phase))
-                                        <input type="hidden" name="phase_id" value="{{$phase->id}}">
-                                    @endif
-                                    <input type="hidden" name="payment_type" value="{{STRIPE}}">
-                                    <input type="hidden" name="coin" value="" id="amountCoin" class="form-control" >
-                                    <div class='form-row row'>
-                                        <div class='col-12 form-group required'>
-                                            <label class='control-label'>{{__('Name on Card')}}</label>
-                                            <input class='form-control' size="50" type='text'>
-                                        </div>
-                                    </div>
-
-                                    <div class='form-row row'>
-                                        <div class='col-12 form-group required'>
-                                            <label class='control-label'>{{__('Card Number')}}</label>
-                                            <input autocomplete='off' size="50" class='form-control card-number' type='text'>
-                                        </div>
-                                    </div>
-
-                                    <div class='form-row row'>
-                                        <div class='col-xs-12 col-md-4 form-group cvc required'>
-                                            <label class='control-label'>{{__('CVC')}}</label>
-                                            <input autocomplete='off' class='form-control card-cvc' placeholder='ex. 311' size='4' type='text'>
-                                        </div>
-                                        <div class='col-xs-12 col-md-4 form-group expiration required'>
-                                            <label class='control-label'>{{__('Expiration Month')}}</label>
-                                            <input class='form-control card-expiry-month' placeholder='MM' size='2' type='text'>
-                                        </div>
-                                        <div class='col-xs-12 col-md-4 form-group expiration required'>
-                                            <label class='control-label'>{{__('Expiration Year')}}</label>
-                                            <input class='form-control card-expiry-year' placeholder='YYYY' size='4' type='text'>
-                                        </div>
-
-                                        <div class='col-xs-12 col-md-12 form-group expiration required'>
-                                            <label class='control-label'>{{__('Country')}}</label>
-                                            <select name="country" class="form-control" id="">
-                                                @foreach(code_to_country() as $ky=> $country)
-
-                                                    <option {{$ky== "IN" ? "selected" : "" }} value="{{$ky}}">{{$country}}</option>
-                                                @endforeach
-
-                                            </select>
-
-                                        </div>
-
-                                        <div class='col-xs-12 col-md-12 form-group expiration required'>
-                                            <label class='control-label'>{{__('CITY')}}</label>
-                                            <input class='form-control card-expiry-month' placeholder='kolkata' name="city" type='text'>
-                                        </div>
-                                        <div class='col-xs-12 col-md-12 form-group expiration required'>
-                                            <label class='control-label'>{{__('Billing address')}}</label>
-                                            <input class='form-control card-expiry-month' placeholder='1127, Main Market' name="billing_address" type='text'>
-                                        </div>
-
-
-                                    </div>
-
-                                    <div class='form-row row'>
-                                        <div class='col-md-12 error form-group hide'>
-                                            <div class='alert-danger card-alert'></div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-row row">
-                                        <div class="col-xs-12">
-                                            <button id="buy_button" type="submit" class="btn theme-btn">{{__('Buy Now')}}</button>
-                                        </div>
-                                    </div>
-
-                                </form>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -400,69 +294,6 @@
 @endsection
 
 @section('script')
-    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-
-    <script type="text/javascript">
-        $(function() {
-            var $form         = $(".require-validation");
-            $('form.require-validation').bind('submit', function(e) {
-                var $form         = $(".require-validation"),
-                    inputSelector = ['input[type=email]', 'input[type=password]',
-                        'input[type=text]', 'input[type=file]',
-                        'textarea'].join(', '),
-                    $inputs       = $form.find('.required').find(inputSelector),
-                    $errorMessage = $form.find('div.error'),
-                    valid         = true;
-                $errorMessage.addClass('hide');
-
-                $('.has-error').removeClass('has-error');
-                $inputs.each(function(i, el) {
-                    var $input = $(el);
-                    if ($input.val() === '') {
-                        $input.parent().addClass('has-error');
-                        $errorMessage.removeClass('hide');
-                        e.preventDefault();
-                    }
-                });
-
-                if (!$form.data('cc-on-file')) {
-                    e.preventDefault();
-                    Stripe.setPublishableKey($form.data('stripe-publishable-key'));
-                    Stripe.createToken({
-                        name:"test",
-                        number: $('.card-number').val(),
-                        cvc: $('.card-cvc').val(),
-                        exp_month: $('.card-expiry-month').val(),
-                        exp_year: $('.card-expiry-year').val()
-                    }, stripeResponseHandler);
-                }
-
-            });
-
-            function stripeResponseHandler(status, response) {
-                console.log(response);
-                if (response.error) {
-                    $('.error')
-                        .removeClass('hide')
-                        .find('.card-alert')
-                        .text(response.error.message);
-                } else {
-                    var amount = $('input[name=coin]').val();
-                    $('#amountCoin').val(amount);
-                    // token contains id, last4, and card type
-                    $('.error')
-                        .addClass('hide')
-                        .find('.card-alert')
-                    var token = response['id'];
-                    // insert the token into the form so it gets submitted to the server
-                    $form.find('input[type=text]').empty();
-                    $form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
-                    $form.get(0).submit();
-                }
-            }
-
-        });
-    </script>
     <script>
         $('[data-toggle="tooltip"]').tooltip()
         //bank details
@@ -561,8 +392,6 @@
                var payment_type = $('#payment_type').val();
                call_coin_rate(amount, pay_type, payment_type);
            }
-
-
         }, 500));
 
 

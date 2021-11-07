@@ -203,6 +203,10 @@ class CoinController extends Controller
                     } else {
                         return redirect()->back()->with('dismiss', $buyCoinWithStripe['message']);
                     }
+                } elseif($request->payment_type == CARD) {
+                    return redirect()->route('buyCoinByAddress', 'card')->with('success', __('Payment with card'));
+                } elseif($request->payment_type == EPV) {
+                    return redirect()->route('buyCoinByAddress', 'epv')->with('success', __('Payment with epv'));
                 } else {
                     return redirect()->back()->with('dismiss', "Something went wrong");
                 }
@@ -243,17 +247,32 @@ class CoinController extends Controller
     // coin payment success page
     public function buyCoinByAddress($address)
     {
-        $data['title'] = __('Coin Payment');
-        if (is_numeric($address)) {
-            $coinAddress = BuyCoinHistory::where(['user_id' => Auth::id(), 'id' => $address, 'status' => STATUS_PENDING])->first();
-        } else {
-            $coinAddress = BuyCoinHistory::where(['user_id' => Auth::id(), 'address' => $address, 'status' => STATUS_PENDING])->first();
-        }
-        if (isset($coinAddress)) {
-            $data['coinAddress'] = $coinAddress;
-            return view('user.buy_coin.payment_success', $data);
-        } else {
-            return redirect()->back()->with('dismiss', __('Address not found'));
+        try {
+            $data['type'] = $address;
+            if ($address == 'card') {
+                $data['title'] = __('Payment With Card');
+
+                return view('user.buy_coin.payment_success', $data);
+            } elseif($address == 'epv') {
+                $data['title'] = __('Payment With EPV');
+
+                return view('user.buy_coin.payment_success', $data);
+            } else {
+                $data['title'] = __('Coin Payment');
+                if (is_numeric($address)) {
+                    $coinAddress = BuyCoinHistory::where(['user_id' => Auth::id(), 'id' => $address, 'status' => STATUS_PENDING])->first();
+                } else {
+                    $coinAddress = BuyCoinHistory::where(['user_id' => Auth::id(), 'address' => $address, 'status' => STATUS_PENDING])->first();
+                }
+                if (isset($coinAddress)) {
+                    $data['coinAddress'] = $coinAddress;
+                    return view('user.buy_coin.payment_success', $data);
+                } else {
+                    return redirect()->back()->with('dismiss', __('Address not found'));
+                }
+            }
+        } catch (\Exception $e) {
+            return redirect()->back()->with('dismiss', $e->getMessage());
         }
     }
 
@@ -280,6 +299,7 @@ class CoinController extends Controller
     public function requestCoin(Request $request)
     {
         $data['title'] = __('Request or Give Coin ');
+        $data['coin'] = Coin::where(['type' => DEFAULT_COIN_TYPE])->first();
         $data['wallets'] = Wallet::where(['user_id' => Auth::id(), 'coin_type' => 'Default'])->where('balance','>',0)->get();
         $data['qr'] = (!empty($request->qr)) ? $request->qr : 'requests';
 
@@ -321,10 +341,11 @@ class CoinController extends Controller
     // send coin request
     public function giveCoin(Request $request)
     {
+        $defaultCoin = Coin::where(['type' => DEFAULT_COIN_TYPE])->first();
         $rules = [
             'wallet_id' => 'required|exists:wallets,id',
-            'amount' => ['required','numeric','min:'.settings("minimum_withdrawal_amount"),'max:'.settings('maximum_withdrawal_amount')],
-            'email' => 'required|exists:users,email'
+            'address' => 'required|exists:wallet_address_histories,address',
+            'amount' => ['required','numeric','min:'.$defaultCoin->minimum_withdrawal,'max:'.$defaultCoin->maximum_withdrawal]
         ];
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {

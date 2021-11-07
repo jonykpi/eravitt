@@ -110,6 +110,7 @@ class DashboardController extends Controller
             $allBuyCoin[] =  isset($data['coin'][$month]) ? $data['coin'][$month] : 0;
         }
         $data['monthly_buy_coin'] = $allBuyCoin;
+        $data['monthly_coin_price'] = $allBuyCoin;
 
         return view('user.dashboard', $data);
     }

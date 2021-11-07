@@ -18,6 +18,7 @@
                                     <th>{{__('Sender')}}</th>
                                     <th>{{__('Receiver')}}</th>
                                     <th>{{__('Coin Amount')}}</th>
+                                    <th>{{__('Fees')}}</th>
                                     <th>{{__('Coin Name')}}</th>
                                     <th>{{__('Status')}}</th>
                                     <th>{{__('Created At')}}</th>
@@ -57,6 +58,7 @@
                 {"data": "sender_user_id","orderable": false},
                 {"data": "receiver_user_id","orderable": false},
                 {"data": "amount","orderable": false},
+                {"data": "fees","orderable": false},
                 {"data": "coin_type","orderable": false},
                 {"data": "status","orderable": false},
                 {"data": "created_at","orderable": false},

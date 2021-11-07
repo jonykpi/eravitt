@@ -54,10 +54,13 @@
                                                                 <input name="amount" type="text" placeholder="{{__('Coin')}}"
                                                                        class="form-control number_only" value="{{old('amount')}}">
                                                                 <span class="text-warning" style="font-weight: 700;">{{__('Minimum amount : ')}}</span>
-                                                                <span class="text-warning">{{settings('minimum_withdrawal_amount')}} {{settings('coin_name')}}</span>
+                                                                <span class="text-warning">{{$coin->minimum_withdrawal}} {{settings('coin_name')}}</span>
                                                                 <span class="text-warning">{{__(' and ')}}</span>
                                                                 <span class="text-warning" style="font-weight: 700;">{{__('Maximum amount : ')}}</span>
-                                                                <span class="text-warning">{{settings('maximum_withdrawal_amount')}} {{settings('coin_name')}}</span>
+                                                                <span class="text-warning">{{$coin->maximum_withdrawal}} {{settings('coin_name')}}</span>
+                                                                <span class="text-warning">{{__(' and ')}}</span>
+                                                                <span class="text-warning" style="font-weight: 700;">{{__('Fees : ')}}</span>
+                                                                <span class="text-warning">{{$coin->withdrawal_fees}} %</span>
                                                             </div>
                                                             <div class="form-group m-0">
                                                                 <button class="btn theme-btn"
@@ -74,7 +77,7 @@
 
                                         <div class="cp-user-card-header-area">
                                             <div class="cp-user-title">
-                                                <h4>{{__('Send Coin To User From Your  '.settings('coin_name').' Coin Wallet To User Primary Default Coin Wallet Using Email Address')}}</h4>
+                                                <h4>{{__('Send Coin To User From Your  '.settings('coin_name').' Coin Wallet To User Primary Default Coin Wallet Using  '.settings('coin_name').' Address')}}</h4>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -103,14 +106,17 @@
                                                             <input name="amount" type="text" placeholder="{{__('Coin')}}"
                                                                    class="form-control">
                                                             <span class="text-warning" style="font-weight: 700;">{{__('Minimum send amount : ')}}</span>
-                                                            <span class="text-warning">{{settings('minimum_withdrawal_amount')}} {{settings('coin_name')}}</span>
+                                                            <span class="text-warning">{{$coin->minimum_withdrawal}} {{settings('coin_name')}}</span>
                                                             <span class="text-warning">{{__(' and ')}}</span>
                                                             <span class="text-warning" style="font-weight: 700;">{{__('Maximum send amount : ')}}</span>
-                                                            <span class="text-warning">{{settings('maximum_withdrawal_amount')}} {{settings('coin_name')}}</span>
+                                                            <span class="text-warning">{{$coin->maximum_withdrawal}} {{settings('coin_name')}}</span>
+                                                            <span class="text-warning">{{__(' and ')}}</span>
+                                                            <span class="text-warning" style="font-weight: 700;">{{__('Fees : ')}}</span>
+                                                            <span class="text-warning">{{$coin->withdrawal_fees}} %</span>
                                                         </div>
                                                         <div class="form-group mt-4">
-                                                            <label>{{__('User Email')}}</label>
-                                                            <input name="email" type="email" placeholder="{{__('User Email')}}"
+                                                            <label>{{settings('coin_name').__(' Address')}}</label>
+                                                            <input name="address" type="address" placeholder="{{__('Address')}}"
                                                                    class="form-control ">
                                                             <span class="text-warning" style="font-weight: 700;">{{__('Note : ')}}</span>
                                                             <span class="text-warning">{{__('Input user coin address where you want to send coin. Coin will send to his/her primary wallet.')}}</span>
@@ -124,7 +130,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>

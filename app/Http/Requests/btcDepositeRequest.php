@@ -38,20 +38,20 @@ class btcDepositeRequest extends FormRequest
         if ($this->payment_type == BTC){
 //            $check['btc_address'] =  ['required'];
         }
-        if ($this->payment_type == CARD){
-            $check['payment_method_nonce'] =  ['required'];
-        }
-        if ($this->payment_type == STRIPE){
-            $check['stripeToken'] =  ['required'];
-            $check['country'] =  ['required'];
-            $check['city'] =  ['required'];
-            $check['billing_address'] =  ['required'];
-        }
-        if ($this->payment_type == BANK_DEPOSIT){
-
-            $check['sleep'] =  ['required','mimes:jpeg,jpg,png,gif|required|max:10000'];
-            $check['bank_id'] =  'required|integer';
-        }
+//        if ($this->payment_type == CARD){
+//            $check['payment_method_nonce'] =  ['required'];
+//        }
+//        if ($this->payment_type == STRIPE){
+//            $check['stripeToken'] =  ['required'];
+//            $check['country'] =  ['required'];
+//            $check['city'] =  ['required'];
+//            $check['billing_address'] =  ['required'];
+//        }
+//        if ($this->payment_type == BANK_DEPOSIT){
+//
+//            $check['sleep'] =  ['required','mimes:jpeg,jpg,png,gif|required|max:10000'];
+//            $check['bank_id'] =  'required|integer';
+//        }
 
         return $check;
     }

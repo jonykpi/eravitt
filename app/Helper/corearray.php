@@ -229,6 +229,8 @@ function paymentMethods($input = null)
 {
     $output = [
         BTC => __('Coin Payment'),
+        EPV => __('EPV Payment'),
+        CARD => __('Payment With Card'),
 ////        BANK_DEPOSIT => __('Bank Deposit'),
 //        STRIPE => __('Credit card')
     ];

@@ -25,6 +25,7 @@ const CARD = 2;
 const PAYPAL = 3;
 const BANK_DEPOSIT = 4;
 const STRIPE = 5;
+const EPV = 6;
 
 
 const  SEND_FEES_FIXED  = 1;

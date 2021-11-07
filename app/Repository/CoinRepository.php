@@ -144,6 +144,7 @@ class CoinRepository
             }
 
         } catch (\Exception $e) {
+            Log::info('sendCoinAmountRequest -> '.$e->getMessage());
             $response = ['success' => false, 'message' => __('Something went wrong')];
             return $response;
         }
@@ -155,16 +156,21 @@ class CoinRepository
     public function giveCoinToUser($request)
     {
         try {
-            $user = User::where(['email'=> $request->email, 'role'=> USER_ROLE_USER, 'status'=> STATUS_ACTIVE])->first();
-            if (isset($user)) {
-                if ($user->email == Auth::user()->email) {
-                    $response = ['success' => false, 'message' => __('You can not give coin to your own email')];
+            $userAddress = WalletAddressHistory::leftjoin('wallets', 'wallets.id', '=', 'wallet_address_histories.wallet_id')
+                ->leftjoin('coins', 'coins.id', '=', 'wallets.coin_id')
+                ->where(['wallet_address_histories.address'=> $request->address])
+                ->select('wallet_address_histories.address', 'wallets.*', 'coins.withdrawal_fees')
+                ->first();
+            if (isset($userAddress)) {
+                if ($userAddress->user_id == Auth::id()) {
+                    $response = ['success' => false, 'message' => __('You can not give coin to your own address')];
                     return $response;
                 }
                 $myWallet = Wallet::where(['id' => $request->wallet_id])->first();
                 if (isset($myWallet)) {
-                    $userWallet = get_primary_wallet($user->id, $myWallet->coin_type);;
-                    if ($myWallet->balance < $request->amount) {
+                    $userWallet = get_primary_wallet($userAddress->user_id, $myWallet->coin_type);
+                    $fees = check_withdrawal_fees($request->amount, $userAddress->withdrawal_fees);
+                    if ($myWallet->balance < ($request->amount + $fees)) {
                         $response = ['success' => false, 'message' => __('Your selected wallet has not enough coin to give')];
                         return $response;
                     }
@@ -172,8 +178,9 @@ class CoinRepository
                         'amount' => $request->amount,
                         'receiver_wallet_id' => $userWallet->id,
                         'sender_wallet_id' => $myWallet->id,
-                        'receiver_user_id' => $user->id,
+                        'receiver_user_id' => $userAddress->user_id,
                         'sender_user_id' => Auth::id(),
+                        'fees' => $fees,
                         'update_id' => ''
                     ];
 
@@ -208,8 +215,9 @@ class CoinRepository
 
                 $myWallet = Wallet::where(['id' => $request_coin->sender_wallet_id])->first();
                 $userWallet = Wallet::where(['id' => $request_coin->receiver_wallet_id])->first();
+                $amount = $request_coin->amount + $request_coin->fees;
                 if (isset($myWallet)) {
-                    if ($myWallet->balance < $request_coin->amount) {
+                    if ($myWallet->balance < $amount) {
                         $response = ['success' => false, 'message' => __('Your wallet has not enough coin to give')];
                         return $response;
                     }
@@ -219,7 +227,8 @@ class CoinRepository
                         'sender_wallet_id' => $request_coin->sender_wallet_id,
                         'receiver_user_id' => $request_coin->receiver_user_id,
                         'sender_user_id' => $request_coin->sender_user_id,
-                        'update_id' => $request_coin->id
+                        'update_id' => $request_coin->id,
+                        'fees' => $request_coin->fees
                     ];
 
 //                    $this->sendCoinToUser($data);
@@ -271,20 +280,22 @@ class CoinRepository
             Log::info('give coin process started');
             $myWallet = Wallet::where(['id' => $data['sender_wallet_id']])->first();
             $userWallet = Wallet::where(['id' => $data['receiver_wallet_id']])->first();
-            if ($myWallet->balance < $data['amount']) {
+            if ($myWallet->balance < $data['amount'] + $data['fees']) {
                 $response = ['success' => false, 'message' => __('Your selected wallet has not enough coin to give')];
                 Log::info('Your selected wallet has not enough coin to give');
                 Log::info('give coin process failed');
 
                 return $response;
             }
+            $amount = $data['amount'] - $data['fees'];
             if (!empty($data['update_id'])) {
                 CoinRequest::where('id',$data['update_id'])->update(['status' => STATUS_SUCCESS]);
                 Log::info('give coin = '.$data['amount']);
                 Log::info('sender wallet id = '.$data['sender_wallet_id']);
                 Log::info('receiver wallet id = '.$data['receiver_wallet_id']);
-                $myWallet->decrement('balance',$data['amount']);
-                $userWallet->increment('balance',$data['amount']);
+
+                $myWallet->decrement('balance', $amount);
+                $userWallet->increment('balance',$amount);
             } else {
                 $save = CoinRequest::create($data);
                 if ($save) {
@@ -292,11 +303,11 @@ class CoinRepository
                     Log::info('give coin = '.$data['amount']);
                     Log::info('sender wallet id = '.$data['sender_wallet_id']);
                     Log::info('receiver wallet id = '.$data['receiver_wallet_id']);
-                    $myWallet->decrement('balance',$data['amount']);
-                    $userWallet->increment('balance',$data['amount']);
+
+                    $myWallet->decrement('balance',$amount);
+                    $userWallet->increment('balance',$amount);
                 }
             }
-
             DB::commit();
 
             Log::info('give coin process success');

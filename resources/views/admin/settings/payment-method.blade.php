@@ -50,20 +50,20 @@
                                                 </label>
                                             </div>
                                         @endif
-                                        @if($key == BANK_DEPOSIT)
+                                        @if($key == EPV)
                                             <div>
                                                 <label class="switch">
-                                                    <input type="checkbox" onclick="return processForm('payment_method_bank_deposit')"
-                                                           id="notification" name="security" @if(isset($settings['payment_method_bank_deposit']) && ($settings['payment_method_bank_deposit'] == 1)) checked @endif>
+                                                    <input type="checkbox" onclick="return processForm('payment_method_epv')"
+                                                           id="notification" name="security" @if(isset($settings['payment_method_epv']) && ($settings['payment_method_epv'] == 1)) checked @endif>
                                                     <span class="slider" for="status"></span>
                                                 </label>
                                             </div>
                                         @endif
-                                        @if($key == STRIPE)
+                                        @if($key == CARD)
                                             <div>
                                                 <label class="switch">
-                                                    <input type="checkbox" onclick="return processForm('payment_method_stripe')"
-                                                           id="notification" name="security" @if(isset($settings['payment_method_stripe']) && ($settings['payment_method_stripe'] == 1)) checked @endif>
+                                                    <input type="checkbox" onclick="return processForm('payment_method_card')"
+                                                           id="notification" name="security" @if(isset($settings['payment_method_card']) && ($settings['payment_method_card'] == 1)) checked @endif>
                                                     <span class="slider" for="status"></span>
                                                 </label>
                                             </div>
