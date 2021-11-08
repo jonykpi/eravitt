@@ -43,6 +43,8 @@ Route::group(['prefix'=>'user','namespace'=>'user','middleware'=> ['auth','user'
     Route::get('buy-coin-by-{address}', 'CoinController@buyCoinByAddress')->name('buyCoinByAddress');
     Route::get('buy-coin-history', 'CoinController@buyCoinHistory')->name('buyCoinHistory');
     Route::post('login-with-epv', 'EPVController@LoginWithEpv')->name('LoginWithEpv');
+    Route::get('confirm-payment', 'EPVController@confirmPaymentWithEpv')->name('confirmPaymentWithEpv');
+    Route::post('confirm-payment-with-epv', 'EPVController@confirmPaymentProcessWithEpv')->name('confirmPaymentProcessWithEpv');
 
     Route::get('my-membership', 'ClubController@myMembership')->name('myMembership');
     Route::get('membership-club-plans', 'ClubController@membershipClubPlan')->name('membershipClubPlan');

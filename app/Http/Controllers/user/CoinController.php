@@ -18,6 +18,7 @@ use App\Services\CoinPaymentsAPI;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use App\Model\IcoPhase;
 use Illuminate\Support\Facades\Log;
@@ -206,6 +207,7 @@ class CoinController extends Controller
                 } elseif($request->payment_type == CARD) {
                     return redirect()->route('buyCoinByAddress', 'card')->with('success', __('Payment with card'));
                 } elseif($request->payment_type == EPV) {
+                    Cookie::queue('requestedAmount', $request->coin);
                     return redirect()->route('buyCoinByAddress', 'epv')->with('success', __('Payment with epv'));
                 } else {
                     return redirect()->back()->with('dismiss', "Something went wrong");
@@ -285,6 +287,9 @@ class CoinController extends Controller
             return datatables($items)
                 ->addColumn('type', function ($item) {
                     return byCoinType($item->type);
+                })
+                ->addColumn('coin_type', function ($item) {
+                    return find_coin_type($item->coin_type);
                 })
                 ->addColumn('status', function ($item) {
                     return deposit_status($item->status);

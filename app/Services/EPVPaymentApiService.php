@@ -5,6 +5,8 @@ namespace App\Services;
 */
 
 use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\Exception\RequestException;
+use Illuminate\Http\JsonResponse;
 
 
 class EPVPaymentApiService {
@@ -20,27 +22,46 @@ class EPVPaymentApiService {
         $this->base_url = 'https://www.eravitt.com/api/';
 
         $this->header =  [
-            'Client-Service' => $this->auth_key,
-            'Auth-Key' => $this->client_service,
+            'Client-Service' => $this->client_service,
+            'Auth-Key' => $this->auth_key,
             'Accept'     => 'application/json',
         ];
     }
 
     public function callApi($method,$endPoint,$params=[])
     {
-        $client = new GuzzleClient([
-            'headers' => $this->header
-        ]);
-        $url = $this->base_url.$endPoint;
-        $response = $client->request('POST', $url, ['form_params' => $params]);
+        try {
+            $client = new GuzzleClient();
+            $url = $this->base_url.$endPoint;
 
-        return $response;
-
+            $response = $client->request('POST', $url, ['body' => $params,  'headers' => $this->header]);
+            $result = (string)$response->getBody();
+            $result = json_decode($result);
+            return $result;
+        } catch (RequestException $e) {
+            if ($e->hasResponse()) {
+                $exception = (string)$e->getResponse()->getBody();
+                $exception = json_decode($exception);
+                return $exception;
+                return new JsonResponse($exception, $e->getCode());
+            } else {
+                return new JsonResponse($e->getMessage(), 503);
+            }
+        }
     }
 
-    public function evpLogin($params)
+    public function evpLogin($postData)
     {
+        $params = json_encode($postData);
         $response = $this->callApi('POST','login',$params);
+
+        return $response;
+    }
+
+    public function epvCheckout($postData)
+    {
+        $params = json_encode($postData);
+        $response = $this->callApi('POST','evp_checkout',$params);
 
         return $response;
     }
