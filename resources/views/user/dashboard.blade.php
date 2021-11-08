@@ -93,9 +93,9 @@
         </div>
     </div>
     <!-- user chart -->
-    <div class="row mt-4">
+    <div class="row">
         <div class="col-xl-6">
-            <div class="card cp-user-custom-card">
+            <div class="card cp-user-custom-card height-100 mt-4">
                 <div class="card-body">
                     <div class="cp-user-card-header-area">
                         <div class="cp-user-title">
@@ -108,7 +108,7 @@
             </div>
         </div>
         <div class="col-xl-6">
-            <div class="card cp-user-custom-card">
+            <div class="card cp-user-custom-card height-100 mt-4">
                 <div class="card-body">
                     <div class="cp-user-card-header-area">
                         <div class="cp-user-title">
@@ -121,9 +121,9 @@
             </div>
         </div>
     </div>
-    <div class="row mt-4">
-        <div class="col-xl-6">
-            <div class="card cp-user-custom-card">
+    <div class="row">
+        <div class="col-xl-6 mt-4">
+            <div class="card cp-user-custom-card height-100">
                 <div class="card-body">
                     <div class="cp-user-card-header-area">
                         <div class="cp-user-title">
@@ -135,8 +135,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-6">
-            <div class="card cp-user-custom-card">
+        <div class="col-xl-6 mt-4">
+            <div class="card cp-user-custom-card height-100">
                 <div class="card-body">
                     <div class="cp-user-card-header-area">
                         <div class="cp-user-title">
@@ -151,7 +151,7 @@
     </div>
     <div class="row mt-4">
         <div class="col-xl-12">
-            <div class="card cp-user-custom-card">
+            <div class="card cp-user-custom-card height-100">
                 <div class="card-body">
                     <div class="deposite-list-area">
                         <div class="row">
@@ -194,7 +194,7 @@
                                                 <div class="tab-content">
                                                     <div id="deposit" class="tab-pane fade in active show text-center">
 
-                                                        <div class="cp-user-transaction-history-table">
+                                                        <div class="cp-user-transaction-history-table height-100">
                                                             <table class="table" id="table">
                                                                 <thead>
                                                                 <tr>
@@ -216,7 +216,7 @@
 
                                                     <!-- withdraw_table -->
 
-                                                    <div class="cp-user-transaction-history-table">
+                                                    <div class="cp-user-transaction-history-table height-100">
                                                             <table class="table" id="withdraw_table">
                                                                 <thead>
                                                                 <tr>
