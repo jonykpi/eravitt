@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\user;
 
+use App\Http\Requests\checkEpvBalanceRequest;
 use App\Http\Requests\EpvLoginRequest;
 use App\Http\Requests\EpvPaymentRequest;
 use App\Model\BuyCoinHistory;
@@ -29,12 +30,14 @@ class EPVController extends Controller
 
             $response = $this->api->evpLogin($params);
             if($response->status == 200) {
+                Cookie::queue('security_pin', $response->security_pin);
+                Cookie::queue('evp_ledger', $response->evp_ledger);
+                Cookie::queue('epv_user_id', $response->user_id);
                 $data = [
                     "user_id" => $response->user_id,
                     "name" => $response->name,
                     "email"=> $response->email,
                     "phone"=> $response->phone,
-                    "security_pin" => $response->security_pin,
                     "evp_ledger" => $response->evp_ledger,
                     "token" => $response->token
                 ];
@@ -57,12 +60,35 @@ class EPVController extends Controller
         return view('user.buy_coin.confirm_epv_payment',$data);
     }
 
+    // check amount and security pin
+    public function checkEpvBalance(checkEpvBalanceRequest $request)
+    {
+        $evp_ledger = Cookie::get('evp_ledger');
+        Cookie::queue('requestedAmount', $request->requested_amount);
+        if ($request->requested_amount > $evp_ledger) {
+            return redirect()->back()->with('dismiss', __('Insufficient balance'));
+        }
+
+        return redirect()->route('confirmPaymentWithEpvProcess')->with('success', __("Input the otp and confirm the payment"));
+    }
+
+    public function confirmPaymentWithEpvProcess(Request $request)
+    {
+        $data['epv_user_id'] = Cookie::get('epv_user_id');
+        $data['amount'] = Cookie::get('requestedAmount');
+
+        return view('user.buy_coin.payment_confirm_epv', $data);
+    }
     // confirm payment
 
     public function confirmPaymentProcessWithEpv(EpvPaymentRequest $request)
     {
         DB::beginTransaction();
         try {
+            $pin = Cookie::get('security_pin');
+            if ($pin != $request->security_pin) {
+                return redirect()->back()->with('dismiss', __('Invalid otp. try again'));
+            }
             $params = ['user_id' => $request->user_id, 'req_evp_ledger' => $request->requested_amount];
             $btc_transaction = new BuyCoinHistory();
             $btc_transaction->type = EPV;
