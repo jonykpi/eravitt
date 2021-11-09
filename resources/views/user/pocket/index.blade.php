@@ -12,7 +12,7 @@
                             <h4>{{__('My Wallet')}}</h4>
                         </div>
                         <div class="cp-user-title">
-                            <h4>{{settings('coin_name ').__(' Coin Internal Transaction Address : ').$defaultCoinAddress->address ?? ''}}</h4>
+                            <h4>{{settings('coin_name ').__(' Address : ').$defaultCoinAddress->address ?? ''}}</h4>
                         </div>
                         <div class="buttons">
                             <button class="btn cp-user-add-pocket" data-toggle="modal"
