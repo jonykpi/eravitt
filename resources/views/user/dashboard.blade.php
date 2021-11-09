@@ -252,82 +252,7 @@
             <script src="{{asset('assets/chart/chart.min.js')}}"></script>
             <script src="{{asset('assets/chart/anychart-base.min.js')}}"></script>
             <!-- Resources -->
-            <script src="{{asset('assets/chart/amchart.core.js')}}"></script>
-            <script src="{{asset('assets/chart/amchart.charts.js')}}"></script>
-            <script src="{{asset('assets/chart/amchart.animated.js')}}"></script>
-            <script>
-                anychart.onDocumentReady(function () {
-                    var chart = anychart.pie([
-                        {x: "Complete", value: {!! $completed_withdraw !!}},
-                        {x: "Pending", value: {!! $pending_withdraw !!}},
 
-                    ]);
-
-                    chart.innerRadius("60%");
-
-                    var label = anychart.standalones.label();
-                    label.text({!! json_encode($pending_withdraw) !!});
-                    label.width("100%");
-                    label.height("100%");
-                    label.adjustFontSize(true);
-                    label.fontColor("#60727b");
-                    label.hAlign("center");
-                    label.vAlign("middle");
-
-                    // set the label as the center content
-                    chart.center().content(label);
-
-                    //  chart.title("Donut Chart: Label in the center");
-                    chart.container('circle');
-                    chart.draw();
-                });
-            </script>
-            <script>
-                am4core.ready(function () {
-
-// Themes begin
-                    am4core.useTheme(am4themes_animated);
-// Themes end
-
-// Create chart instance
-                    var chart = am4core.create("container", am4charts.XYChart);
-
-// Add percent sign to all numbers
-                    //chart.numberFormatter.numberFormat = "#.3";
-
-// Add data
-                    chart.data = {!! json_encode($sixmonth_diposites) !!};
-
-// Create axes
-                    var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-                    categoryAxis.dataFields.category = "country";
-                    categoryAxis.renderer.grid.template.location = 0;
-                    categoryAxis.renderer.minGridDistance = 30;
-
-                    var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-                    valueAxis.title.text = "Deposit and withdraw ";
-                    valueAxis.title.fontWeight = 800;
-
-// Create series
-                    var series = chart.series.push(new am4charts.ColumnSeries());
-                    series.dataFields.valueY = "year2004";
-                    series.dataFields.categoryX = "country";
-                    series.clustered = false;
-                    series.tooltipText = "Deposit {categoryX}: [bold]{valueY}[/]";
-
-                    var series2 = chart.series.push(new am4charts.ColumnSeries());
-                    series2.dataFields.valueY = "year2005";
-                    series2.dataFields.categoryX = "country";
-                    series2.clustered = false;
-                    series2.columns.template.width = am4core.percent(50);
-                    series2.tooltipText = "Withdraw {categoryX}: [bold]{valueY}[/]";
-
-                    chart.cursor = new am4charts.XYCursor();
-                    chart.cursor.lineX.disabled = true;
-                    chart.cursor.lineY.disabled = true;
-
-                }); // end am4core.ready()
-            </script>
 
             <script>
                 $(document).ready(function () {
@@ -575,9 +500,9 @@
                 // price chart
                 var ctx = document.getElementById('coinPriceChart').getContext("2d")
                 var coinPriceChart = new Chart(ctx, {
-                    type: 'bar',
+                    type: 'line',
                     data: {
-                        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul","Aug", "Sep", "Oct", "Nov", "Dec"],
+                        labels: {!! json_encode(array_reverse($coin_price_date)) !!},
                         datasets: [{
                             label: "Coin Price Change",
                             backgroundColor: "#007bff",
@@ -592,7 +517,7 @@
                             pointRadius: 3,
                             fill: true,
                             borderWidth: 1,
-                            data: {!! json_encode($monthly_coin_price) !!}
+                            data: {!! json_encode(array_reverse($coin_price_price)) !!}
                         }]
                     },
                     options: {

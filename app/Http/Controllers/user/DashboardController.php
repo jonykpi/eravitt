@@ -4,6 +4,7 @@ namespace App\Http\Controllers\user;
 
 use App\Http\Services\CommonService;
 use App\Model\BuyCoinHistory;
+use App\Model\CoinBalanceHistory;
 use App\Model\DepositeTransaction;
 use App\Model\Faq;
 use App\Model\Notification;
@@ -21,21 +22,21 @@ class DashboardController extends Controller
     {
         $data['title'] = __('Dashboard');
         $data['balance'] = getUserBalance(Auth::id());
-        $data['total_buy_coin'] = BuyCoinHistory::where(['user_id'=> Auth::id(),'status'=> STATUS_ACTIVE])->sum('coin');
+        $data['total_buy_coin'] = BuyCoinHistory::where(['user_id' => Auth::id(), 'status' => STATUS_ACTIVE])->sum('coin');
         $from = Carbon::now()->subMonth(6)->format('Y-m-d h:i:s');
         $to = Carbon::now()->format('Y-m-d h:i:s');
 
         $common_service = new CommonService();
 
-        if (!$request->ajax()){
-            $sixmonth_diposites = $common_service->AuthUserDiposit($from,$to);
-            $sixmonth_withdraws = $common_service->AuthUserWithdraw($from,$to);
+        if (!$request->ajax()) {
+            $sixmonth_diposites = $common_service->AuthUserDiposit($from, $to);
+            $sixmonth_withdraws = $common_service->AuthUserWithdraw($from, $to);
 
             ///////////////////////////////////////////   six month data /////////////////////////////
             $data['sixmonth_diposites'] = [];
             $months = previousMonthName(5);
 
-            foreach ($months as $key => $month){
+            foreach ($months as $key => $month) {
                 $data['sixmonth_diposites'][$key]['country'] = $month;
                 $data['sixmonth_diposites'][$key]['year2004'] = (isset($sixmonth_diposites[$month])) ? $sixmonth_diposites[$month] : 0;
                 $data['sixmonth_diposites'][$key]['year2005'] = (isset($sixmonth_withdraws[$month])) ? $sixmonth_withdraws[$month] : 0;
@@ -43,12 +44,12 @@ class DashboardController extends Controller
         }
 
 
-        $data['completed_withdraw']  = WithdrawHistory::join('wallets','wallets.id','withdraw_histories.wallet_id')
-            ->where('withdraw_histories.status',STATUS_SUCCESS)
-            ->where('wallets.user_id',Auth::id())->sum('withdraw_histories.amount');
-        $data['pending_withdraw']  = WithdrawHistory::join('wallets','wallets.id','withdraw_histories.wallet_id')
-            ->where('withdraw_histories.status',STATUS_PENDING)
-            ->where('wallets.user_id',Auth::id())->sum('withdraw_histories.amount');
+        $data['completed_withdraw'] = WithdrawHistory::join('wallets', 'wallets.id', 'withdraw_histories.wallet_id')
+            ->where('withdraw_histories.status', STATUS_SUCCESS)
+            ->where('wallets.user_id', Auth::id())->sum('withdraw_histories.amount');
+        $data['pending_withdraw'] = WithdrawHistory::join('wallets', 'wallets.id', 'withdraw_histories.wallet_id')
+            ->where('withdraw_histories.status', STATUS_PENDING)
+            ->where('wallets.user_id', Auth::id())->sum('withdraw_histories.amount');
 
 
         $data['histories'] = DepositeTransaction::get();
@@ -70,7 +71,7 @@ class DashboardController extends Controller
         }
         $allDeposits = [];
         foreach ($allMonths as $month) {
-            $allDeposits[] =  isset($data['deposit'][$month]) ? $data['deposit'][$month] : 0;
+            $allDeposits[] = isset($data['deposit'][$month]) ? $data['deposit'][$month] : 0;
         }
         $data['monthly_deposit'] = $allDeposits;
 
@@ -89,14 +90,14 @@ class DashboardController extends Controller
         }
         $allWithdrawal = [];
         foreach ($allMonths as $month) {
-            $allWithdrawal[] =  isset($data['withdrawal'][$month]) ? $data['withdrawal'][$month] : 0;
+            $allWithdrawal[] = isset($data['withdrawal'][$month]) ? $data['withdrawal'][$month] : 0;
         }
         $data['monthly_withdrawal'] = $allWithdrawal;
 
         // withdrawal
         $monthlyBuyCoins = BuyCoinHistory::select(DB::raw('sum(coin) as totalCoin'), DB::raw('MONTH(created_at) as months'))
             ->whereYear('created_at', Carbon::now()->year)
-            ->where(['user_id'=> Auth::id(),'status'=> STATUS_SUCCESS])
+            ->where(['user_id' => Auth::id(), 'status' => STATUS_SUCCESS])
             ->groupBy('months')
             ->get();
 
@@ -107,10 +108,21 @@ class DashboardController extends Controller
         }
         $allBuyCoin = [];
         foreach ($allMonths as $month) {
-            $allBuyCoin[] =  isset($data['coin'][$month]) ? $data['coin'][$month] : 0;
+            $allBuyCoin[] = isset($data['coin'][$month]) ? $data['coin'][$month] : 0;
         }
         $data['monthly_buy_coin'] = $allBuyCoin;
-        $data['monthly_coin_price'] = $allBuyCoin;
+
+        $coinPrice = CoinBalanceHistory::orderBy('id', 'desc')->select('price', 'created_at')->limit(30)->get();
+        $coinPriceDate = [];
+        $coinPriceData = [];
+        if (isset($coinPrice[0])) {
+            foreach ($coinPrice as $key => $value) {
+                $coinPriceData[$key] = $value->price;
+                $coinPriceDate[$key] = date('d M y', strtotime($value->created_at));
+            }
+        }
+        $data['coin_price_price'] = $coinPriceData;
+        $data['coin_price_date'] = $coinPriceDate;
 
         return view('user.dashboard', $data);
     }
