@@ -34,11 +34,11 @@
                                         <div class="col-md-1">:</div>
                                         <div class="col-md-7">{{ $data['email'] }}</div>
                                     </div>
-                                    <div class="row row-text">
-                                        <div class="col-md-4">{{__('Security Pin')}}</div>
-                                        <div class="col-md-1">:</div>
-                                        <div class="col-md-7">{{ $data['security_pin'] }}</div>
-                                    </div>
+{{--                                    <div class="row row-text">--}}
+{{--                                        <div class="col-md-4">{{__('Security Pin')}}</div>--}}
+{{--                                        <div class="col-md-1">:</div>--}}
+{{--                                        <div class="col-md-7">{{ $data['security_pin'] }}</div>--}}
+{{--                                    </div>--}}
                                     <div class="row row-text">
                                         <div class="col-md-4">{{__('Current Balance')}}</div>
                                         <div class="col-md-1">:</div>
@@ -66,8 +66,15 @@
                                             <label>{{__('Security Pin')}}</label>
                                             <input name="security_pin" type="password" autocomplete="off" id="" class="form-control" placeholder="{{__('Security Pin')}}">
                                         </div>
-                                        <input type="text" name="user_id" value="{{$data['user_id']}}">
-                                        <input type="text" name="requested_amount" value="{{$requested_amount}}">
+                                        <br>
+                                        <input type="hidden" name="user_id" value="{{$data['user_id']}}">
+
+                                        <div class="form-group">
+                                            <label>{{__('Amount')}}</label>
+                                        <input class="form-control" type="text" name="requested_amount" value="{{$requested_amount}}">
+                                        </div>
+
+
                                         <button id="" type="submit" class="btn normal-btn theme-btn">{{__('Confirm')}}</button>
                                         <a href="{{route('buyCoin')}}" class="btn normal-btn btn-warning">{{__('Cancel')}}</a>
                                     </form>
