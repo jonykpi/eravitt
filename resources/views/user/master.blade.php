@@ -45,7 +45,7 @@
     @yield('style')
     <title>{{allsetting('app_title')}}::@yield('title')</title>
     <!-- Favicon and Touch Icons -->
-    <link rel="shortcut icon" href="{{landingPageImage('favicon','images/fav.png')}}/">
+    <link rel="shortcut icon" href="{{landingPageImage('favicon','images/fav.png')}}">
 </head>
 
 <body class="cp-user-body-bg">

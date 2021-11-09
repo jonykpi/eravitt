@@ -2550,15 +2550,14 @@ table.dataTable thead .sorting_desc_disabled:after{
 
 
 .login-sidebar-img {
-    display: inline-block;
+    display: block;
     margin-bottom: 15px;
 }
 
 .login-sidebar-img img {
-    /*margin: auto;*/
-    max-height: 100%;
-    min-height: 655px;
+    height: 900px;
     width: 100%;
+    object-fit: cover;
 }
 
 
@@ -2567,4 +2566,7 @@ table.dataTable thead .sorting_desc_disabled:after{
     border-radius: 3px;
     box-shadow: none;
     color: #212E55;
+}
+.auth-box {
+    margin-top: 0;
 }

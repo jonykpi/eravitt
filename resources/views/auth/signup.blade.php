@@ -2,15 +2,12 @@
 @section('title', isset($title) ? $title : '')
 @section('style')
     <style>
-        .login-sidebar-img img {
-            min-height: 800px !important;
-        }
     </style>
 @endsection
 @section('content')
     <div class="form-top">
         <a class="auth-logo" href="javascript:">
-            <img src="{{show_image(1,'login_logo')}}" class="img-fluid" alt="">
+            <img src="{{show_image(1,'logo')}}" class="img-fluid" alt="">
         </a>
         <p>{{__('Register')}}</p>
     </div>

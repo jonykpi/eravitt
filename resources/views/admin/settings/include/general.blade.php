@@ -97,7 +97,7 @@
                 <div class="col-lg-4 mt-20">
                     <div class="single-uplode">
                         <div class="uplode-catagory">
-                            <span>{{__('Login Logo')}}</span>
+                            <span>{{__('Login Sidebar image')}}</span>
                         </div>
                         <div class="form-group buy_coin_address_input ">
                             <div id="file-upload" class="section-p">

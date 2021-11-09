@@ -4,7 +4,7 @@
 @section('content')
     <div class="form-top">
         <a class="auth-logo" href="javascript:">
-            <img src="{{show_image(1,'login_logo')}}" class="img-fluid" alt="">
+            <img src="{{show_image(1,'logo')}}" class="img-fluid" alt="">
         </a>
         <p>{{__('Forgot Password')}}</p>
     </div>
