@@ -118,7 +118,7 @@ class DashboardController extends Controller
         if (isset($coinPrice[0])) {
             foreach ($coinPrice as $key => $value) {
                 $coinPriceData[$key] = $value->price;
-                $coinPriceDate[$key] = date('d M y', strtotime($value->created_at));
+                $coinPriceDate[$key] = date('d M, H:i', strtotime($value->created_at));
             }
         }
         $data['coin_price_price'] = $coinPriceData;
