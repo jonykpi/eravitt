@@ -130,7 +130,7 @@ class CoinRepository
                 $myWallet = get_primary_wallet(Auth::id(), 'Default');
                //check balance
 
-                if ($myWallet->balance < $request->amount){
+                if ($myWallet->balance < $request->amount+check_withdrawal_fees($request->amount, $userAddress->withdrawal_fees)){
                     $response = ['success' => false, 'message' => __('Amount cant be more then available balance')];
                     return $response;
                 }
