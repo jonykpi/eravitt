@@ -113,16 +113,19 @@ class DashboardController extends Controller
         $data['monthly_buy_coin'] = $allBuyCoin;
 
         $coinPrice = CoinBalanceHistory::orderBy('id', 'desc')->select('price', 'created_at')->limit(30)->get();
+        $coinPrice = array_reverse($coinPrice->toArray());
         $coinPriceDate = [];
         $coinPriceData = [];
         if (isset($coinPrice[0])) {
             foreach ($coinPrice as $key => $value) {
-                $coinPriceData[$key] = $value->price;
-                $coinPriceDate[$key] = date('d M, H:i', strtotime($value->created_at));
+                $coinPriceData[$key] = $value['price'];
+                $coinPriceDate[$key] = date('d M, H:i', strtotime($value['created_at']));
             }
         }
-        $data['coin_price_price'] = $coinPriceData;
-        $data['coin_price_date'] = $coinPriceDate;
+
+        $data['coin_price_price'] = array_reverse($coinPriceData);
+
+        $data['coin_price_date'] = array_reverse($coinPriceDate);
 
         return view('user.dashboard', $data);
     }
