@@ -21,8 +21,11 @@ class SettingRepository
                 AdminSetting::where('slug', 'lang')->update(['value' => $request->lang]);
             }
             if (isset($request->coin_price)) {
-                AdminSetting::where('slug', 'coin_price')->update(['value' => $request->coin_price]);
-                $this->updateCoinPrice($request->coin_price);
+                if (!empty($request->price_change)){
+                    AdminSetting::where('slug', 'coin_price')->update(['value' => $request->coin_price]);
+                    $this->updateCoinPrice($request->coin_price);
+                }
+
             }
             if (isset($request->coin_name)) {
                 AdminSetting::where('slug', 'coin_name')->update(['value' => $request->coin_name]);
@@ -324,7 +327,7 @@ class SettingRepository
         } else {
             $pevPrice = $price;
         }
-        CoinBalanceHistory::updateOrCreate(['price' => $price],['price' => $price, 'previous_price' => $pevPrice, 'updated_by' => Auth::id()]);
+        CoinBalanceHistory::create(['price' => $price],['price' => $price, 'previous_price' => $pevPrice, 'updated_by' => Auth::id()]);
     }
 
 }

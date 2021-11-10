@@ -38,7 +38,8 @@
             </div>
             <div class="col-lg-6 col-12  mt-20">
                 <div class="form-group">
-                    <label for="#">{{__('Coin Price (in USD)')}}</label>
+                    <label for="#">{{__('Coin Price (in USD)')}} </label> <input type="checkbox" name="price_change" value="1">
+
                     <input class="form-control number_only" type="text" name="coin_price"
                            placeholder="{{__('coin price')}}"
                            value="{{isset($settings['coin_price']) ? $settings['coin_price'] : ''}}">
