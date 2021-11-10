@@ -38,7 +38,7 @@ class PlanSaveRequest extends FormRequest
             $rule['bonus'] = 'numeric';
         }
         if ($this->image) {
-            $rule['image'] = 'image|mimes:jpg,jpeg,png|max:2000';
+            $rule['image'] = 'image|mimes:jpg,jpeg,png,svg,webp|max:2000';
         }
 
         return $rule;

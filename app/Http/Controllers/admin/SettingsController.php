@@ -97,13 +97,13 @@ class SettingsController extends Controller
         $rules=[];
 //        $messages=[];
         if(!empty($request->logo)){
-            $rules['logo']='image|mimes:jpg,jpeg,png|max:2000';
+            $rules['logo']='image|mimes:jpg,jpeg,png,svg,webp|max:2000';
         }
         if(!empty($request->favicon)){
-            $rules['favicon']='image|mimes:jpg,jpeg,png|max:2000';
+            $rules['favicon']='image|mimes:jpg,jpeg,png,svg,webp|max:2000';
         }
         if(!empty($request->login_logo)){
-            $rules['login_logo']='image|mimes:jpg,jpeg,png|max:2000';
+            $rules['login_logo']='image|mimes:jpg,jpeg,png,svg,webp|max:2000';
         }
         if(!empty($request->coin_price)){
             $rules['coin_price']='numeric';

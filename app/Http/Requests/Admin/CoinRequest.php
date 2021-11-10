@@ -42,7 +42,7 @@ class CoinRequest extends FormRequest
             $rules['minimum_sell_amount']='numeric|min:0.00000010';
         }
         if(!empty($this->coin_icon)){
-            $rules['coin_icon'] = 'image|mimes:jpg,jpeg,png,jpg,gif|max:2048';
+            $rules['coin_icon'] = 'image|mimes:jpg,jpeg,png,svg,webp,jpg,gif|max:2048';
         }
 
         return $rules;

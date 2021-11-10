@@ -140,7 +140,7 @@ class LandingController extends Controller
         $rules = [];
         foreach ($request->all() as $key => $item) {
             if ($request->hasFile($key)) {
-                $rules[$key] = 'image|mimes:jpg,jpeg,png|max:2000';
+                $rules[$key] = 'image|mimes:jpg,jpeg,png,svg,webp|max:2000';
             }
         }
         $validator = Validator::make($request->all(), $rules);

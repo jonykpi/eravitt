@@ -110,7 +110,7 @@ class DashboardController extends Controller
     // profile upload image
     public function uploadProfileImage(Request $request)
     {
-        $rules['file_one'] = 'required|image|max:2024|mimes:jpg,jpeg,png,jpg,gif,svg|max:2048|dimensions:max_width=500,max_height=500';
+        $rules['file_one'] = 'required|image|max:2024|mimes:jpg,jpeg,png,svg,webp,jpg,gif,svg|max:2048|dimensions:max_width=500,max_height=500';
         $validator = Validator::make($request->all(),$rules);
         if ($validator->fails()) {
             $message = $validator->getMessageBag()->getMessages()['file_one'][0];
