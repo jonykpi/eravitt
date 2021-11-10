@@ -41,6 +41,12 @@
     <link rel="stylesheet" href="{{asset('assets/user/style.css')}}">
     <!-- Responsive CSS -->
     <link rel="stylesheet" href="{{asset('assets/user/css/responsive.css')}}">
+    <style>
+        table.dataTable thead>tr, table.dataTable tbody tr td{
+            text-align: justify;
+            text-align-last: left;
+        }
+    </style>
 
     @yield('style')
     <title>{{allsetting('app_title')}}::@yield('title')</title>

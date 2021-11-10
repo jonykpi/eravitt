@@ -1,6 +1,11 @@
-<div class="card-body">
+<div class="card-body" style="
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -100px;">
     <div class="cp-user-card-header-area">
-        <h4>{{__('Coming soon ..... ')}}</h4>
+        <h2 style="color: white">{{__('Coming soon ..... ')}}</h2>
     </div>
 
     <div class="cp-user-buy-coin-content-area mt-5">

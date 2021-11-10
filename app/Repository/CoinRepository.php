@@ -121,24 +121,51 @@ class CoinRepository
                 ->where(['wallet_address_histories.address'=> $request->address])
                 ->select('wallet_address_histories.address', 'wallets.*', 'coins.withdrawal_fees')
                 ->first();
+
             if (isset($userAddress)) {
                 if ($userAddress->user_id == Auth::id()) {
                     $response = ['success' => false, 'message' => __('You can not send request to your own address')];
                     return $response;
                 }
                 $myWallet = get_primary_wallet(Auth::id(), 'Default');
-                $userWallet = get_primary_wallet($userAddress->user_id, 'Default');
-                $data = [
-                    'amount' => $request->amount,
-                    'sender_user_id' => $userAddress->user_id,
-                    'sender_wallet_id' => $userWallet->id,
-                    'receiver_user_id' => Auth::id(),
-                    'receiver_wallet_id' => $myWallet->id,
-                    'fees' => check_withdrawal_fees($request->amount, $userAddress->withdrawal_fees)
-                ];
-                CoinRequest::create($data);
+               //check balance
 
-                $response = ['success' => true, 'message' => __('Request sent successfully. Please wait for user approval')];
+                if ($myWallet->balance < $request->amount){
+                    $response = ['success' => false, 'message' => __('Amount cant be more then available balance')];
+                    return $response;
+                }
+
+
+                try {
+                    DB::beginTransaction();
+
+                    $userWallet = get_primary_wallet($userAddress->user_id, 'Default');
+                    $data = [
+                        'amount' => $request->amount,
+                        'sender_user_id' => Auth::id(),
+                        'sender_wallet_id' => $myWallet->id,
+
+                        'receiver_user_id' => $userAddress->user_id,
+                        'receiver_wallet_id' => $userWallet->id,
+
+                        'status' => STATUS_SUCCESS,
+                        'fees' => check_withdrawal_fees($request->amount, $userAddress->withdrawal_fees)
+                    ];
+                    CoinRequest::create($data);
+
+                    $add = Wallet::find($myWallet->id);
+                    $add->decrement("balance",$request->amount+check_withdrawal_fees($request->amount, $userAddress->withdrawal_fees));
+                    $add->save();
+
+                    $deduct = Wallet::find($userWallet->id);
+                    $deduct->increment("balance",$request->amount);
+                    $deduct->save();
+
+                    DB::commit();
+                }catch (\Exception $exception){
+                    DB::rollBack();
+                }
+                $response = ['success' => true, 'message' => __('DPV sent successfully to this address')];
             } else {
                 $response = ['success' => false, 'message' => __('User not found')];
             }

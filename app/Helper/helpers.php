@@ -2160,6 +2160,7 @@ function admin_coin_price()
         $previousPrice = $price->previous_price;
     }
     $buy =  BuyCoinHistory::orderBy('id', 'desc')->first();
+
     if (isset($buy)) {
         $buyPrice = bcdiv($buy->doller,$buy->coin,8);
     }
@@ -2167,6 +2168,6 @@ function admin_coin_price()
     return [
         'currentPrice' => $currentPrice,
         'previousPrice' => $previousPrice,
-        'buyPrice' => $buyPrice,
+        'buyPrice' => $currentPrice,
     ];
 }

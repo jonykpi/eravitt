@@ -111,7 +111,7 @@
                     </a>
                     <ul class="@if(isset($menu) && $menu == 'transaction')  mm-show  @endif">
                         <li class="@if(isset($sub_menu) && $sub_menu == 'transaction_default') submenu-active @endif">
-                            <a href="{{route('adminDefaultCoinTransactionHistory')}}">{{__('Default Coin Transaction History')}}</a>
+                            <a href="{{route('adminDefaultCoinTransactionHistory')}}">{{__('DPV Coin Transaction History')}}</a>
                         </li>
                         <li class="@if(isset($sub_menu) && $sub_menu == 'transaction_all') submenu-active @endif">
                             <a href="{{route('adminTransactionHistory')}}">{{__('All Coin Transaction History')}}</a>
@@ -145,7 +145,7 @@
                             <a href="{{route('adminPendingCoinOrder')}}">{{__('Buy coin order list')}}</a>
                         </li>
                         <li class="@if(isset($sub_menu) && $sub_menu == 'give_coin') submenu-active @endif">
-                            <a href="{{route('adminGiveCoinToUser')}}">{{__('Give Default Coin')}}</a>
+                            <a href="{{route('adminGiveCoinToUser')}}">{{__('Give DPV Coin')}}</a>
                         </li>
                         <li class="@if(isset($sub_menu) && $sub_menu == 'give_coin_history') submenu-active @endif">
                             <a href="{{route('adminGiveCoinHistory')}}">{{__('Give Coin History')}}</a>
