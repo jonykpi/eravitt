@@ -59,7 +59,7 @@
                 {"data": "coin_type","orderable": false},
                 {"data": "type","orderable": false},
                 {"data": "status","orderable": false},
-                {"data": "created_at","orderable": false},
+                {"data": "created_at","orderable": true},
             ],
         });
     </script>

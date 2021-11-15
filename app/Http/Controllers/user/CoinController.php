@@ -283,7 +283,7 @@ class CoinController extends Controller
     {
         $data['title'] = __('Buy Coin History');
         if ($request->ajax()) {
-            $items = BuyCoinHistory::where(['user_id'=>Auth::id()]);
+            $items = BuyCoinHistory::orderBy("created_at","DESC")->where(['user_id'=>Auth::id()]);
             return datatables($items)
                 ->addColumn('type', function ($item) {
                     return byCoinType($item->type);
