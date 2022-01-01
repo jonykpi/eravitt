@@ -69,8 +69,8 @@
         <span class="eye rev-1"><i class="fa fa-eye-slash toggle-password"></i></span>
     </div>
     <div class="form-group">
-        <label id="checkBoxRefCode" onClick="$('#refCode').toggle();">{{__('Referral code (optional)')}} <i class="fa fa-arrow-down"></i></label>
-        <input id="refCode" type="text" name="ref_code" class="form-control " placeholder="{{__('Referral Code')}}" style="display:none;">
+        <label id="checkBoxRefCode" >{{__('Referral code')}} <span class="text-danger">*</span></label>
+        <input id="refCode" value="{{old('ref_code')}}" type="text" name="ref_code" class="form-control " placeholder="{{__('Referral Code')}}" style="">
         @if ($errors->has('ref_code'))
             <p class="invalid-feedback">{{ $errors->first('ref_code') }} </p>
         @endif

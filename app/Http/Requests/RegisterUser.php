@@ -23,6 +23,7 @@ class RegisterUser extends FormRequest
      */
     public function rules()
     {
+
         $rules = [
             'first_name' => ['required', 'string', 'max:50'],
             'last_name' => ['required', 'string', 'max:50'],
@@ -36,6 +37,7 @@ class RegisterUser extends FormRequest
                 'regex:/[0-9]/',      // must contain at least one digit
             ],
             'password_confirmation' => 'required|min:8|same:password',
+            'ref_code' => 'required',
         ];
 
         if (isset(allsetting()['google_recapcha']) && (allsetting()['google_recapcha'] == STATUS_ACTIVE)) {
