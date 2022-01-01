@@ -40,7 +40,20 @@
 </head>
 
 <body class="body-bg">
+<div class="container-fluid">
+    <nav class="navbar navbar-expand-lg ">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+
+                <img width="150px" src="{{asset("assets/img/LOGO.jpg")}}" alt="">
+            </a>
+
+
+        </div>
+    </nav>
+</div>
 <div class="container">
+
     <div class="row mt-lg-5">
         <div class="col-md-12">
             <div class="row auth-box align-items-center">

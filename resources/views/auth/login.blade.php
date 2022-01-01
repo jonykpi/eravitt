@@ -2,6 +2,7 @@
 @section('title', isset($title) ? $title : '')
 
 @section('content')
+
     <div class="form-top">
 
         <p>{{__('Log into your account')}}</p>
