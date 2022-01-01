@@ -32,6 +32,11 @@
     <title>@yield('title') {{settings('app_title')}}</title>
     <!-- Favicon and Touch Icons -->
     <link rel="shortcut icon" href="{{landingPageImage('favicon','images/fav.png')}}/">
+    <style>
+        .login-sidebar-img img{
+            height: auto !important;
+        }
+    </style>
 </head>
 
 <body class="body-bg">
