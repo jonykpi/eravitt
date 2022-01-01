@@ -3,9 +3,7 @@
 
 @section('content')
     <div class="form-top">
-        <a class="auth-logo" href="javascript:">
-            <img src="{{show_image(1,'logo')}}" class="img-fluid" alt="">
-        </a>
+
         <p>{{__('Password Reset')}}</p>
     </div>
     {{Form::open(['route' => 'resetPasswordSave', 'files' => true])}}

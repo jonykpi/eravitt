@@ -3,9 +3,7 @@
 
 @section('content')
     <div class="form-top">
-        <a class="auth-logo" href="javascript:">
-            <img src="{{show_image(1,'logo')}}" class="img-fluid" alt="">
-        </a>
+
         <p>{{__('Log into your account')}}</p>
         <div class="user-icon">
             <img src="{{asset('assets/img/user.svg')}}" alt="user icon">
