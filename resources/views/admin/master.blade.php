@@ -48,6 +48,12 @@
     <title>@yield('title')</title>
     <!-- Favicon and Touch Icons -->
     <link rel="shortcut icon" href="{{landingPageImage('favicon','images/fav.png')}}/">
+    <style>
+        .sidebar .logo{
+            padding: 5px;
+            width: 120px;
+        }
+    </style>
 </head>
 
 <body class="body-bg">
