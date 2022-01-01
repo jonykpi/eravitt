@@ -46,6 +46,9 @@
             text-align: justify;
             text-align-last: left;
         }
+        .cp-user-logo{
+            width: 99px;
+        }
     </style>
 
     @yield('style')
