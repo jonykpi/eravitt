@@ -3,7 +3,7 @@
 
 @section('content')
     <div class="form-top">
-       
+
         <p>{{__('Forgot Password')}}</p>
     </div>
     {{Form::open(['route' => 'sendForgotMail', 'files' => true])}}

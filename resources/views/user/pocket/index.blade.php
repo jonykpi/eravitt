@@ -88,14 +88,14 @@
                                                                             class="img-fluid" alt="">
                                                                     </a>
                                                                 </li>
-                                                                    <li>
-                                                                        <a title="{{__('Deposit')}}"
-                                                                           href="{{route('walletDetails',$wallet->id)}}?q=deposit">
-                                                                            <img
-                                                                                src="{{asset('assets/user/images/wallet-table-icons/wallet.svg')}}"
-                                                                                class="img-fluid" alt="">
-                                                                        </a>
-                                                                    </li>
+                                                                    {{--<li>--}}
+                                                                        {{--<a title="{{__('Deposit')}}"--}}
+                                                                           {{--href="{{route('walletDetails',$wallet->id)}}?q=deposit">--}}
+                                                                            {{--<img--}}
+                                                                                {{--src="{{asset('assets/user/images/wallet-table-icons/wallet.svg')}}"--}}
+                                                                                {{--class="img-fluid" alt="">--}}
+                                                                        {{--</a>--}}
+                                                                    {{--</li>--}}
                                                                 <li>
                                                                     <a title="{{__('withdraw')}}"
                                                                        href="{{route('withdrawalCoin')}}">
