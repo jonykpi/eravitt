@@ -56,7 +56,9 @@ class UserController extends Controller
                 ->addColumn('referral_username', function ($item) {
                     $cc = ReferralUser::where("user_id",$item->id)->first();
                     if (!empty($cc)){
-                        return User::find($cc->parent_id)->first()->email;
+                        return User::find($cc->parent_id)->email;
+                    }else{
+                        return "N/A";
                     }
                 })
                 ->addColumn('type', function ($item) {
