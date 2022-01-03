@@ -68,7 +68,7 @@
     </div>
     <div class="form-group">
         <label id="checkBoxRefCode" >{{__('Referral code')}} <span class="text-danger">*</span></label>
-        <input id="refCode" value="{{old('ref_code')}}" type="text" name="ref_code" class="form-control " placeholder="{{__('Referral Code')}}" style="">
+        <input id="refCode" value="{{old('ref_code',request()->ref_code)}}" type="text" name="ref_code" class="form-control " placeholder="{{__('Referral Code')}}" style="">
         @if ($errors->has('ref_code'))
             <p class="invalid-feedback">{{ $errors->first('ref_code') }} </p>
         @endif

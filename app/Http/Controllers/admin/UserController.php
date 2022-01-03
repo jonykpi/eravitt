@@ -4,7 +4,9 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Requests\AdminCreateUser;
 use App\Http\Services\CommonService;
+use App\Model\AffiliationCode;
 use App\Model\Coin;
+use App\Model\ReferralUser;
 use App\Model\UserVerificationCode;
 use App\Model\VerificationDetails;
 use App\Model\Wallet;
@@ -40,6 +42,22 @@ class UserController extends Controller
 
                 ->addColumn('status', function ($item) {
                     return statusAction($item->status);
+                })
+                ->addColumn('ref_id', function ($item) {
+                    $xx = AffiliationCode::where("user_id",$item->id)->first();
+                    if (!empty($xx)){
+                        return AffiliationCode::where("user_id",$item->id)->first()->code;
+                    }else{
+                        return "N/A";
+                    }
+
+
+                })
+                ->addColumn('referral_username', function ($item) {
+                    $cc = ReferralUser::where("user_id",$item->id)->first();
+                    if (!empty($cc)){
+                        return User::find($cc->parent_id)->first()->email;
+                    }
                 })
                 ->addColumn('type', function ($item) {
                     return userRole($item->role);

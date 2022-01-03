@@ -64,7 +64,11 @@
                                     <thead>
                                     <tr>
                                         <th scope="col" class="all">{{__('User Name')}}</th>
+                                        <th scope="col" class="all">{{__('Referral code')}}</th>
                                         <th scope="col" class="desktop">{{__('Email ID')}}</th>
+                                        <th scope="col" class="all">{{__('Parent email')}}</th>
+
+
                                         <th scope="col" class="all">{{__('Role')}}</th>
                                         <th scope="col" class="desktop">{{__('Status')}}</th>
                                         <th scope="col" class="desktop">{{__('Created At')}}</th>
@@ -211,7 +215,10 @@
                 },
                 columns: [
                     {"data": "first_name","orderable": false},
+                    {"data": "ref_id","orderable": true},
                     {"data": "email","orderable": true},
+                    {"data": "referral_username","orderable": false},
+
                     {"data": "type","orderable": false},
                     {"data": "status","orderable": false},
                     {"data": "created_at","orderable": true},
