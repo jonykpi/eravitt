@@ -161,6 +161,63 @@
                 </div>
             </div>
 
+
+            <div class="card cp-user-custom-card mt-5">
+                <div class="card-body">
+                    <div class="cp-user-card-header-area">
+                        <h4>{{__('My referral signup bonus & coin buy bonus')}}</h4>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="cp-user-myreferral">
+                                <div class="table-responsive">
+                                    <table class="table dataTable cp-user-custom-table table-borderless text-center" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>{{__('Date')}}</th>
+                                                <th>{{__('Type')}}</th>
+                                                <th>{{__('Email')}}</th>
+                                                <th>{{__('level')}}</th>
+                                                <th>{{__('Commissions')}}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @php
+                                                $total = 0;
+                                            @endphp
+                                            @if(!empty($referral_bonuses_signup))
+
+                                                @foreach($referral_bonuses_signup as $key=> $referral_bonus)
+                                                    <tr>
+
+                                                        <td>{{$referral_bonus->created_at}}</td>
+                                                        <td>{{$referral_bonus->type}}</td>
+                                                        <td>{{$referral_bonus->email}}</td>
+                                                        <td>{{$referral_bonus->level}}</td>
+                                                        <td>{{$referral_bonus->amount}}</td>
+
+                                                    </tr>
+                                                @endforeach
+
+                                                     <tr>
+                                                         <td>
+                                                             {!! $referral_bonuses_signup->links() !!}
+                                                         </td>
+                                                     </tr>
+                                            @else
+                                                <tr>
+                                                    <td colspan="4" class="text-center"><b>{{__('No Data available')}}</b></td>
+                                                </tr>
+                                            @endif
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 @endsection
