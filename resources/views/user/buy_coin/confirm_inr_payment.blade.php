@@ -24,7 +24,7 @@
                                 <div class="col-lg-6 offset-lg-3">
                                     <div class="cp-user-card-header-area">
 
-                                        <h4>Total payment amount : {{number_format($item->inr)}} <i class="fa fa-rupee"></i> and You will receive : {{number_format($item->inr)}} EVP</h4>
+                                        <h4>Total payment amount : {{number_format($item->inr)}} <i class="fa fa-rupee"></i> and You will receive : {{number_format($item->coin)}} EVP</h4>
 
                                     </div>
  <div class="cp-user-card-header-area">
