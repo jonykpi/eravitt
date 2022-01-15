@@ -68,6 +68,15 @@
                                                 </label>
                                             </div>
                                         @endif
+                                            @if($key == INR)
+                                                <div>
+                                                    <label class="switch">
+                                                        <input type="checkbox" onclick="return processForm('payment_method_inr')"
+                                                               id="notification" name="security" @if(isset($settings['payment_method_inr']) && ($settings['payment_method_inr'] == 1)) checked @endif>
+                                                        <span class="slider" for="status"></span>
+                                                    </label>
+                                                </div>
+                                            @endif
                                     </td>
                                 </tr>
                             @endforeach

@@ -29,6 +29,7 @@ class EPVController extends Controller
             $params = ['email' => $request->email, 'password' => $request->password];
 
             $response = $this->api->evpLogin($params);
+            dd($response);
             if($response->status == 200) {
                 Cookie::queue('security_pin', $response->security_pin);
                 Cookie::queue('evp_ledger', $response->evp_ledger);

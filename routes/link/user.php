@@ -41,6 +41,11 @@ Route::group(['prefix'=>'user','namespace'=>'user','middleware'=> ['auth','user'
     Route::get('bank-details', 'CoinController@bankDetails')->name('bankDetails');
     Route::post('buy-coin', 'CoinController@buyCoin')->name('buyCoinProcess');
     Route::get('buy-coin-by-{address}', 'CoinController@buyCoinByAddress')->name('buyCoinByAddress');
+    Route::get('buy-coin-inr-{id}', 'CoinController@buyCoinByInr')->name('buyCoinByInr');
+    Route::post('pay-confirm-inr', 'CoinController@paymentConfirmInr')->name('paymentConfirmInr');
+
+
+
     Route::get('buy-coin-history', 'CoinController@buyCoinHistory')->name('buyCoinHistory');
     Route::post('login-with-epv', 'EPVController@LoginWithEpv')->name('LoginWithEpv');
     Route::get('confirm-payment', 'EPVController@confirmPaymentWithEpv')->name('confirmPaymentWithEpv');

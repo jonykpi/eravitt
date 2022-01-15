@@ -17,9 +17,9 @@ class EPVPaymentApiService {
 
     public function __construct()
     {
-        $this->auth_key = 'J@NcRfUjXn2r5u8x/A?D(G-KaPdSgVkY';
+        $this->auth_key = '@NcRfUjXn2r5u8x/A?D(G-KaPdSgVkY';
         $this->client_service = 'eravitt-client';
-        $this->base_url = 'https://www.eravitt.com/api/';
+        $this->base_url = 'https://www.eravitt.com/api/wallet_checkout/';
 
         $this->header =  [
             'Client-Service' => $this->client_service,
