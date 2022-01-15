@@ -5,7 +5,10 @@ namespace App\Http\Controllers\user;
 use App\Http\Requests\checkEpvBalanceRequest;
 use App\Http\Requests\EpvLoginRequest;
 use App\Http\Requests\EpvPaymentRequest;
+use App\Http\Services\CommonService;
 use App\Model\BuyCoinHistory;
+use App\Model\Notification;
+use App\Model\ReferralUser;
 use App\Services\EPVPaymentApiService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -29,17 +32,17 @@ class EPVController extends Controller
             $params = ['email' => $request->email, 'password' => $request->password];
 
             $response = $this->api->evpLogin($params);
-            dd($response);
+
             if($response->status == 200) {
                 Cookie::queue('security_pin', $response->security_pin);
-                Cookie::queue('evp_ledger', $response->evp_ledger);
+                Cookie::queue('evp_ledger', $response->wallet_balance);
                 Cookie::queue('epv_user_id', $response->user_id);
                 $data = [
                     "user_id" => $response->user_id,
                     "name" => $response->name,
                     "email"=> $response->email,
                     "phone"=> $response->phone,
-                    "evp_ledger" => $response->evp_ledger,
+                    "evp_ledger" => $response->wallet_balance,
                     "token" => $response->token
                 ];
 
@@ -90,7 +93,7 @@ class EPVController extends Controller
             if ($pin != $request->security_pin) {
                 return redirect()->back()->with('dismiss', __('Invalid otp. try again'));
             }
-            $params = ['user_id' => $request->user_id, 'req_evp_ledger' => $request->requested_amount];
+            $params = ['user_id' => $request->user_id, 'req_wallet' => $request->requested_amount];
             $btc_transaction = new BuyCoinHistory();
             $btc_transaction->type = EPV;
             $btc_transaction->user_id = Auth::id();
@@ -102,6 +105,7 @@ class EPVController extends Controller
             $btc_transaction->save();
 
             $response = $this->api->epvCheckout($params);
+
             if($response->status == 200) {
                 Log::info(json_encode($response));
                 $primary = get_primary_wallet(Auth::id(), 'Default');
@@ -109,6 +113,15 @@ class EPVController extends Controller
                 $primary->increment('balance', $btc_transaction->coin);
                 $btc_transaction->status = STATUS_SUCCESS;
                 $btc_transaction->save();
+
+                $referral = ReferralUser::where("user_id", $btc_transaction->user_id)->first();
+
+                if (!empty($referral)){
+                    $signUpBonus = isset(allsetting()['referral_signup_reward']) ? allsetting()['referral_signup_reward'] : 0;
+                    $commonService = new CommonService();
+                    $commonService->referralBonus($referral,$btc_transaction->coin,REFERRAL_BONUS_BUY);
+                }
+                Notification::create(['user_id'=>$btc_transaction->user_id, 'title'=>allsetting('coin_name')." deposited", 'notification_body'=>$btc_transaction->coin." ".allsetting('coin_name')." deposited successfully"]);
 
                 DB::commit();
                 return redirect()->route('buyCoin')->with('success', $response->message);

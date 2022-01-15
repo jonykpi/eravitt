@@ -1,9 +1,11 @@
 <?php
 namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
+use App\Http\Services\CommonService;
 use App\Model\BuyCoinHistory;
 use App\Model\DepositeTransaction;
 use App\Model\Notification;
+use App\Model\ReferralUser;
 use App\Model\Wallet;
 use App\Model\WalletAddressHistory;
 use App\Repository\AffiliateRepository;
@@ -144,10 +146,16 @@ class WalletNotifier extends Controller
                     $affiliate_servcice = new AffiliateRepository();
                     $primary = get_primary_wallet($buy_coin->user_id, 'Default');
                     $primary->increment('balance', $buy_coin->coin);
-                    if (!empty($buy_coin->phase_id)) {
-                        $bonus = $affiliate_servcice->storeAffiliationHistoryForBuyCoin($buy_coin);
+
+                    $referral = ReferralUser::where("user_id", $buy_coin->user_id)->first();
+
+                    if (!empty($referral)){
+                        $signUpBonus = isset(allsetting()['referral_signup_reward']) ? allsetting()['referral_signup_reward'] : 0;
+                        $commonService = new CommonService();
+                        $commonService->referralBonus($referral,$buy_coin->coin,REFERRAL_BONUS_BUY);
                     }
-                    Notification::create(['user_id'=>$buy_coin->user_id, 'title'=>allsetting('coin_name')." deposited", 'notification_body'=>$buy_coin->coin.allsetting('coin_name')." deposited successfully"]);
+                    Notification::create(['user_id'=>$buy_coin->user_id, 'title'=>allsetting('coin_name')." deposited", 'notification_body'=>$buy_coin->coin." ".allsetting('coin_name')." deposited successfully"]);
+
 
                 }else{
                     Log::info('Buy history not found');

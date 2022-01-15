@@ -17,14 +17,14 @@ class EPVPaymentApiService {
 
     public function __construct()
     {
-        $this->auth_key = '@NcRfUjXn2r5u8x/A?D(G-KaPdSgVkY';
+        $this->auth_key = 'J@NcRfUjXn2r5u8x/A?D(G-KaPdSgVkY';
         $this->client_service = 'eravitt-client';
-        $this->base_url = 'https://www.eravitt.com/api/wallet_checkout/';
+        $this->base_url = 'https://www.eravitt.com/api/';
 
         $this->header =  [
             'Client-Service' => $this->client_service,
             'Auth-Key' => $this->auth_key,
-            'Accept'     => 'application/json',
+            'Content-Type'=> 'application/json',
         ];
     }
 
@@ -35,6 +35,7 @@ class EPVPaymentApiService {
             $url = $this->base_url.$endPoint;
 
             $response = $client->request('POST', $url, ['body' => $params,  'headers' => $this->header]);
+
             $result = (string)$response->getBody();
             $result = json_decode($result);
             return $result;
@@ -61,7 +62,7 @@ class EPVPaymentApiService {
     public function epvCheckout($postData)
     {
         $params = json_encode($postData);
-        $response = $this->callApi('POST','evp_checkout',$params);
+        $response = $this->callApi('POST','wallet_checkout',$params);
 
         return $response;
     }

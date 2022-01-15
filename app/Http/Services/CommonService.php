@@ -605,6 +605,8 @@ class CommonService
             if (!empty($wallet)){
                 $wallet->increment('balance', $refBonusAmount);
                 ReferralBonusFromMultiLevelChild::create(['child_id'=>$referral->user_id,"level"=>$lv,"type"=>$type, 'user_id'=>$parent, 'wallet_id'=>$wallet->id, 'amount'=>$refBonusAmount]);
+
+                Notification::create(['user_id'=>$referral->user_id, 'title'=>allsetting('coin_name')." referral bonus", 'notification_body'=>$refBonusAmount.allsetting('coin_name')." got referral bonus successfully"]);
             }
 
         }
