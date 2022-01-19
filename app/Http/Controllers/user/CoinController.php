@@ -236,9 +236,9 @@ class CoinController extends Controller
                     }
                 }
 
-                elseif($request->payment_type == EPV) {
+                elseif($request->payment_type == EVP) {
                     Cookie::queue('requestedAmount', $request->coin);
-                    return redirect()->route('buyCoinByAddress', 'epv')->with('success', __('Payment with epv'));
+                    return redirect()->route('buyCoinByAddress', 'evp')->with('success', __('Payment with evp'));
                 } else {
                     return redirect()->back()->with('dismiss', "Something went wrong");
                 }
@@ -286,8 +286,8 @@ class CoinController extends Controller
                 $data['title'] = __('Payment With Card');
 
                 return view('user.buy_coin.payment_success', $data);
-            } elseif($address == 'epv') {
-                $data['title'] = __('Payment With EPV');
+            } elseif($address == 'evp') {
+                $data['title'] = __('Payment With EVP');
 
                 return view('user.buy_coin.payment_success', $data);
             } else {

@@ -102,12 +102,12 @@
                                             <label for="coin-option">{{__('Coin Payment')}}</label>
                                         </div>
                                     @endif
-                                    @if(isset($settings['payment_method_epv']) && $settings['payment_method_epv'] == 1)
+                                    @if(isset($settings['payment_method_evp']) && $settings['payment_method_evp'] == 1)
                                         <div class="form-group">
-                                            <input type="radio" onclick="call_coin_payment();" value="{{EPV}}"
+                                            <input type="radio" onclick="call_coin_payment();" value="{{EVP}}"
                                                    onchange="$('.payment_method').addClass('d-none');$('.bank_payment').toggleClass('d-none');$('.normal-btn').addClass('d-block').removeClass('d-none')"
                                                    id="f-option" name="payment_type">
-                                            <label for="f-option">{{__('EPV Payment')}}</label>
+                                            <label for="f-option">{{__('EVP Payment')}}</label>
                                         </div>
                                     @endif
                                     @if(isset($settings['payment_method_card']) && $settings['payment_method_card'] == 1)

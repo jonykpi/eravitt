@@ -1,7 +1,7 @@
 <?php
 namespace App\Services;
 /*
-	EPV Payment Api Service
+	EVP Payment Api Service
 */
 
 use GuzzleHttp\Client as GuzzleClient;
@@ -9,7 +9,7 @@ use GuzzleHttp\Exception\RequestException;
 use Illuminate\Http\JsonResponse;
 
 
-class EPVPaymentApiService {
+class EVPPaymentApiService {
 	private $base_url;
 	private $auth_key;
 	private $header;
@@ -59,7 +59,7 @@ class EPVPaymentApiService {
         return $response;
     }
 
-    public function epvCheckout($postData)
+    public function evpCheckout($postData)
     {
         $params = json_encode($postData);
         $response = $this->callApi('POST','wallet_checkout',$params);

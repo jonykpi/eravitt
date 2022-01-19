@@ -48,8 +48,8 @@
                                         </div>
 
                                         <div class="form-group mt-2">
-                                            <label for="dd">{{__("UPI IDs")}}</label>
-                                            <h3  class="dd text-white">{{settings("upi_ids")}}</h3>
+                                            <img style="width: 306px; height: 77px;" src="{{asset("assets/img/PhonePePayTMGPay (2).png")}}" alt="">
+                                            <h3  class="dd text-white mt-2">{{settings("upi_ids")}}</h3>
                                         </div>
                                         <input type="hidden" name="id" value="{{$item->id}}">
 

@@ -9,7 +9,7 @@ use App\Http\Services\CommonService;
 use App\Model\BuyCoinHistory;
 use App\Model\Notification;
 use App\Model\ReferralUser;
-use App\Services\EPVPaymentApiService;
+use App\Services\EVPPaymentApiService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -18,14 +18,14 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
-class EPVController extends Controller
+class EVPController extends Controller
 {
     private $api;
     public function __construct()
     {
-        $this->api = new EPVPaymentApiService();
+        $this->api = new EVPPaymentApiService();
     }
-    // login with epv
+    // login with evp
     public function LoginWithEpv(EpvLoginRequest $request)
     {
         try {
@@ -36,7 +36,7 @@ class EPVController extends Controller
             if($response->status == 200) {
                 Cookie::queue('security_pin', $response->security_pin);
                 Cookie::queue('evp_ledger', $response->wallet_balance);
-                Cookie::queue('epv_user_id', $response->user_id);
+                Cookie::queue('evp_user_id', $response->user_id);
                 $data = [
                     "user_id" => $response->user_id,
                     "name" => $response->name,
@@ -61,7 +61,7 @@ class EPVController extends Controller
         $data['data'] = $request->all();
         $data['requested_amount'] = Cookie::get('requestedAmount');
 
-        return view('user.buy_coin.confirm_epv_payment',$data);
+        return view('user.buy_coin.confirm_evp_payment',$data);
     }
 
     // check amount and security pin
@@ -78,10 +78,10 @@ class EPVController extends Controller
 
     public function confirmPaymentWithEpvProcess(Request $request)
     {
-        $data['epv_user_id'] = Cookie::get('epv_user_id');
+        $data['evp_user_id'] = Cookie::get('evp_user_id');
         $data['amount'] = Cookie::get('requestedAmount');
 
-        return view('user.buy_coin.payment_confirm_epv', $data);
+        return view('user.buy_coin.payment_confirm_evp', $data);
     }
     // confirm payment
 
@@ -95,7 +95,7 @@ class EPVController extends Controller
             }
             $params = ['user_id' => $request->user_id, 'req_wallet' => $request->requested_amount];
             $btc_transaction = new BuyCoinHistory();
-            $btc_transaction->type = EPV;
+            $btc_transaction->type = EVP;
             $btc_transaction->user_id = Auth::id();
             $btc_transaction->requested_amount = $request->requested_amount;
             $btc_transaction->coin = $request->requested_amount;
@@ -104,7 +104,7 @@ class EPVController extends Controller
             $btc_transaction->coin_type = DEFAULT_COIN_TYPE;
             $btc_transaction->save();
 
-            $response = $this->api->epvCheckout($params);
+            $response = $this->api->evpCheckout($params);
 
             if($response->status == 200) {
                 Log::info(json_encode($response));

@@ -50,11 +50,11 @@
                                                 </label>
                                             </div>
                                         @endif
-                                        @if($key == EPV)
+                                        @if($key == EVP)
                                             <div>
                                                 <label class="switch">
-                                                    <input type="checkbox" onclick="return processForm('payment_method_epv')"
-                                                           id="notification" name="security" @if(isset($settings['payment_method_epv']) && ($settings['payment_method_epv'] == 1)) checked @endif>
+                                                    <input type="checkbox" onclick="return processForm('payment_method_evp')"
+                                                           id="notification" name="security" @if(isset($settings['payment_method_evp']) && ($settings['payment_method_evp'] == 1)) checked @endif>
                                                     <span class="slider" for="status"></span>
                                                 </label>
                                             </div>

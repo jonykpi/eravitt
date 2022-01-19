@@ -165,7 +165,7 @@ class CoinRepository
                 }catch (\Exception $exception){
                     DB::rollBack();
                 }
-                $response = ['success' => true, 'message' => __('DPV sent successfully to this address')];
+                $response = ['success' => true, 'message' => __('EVP sent successfully to this address')];
             } else {
                 $response = ['success' => false, 'message' => __('User not found')];
             }

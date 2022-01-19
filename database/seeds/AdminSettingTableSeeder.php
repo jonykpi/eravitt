@@ -13,7 +13,7 @@ class AdminSettingTableSeeder extends Seeder
     public function run()
     {
         AdminSetting::insert(['slug'=>'coin_price','value'=>'2.50']);
-        AdminSetting::insert(['slug'=>'coin_name','value'=>'DPV']);
+        AdminSetting::insert(['slug'=>'coin_name','value'=>'EVP']);
         AdminSetting::insert(['slug'=>'app_title','value'=>'ERAVITT']);
         AdminSetting::insert(['slug'=>'maximum_withdrawal_daily','value'=>'3']);
         AdminSetting::insert(['slug'=>'mail_from','value'=>'support@eravitt.com']);
