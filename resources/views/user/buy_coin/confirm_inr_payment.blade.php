@@ -49,7 +49,7 @@
 
                                         <div class="form-group mt-2">
                                             <img style="width: 306px; height: 77px;" src="{{asset("assets/img/PhonePePayTMGPay (2).png")}}" alt="">
-                                            <h3  class="dd text-white mt-2">{{settings("upi_ids")}}</h3>
+                                            {{--<h3  class="dd text-white mt-2">{{settings("upi_ids")}}</h3>--}}
                                         </div>
                                         <input type="hidden" name="id" value="{{$item->id}}">
 
@@ -58,7 +58,7 @@
                                         {{--<input class="form-control" type="text" required name="transaction_id" value="">--}}
                                         {{--</div>--}}
                                         <button id="" type="submit" class="mt-5 btn normal-btn theme-btn">{{__('Paid')}}</button>
-                                        <a href="{{route('buyCoin')}}" class="mt-5 btn normal-btn theme-btn">{{__('Pay later')}}</a>
+                                        {{--<a href="{{route('buyCoin')}}" class="mt-5 btn normal-btn theme-btn">{{__('Pay later')}}</a>--}}
 
 
                                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
