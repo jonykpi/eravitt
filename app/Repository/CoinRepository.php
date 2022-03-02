@@ -365,7 +365,7 @@ class CoinRepository
 
             $coin_type = isset($request->payment_coin_type) ? $request->payment_coin_type : allsetting('base_coin_type');
             $address = $coin_payment->GetCallbackAddress($coin_type);
-
+dd($address);
 
             if ( isset($address['error']) && ($address['error'] == 'ok') ) {
 
