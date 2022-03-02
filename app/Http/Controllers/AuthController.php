@@ -11,8 +11,11 @@ use App\Http\Services\CommonService;
 use App\Model\AffiliationCode;
 use App\Model\Coin;
 use App\Model\Referral;
+use App\Model\ReferralSignBonusHistory;
+use App\Model\ReferralUser;
 use App\Model\UserVerificationCode;
 use App\Model\Wallet;
+use App\ReferralBonusFromMultiLevelChild;
 use App\Repository\AffiliateRepository;
 use App\Services\MailService;
 use App\User;
@@ -361,6 +364,7 @@ class AuthController extends Controller
     {
         $user = User::where(['email' => $request->email])->first();
 
+
         if (!empty($user)) {
             $varify = UserVerificationCode::where(['user_id' => $user->id])
                 ->where('code', decrypt($request->token))
@@ -372,6 +376,21 @@ class AuthController extends Controller
                 $check = $user->update(['is_verified' => STATUS_SUCCESS]);
                 try {
                     if ($check) {
+                        $referral = ReferralUser::where("user_id",$user->id)->first();
+                       if (!empty($referral)){
+                           $signUpBonus = isset(allsetting()['referral_signup_reward']) ? allsetting()['referral_signup_reward'] : 0;
+                           $wallet = Wallet::where(['user_id' => $user->id, 'is_primary' => STATUS_ACTIVE, 'coin_type'=>'Default'])->first();
+                           if (isset($wallet)) {
+                               $wallet->increment('balance', $signUpBonus);
+                               ReferralSignBonusHistory::create(['parent_id'=>$referral->parent_id, 'user_id'=>$user->id, 'wallet_id'=>$wallet->id, 'amount'=>$signUpBonus]);
+                           }
+
+                          $commonService = new CommonService();
+                           $commonService->referralBonus($referral,$signUpBonus);
+                       }
+
+
+
                         UserVerificationCode::where(['user_id' => $user->id])->delete();
                         return redirect()->route('login')->with('success',__('Verify successful,you can login now'));
                     }

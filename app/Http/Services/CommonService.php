@@ -11,10 +11,12 @@ namespace App\Http\Services;
 use App\Model\Coin;
 use App\Model\DepositeTransaction;
 use App\Model\Notification;
+use App\Model\ReferralUser;
 use App\Model\SendMailRecord;
 use App\Model\Wallet;
 use App\Model\WalletSwapHistory;
 use App\Model\WithdrawHistory;
+use App\ReferralBonusFromMultiLevelChild;
 use App\Services\BitCoinApiService;
 use App\Services\MailService;
 use App\Taggable;
@@ -571,6 +573,42 @@ class CommonService
             }
         } catch (\Exception $e) {
             Log::info('wallet creation exception '.$e->getMessage());
+        }
+    }
+
+    public function referralBonus($referral,$spendAmount,$type = REFERRAL_BONUS_SIGNUP){
+
+        $parents = [$referral->parent_id];
+
+        //2nd parent
+        $referral2 = ReferralUser::where("user_id", $referral->parent_id)->first();
+        if (!empty($referral2)){
+            array_push($parents,$referral2->parent_id);
+        }
+
+        //4rd parent
+        $referral3 = ReferralUser::where("user_id", $referral2->parent_id)->first();
+
+        if (!empty($referral3)){
+            array_push($parents,$referral3->parent_id);
+        }
+
+
+
+
+        foreach ($parents as $key => $parent){
+            $lv = $key+1;
+            $signUpBonusPercentage = isset(allsetting()['fees_level'.$lv]) ? allsetting()['fees_level'.$lv] : 0;
+            $refBonusAmount = bcmul($spendAmount,bcdiv($signUpBonusPercentage,100,8),8);
+
+            $wallet = Wallet::where(['user_id' => $parent, 'is_primary' => STATUS_ACTIVE, 'coin_type'=>'Default'])->first();
+            if (!empty($wallet)){
+                $wallet->increment('balance', $refBonusAmount);
+                ReferralBonusFromMultiLevelChild::create(['child_id'=>$referral->user_id,"level"=>$lv,"type"=>$type, 'user_id'=>$parent, 'wallet_id'=>$wallet->id, 'amount'=>$refBonusAmount]);
+
+                Notification::create(['user_id'=>$referral->user_id, 'title'=>allsetting('coin_name')." referral bonus", 'notification_body'=>$refBonusAmount.allsetting('coin_name')." got referral bonus successfully"]);
+            }
+
         }
     }
 

@@ -15,8 +15,8 @@
             <div class="card cp-user-custom-card">
                 @if($type == 'card')
                     @include('user.buy_coin.include.payment_with_card')
-                @elseif($type == 'epv')
-                    @include('user.buy_coin.include.payment_with_epv')
+                @elseif($type == 'evp')
+                    @include('user.buy_coin.include.payment_with_evp')
                 @else
                     @include('user.buy_coin.include.payment_with_coin_payment')
                 @endif

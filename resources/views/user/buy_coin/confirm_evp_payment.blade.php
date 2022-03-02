@@ -17,11 +17,12 @@
                         <h4>{{__('Confirm your payment ')}}</h4>
                     </div>
 
+
                     <div class="cp-user-buy-coin-content-area mt-5">
                         <div class="cp-user-coin-info">
                             <div class="row align-items-center">
                                 <div class="col-lg-6">
-                                    @include('user.buy_coin.include.confirm_epv.epv_login_data')
+                                    @include('user.buy_coin.include.confirm_evp.evp_login_data')
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="cp-user-card-header-area">

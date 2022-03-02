@@ -165,7 +165,7 @@ class CoinRepository
                 }catch (\Exception $exception){
                     DB::rollBack();
                 }
-                $response = ['success' => true, 'message' => __('DPV sent successfully to this address')];
+                $response = ['success' => true, 'message' => __('EVP sent successfully to this address')];
             } else {
                 $response = ['success' => false, 'message' => __('User not found')];
             }
@@ -366,6 +366,7 @@ class CoinRepository
             $coin_type = isset($request->payment_coin_type) ? $request->payment_coin_type : allsetting('base_coin_type');
             $address = $coin_payment->GetCallbackAddress($coin_type);
 
+
             if ( isset($address['error']) && ($address['error'] == 'ok') ) {
 
                 $api_rate = $coin_payment->GetRates('');
@@ -463,7 +464,48 @@ class CoinRepository
         return $response;
     }
 
+    public function buyCoinWithInr($request, $coin_amount, $coin_price_doller,$coin_price_inr, $coin_price_btc, $phase_id, $referral_level, $phase_fees, $bonus, $affiliation_percentage)
+    {
+        $response = ['success' => false, 'message' => __('Something went wrong'), 'data' => (object)[]];
 
+        try {
+
+        } catch (\Exception $e) {
+
+            $response = ['success' => false, 'message' => $e->getMessage(), 'data' => (object)[]];
+            return $response;
+        }
+        DB::beginTransaction();
+        try {
+            $btc_transaction = new BuyCoinHistory();
+            $btc_transaction->type = INR;
+            $btc_transaction->address = "manual";
+            $btc_transaction->user_id = Auth::id();
+            $btc_transaction->doller = $coin_price_doller;
+            $btc_transaction->inr = $coin_price_inr;
+            $btc_transaction->btc = $coin_price_btc;
+            $btc_transaction->phase_id = $phase_id;
+            $btc_transaction->referral_level = $referral_level;
+            $btc_transaction->fees  = $phase_fees ;
+            $btc_transaction->bonus = $bonus;
+            $btc_transaction->referral_bonus = $affiliation_percentage;
+            $btc_transaction->requested_amount = $coin_amount;
+            $btc_transaction->coin = $request->coin;
+            $btc_transaction->coin_type = 'INR';
+            $btc_transaction->stripe_token = 0;
+            $btc_transaction->save();
+
+            DB::commit();
+            $response = ['success' => true, 'message' =>  __("Request submitted successful,Please wait for admin approval"), 'data' => $btc_transaction];
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            Log::info('buy coin with stripe exception '.$e->getMessage());
+            $response = ['success' => false, 'message' => __('Something went wrong'), 'data' => (object)[]];
+        }
+
+        return $response;
+    }
     // buy coin with stripe
 
     public function buyCoinWithStripe($request, $coin_amount, $coin_price_doller, $coin_price_btc, $phase_id, $referral_level, $phase_fees, $bonus, $affiliation_percentage)

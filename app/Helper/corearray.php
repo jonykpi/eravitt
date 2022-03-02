@@ -91,8 +91,9 @@ function byCoinType($input = null)
         BTC => __('Coin Payment'),
         BANK_DEPOSIT => __('BANK DEPOSIT'),
         STRIPE => __('Credit Card'),
-        EPV => __('EPV Payment'),
+        EVP => __('EVP Payment'),
         PAYPAL => __('Paypal Payment'),
+        INR => __('INR Payment'),
 
     ];
     if (is_null($input)) {
@@ -231,8 +232,9 @@ function paymentMethods($input = null)
 {
     $output = [
         BTC => __('Coin Payment'),
-        EPV => __('EPV Payment'),
+        EVP => __('EVP Payment'),
         CARD => __('Payment With Card'),
+        INR => __('INR payment'),
 ////        BANK_DEPOSIT => __('Bank Deposit'),
 //        STRIPE => __('Credit card')
     ];

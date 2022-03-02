@@ -4,6 +4,7 @@ namespace App\Http\Controllers\user;
 
 use App\Model\AffiliationCode;
 use App\Model\AffiliationHistory;
+use App\ReferralBonusFromMultiLevelChild;
 use App\Repository\AffiliateRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -30,6 +31,22 @@ class ReferralController extends Controller
     {
         $data['title'] = __('My Referral');
         $data['user'] = Auth::user();
+
+
+        $data["referral_bonuses_signup"] = ReferralBonusFromMultiLevelChild::join("users","users.id","referral_bonus_from_multi_level_children.child_id")
+            ->select(
+                "users.email",
+                "referral_bonus_from_multi_level_children.amount",
+                "referral_bonus_from_multi_level_children.level",
+                "referral_bonus_from_multi_level_children.type",
+                "referral_bonus_from_multi_level_children.created_at"
+            )
+            ->orderBy("referral_bonus_from_multi_level_children.id","desc")
+            ->paginate(50);
+
+
+
+
         $data['referrals_3'] = DB::table('referral_users as ru1')->where('ru1.parent_id', Auth::user()->id)
             ->Join('referral_users as ru2', 'ru2.parent_id', '=', 'ru1.user_id')
             ->Join('referral_users as ru3', 'ru3.parent_id', '=', 'ru2.user_id')

@@ -58,7 +58,7 @@
                                         <th scope="col" class="desktop">{{__('Coin amount')}}</th>
                                         <th scope="col" class="desktop">{{__('Payable Coin')}}</th>
                                         <th scope="col" class="desktop">{{__('Payment Type')}}</th>
-                                        <th scope="col" class="desktop">{{__('Address')}}</th>
+                                        <th scope="col" class="desktop">{{__('Transaction id')}}</th>
                                         <th scope="col" class="all">{{__('Date')}}</th>
                                         <th scope="col" class="all">{{__('Actions')}}</th>
                                     </tr>
@@ -87,7 +87,7 @@
                                         <th scope="col" class="desktop">{{__('Coin Amount')}}</th>
                                         <th scope="col" class="desktop">{{__('Payable Coin')}}</th>
                                         <th scope="col" class="desktop">{{__('Payment Type')}}</th>
-                                        <th scope="col" class="desktop">{{__('Address')}}</th>
+                                        <th scope="col" class="desktop">{{__('Transaction id')}}</th>
                                         <th scope="col" class="all">{{__('Date')}}</th>
                                     </tr>
                                     </thead>
@@ -114,7 +114,7 @@
                                         <th scope="col" class="desktop">{{__('Coin Amount')}}</th>
                                         <th scope="col" class="desktop">{{__('Payable Coin')}}</th>
                                         <th scope="col" class="desktop">{{__('Payment Type')}}</th>
-                                        <th scope="col" class="desktop">{{__('Address')}}</th>
+                                        <th scope="col" class="desktop">{{__('Transaction id')}}</th>
                                         <th scope="col" class="all">{{__('Date')}}</th>
                                     </tr>
                                     </thead>
@@ -152,7 +152,7 @@
                         {"data": "coin","orderable": true},
                         {"data": "btc","orderable": true},
                         {"data": "payment_type","orderable": false},
-                        {"data": "address","orderable": true},
+                        {"data": "transaction_id","orderable": true},
                         {"data": "created_at","orderable": true},
                         {"data": "action","orderable": false}
                     ]

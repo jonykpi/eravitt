@@ -45,6 +45,58 @@
                            value="{{isset($settings['coin_price']) ? $settings['coin_price'] : ''}}">
                 </div>
             </div>
+
+            <div class="col-lg-6 col-12  mt-20">
+                <div class="form-group">
+                    <label for="#">{{__('Company USD Account no.')}}</label>
+                    <input class="form-control" type="text" name="admin_usdt_account_no"
+                           placeholder="{{__('Company usd account mo.')}}"
+                           value="{{isset($settings['admin_usdt_account_no']) ? $settings['admin_usdt_account_no'] : ''}}">
+                </div>
+            </div>
+            <div class="col-lg-6 col-12  mt-20">
+                <div class="form-group">
+                    <label for="#">{{__('Coin Payment Base Coin Type')}}</label>
+                    <input class="form-control" type="text" name="base_coin_type"
+                           placeholder="{{__('Coin Type eg. BTC')}}"
+                           value="{{isset($settings['base_coin_type']) ? $settings['base_coin_type'] : ''}}">
+                </div>
+            </div>
+
+
+
+            <div class="col-lg-6 col-12  mt-20">
+                <div class="form-group">
+                    <label for="#">{{__('Upi ids')}}</label>
+                    <input class="form-control" type="text" name="upi_ids"
+                           placeholder="{{__('upi ids')}}"
+                           value="{{isset($settings['upi_ids']) ? $settings['upi_ids'] : ''}}">
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-12  mt-20">
+                <div class="form-group">
+                    <label for="#">{{__('Inr payment qr code text')}}</label>
+                    <input class="form-control" type="text" name="inr_payment_qr_code_text"
+                           placeholder="{{__('Text')}}"
+                           value="{{isset($settings['inr_payment_qr_code_text']) ? $settings['inr_payment_qr_code_text'] : ''}}">
+                </div>
+            </div>
+
+
+            <div class="col-lg-6 col-12  mt-20">
+                <div class="form-group">
+                    <label for="#">{{__('Bank details')}}</label>
+                    <input class="form-control" type="text" name="bank_details_inr"
+                           placeholder="{{__('Text')}}"
+                           value="{{isset($settings['bank_details_inr']) ? $settings['bank_details_inr'] : ''}}">
+                </div>
+            </div>
+
+
+
+
+
             <div class="col-lg-6 col-12  mt-20">
                 <div class="form-group">
                     <label for="#">{{__('Company USD Account no.')}}</label>

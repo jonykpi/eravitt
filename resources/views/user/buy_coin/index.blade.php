@@ -78,6 +78,11 @@
                                         </li>
                                         <li>$<span class="CoinInDoller">{{$coin_price}} USD</span> = <span
                                                 class="totalBTC">{{$btc_dlr}}</span> <span class="coinType"> BTC</span>
+
+                                        </li>
+                                        <li>
+                                            <span
+                                                    class="totalInr">{{$inr_dlr}}</span> <span class=""> INR</span>
                                         </li>
                                         @if(isset($phase))
 {{--                                            <li><span class="">{{__('Fees')}}</span> = <span--}}
@@ -97,12 +102,12 @@
                                             <label for="coin-option">{{__('Coin Payment')}}</label>
                                         </div>
                                     @endif
-                                    @if(isset($settings['payment_method_epv']) && $settings['payment_method_epv'] == 1)
+                                    @if(isset($settings['payment_method_evp']) && $settings['payment_method_evp'] == 1)
                                         <div class="form-group">
-                                            <input type="radio" onclick="call_coin_payment();" value="{{EPV}}"
+                                            <input type="radio" onclick="call_coin_payment();" value="{{EVP}}"
                                                    onchange="$('.payment_method').addClass('d-none');$('.bank_payment').toggleClass('d-none');$('.normal-btn').addClass('d-block').removeClass('d-none')"
                                                    id="f-option" name="payment_type">
-                                            <label for="f-option">{{__('EPV Payment')}}</label>
+                                            <label for="f-option">{{__('EVP Payment')}}</label>
                                         </div>
                                     @endif
                                     @if(isset($settings['payment_method_card']) && $settings['payment_method_card'] == 1)
@@ -111,6 +116,14 @@
                                                    onchange="$('.payment_method').addClass('d-none');$('.bank_payment').toggleClass('d-none');$('.normal-btn').addClass('d-block').removeClass('d-none')"
                                                    id="card" name="payment_type">
                                             <label for="card">{{__('Payment With Card')}}</label>
+                                        </div>
+                                    @endif
+                                    @if(isset($settings['payment_method_inr']) && $settings['payment_method_inr'] == 1)
+                                        <div class="form-group">
+                                            <input type="radio" onclick="call_coin_payment();" value="{{INR}}"
+                                                   onchange="$('.payment_method').addClass('d-none');$('.payment_method_inr').toggleClass('d-none');$('.normal-btn').addClass('d-block').removeClass('d-none')"
+                                                   id="inr" name="payment_type">
+                                            <label for="inr">{{__('Payment With INR')}}</label>
                                         </div>
                                     @endif
                                 </div>
@@ -347,6 +360,7 @@
                     $('.coinAmount').text(data.amount);
                     $('.CoinInDoller').text(data.coin_price);
                     $('.totalBTC').text(data.btc_dlr);
+                    $('.totalInr').text(data.inr_dlr);
                     $('#total_price').val(data.btc_dlr);
                     $('.coinType').text(data.coin_type);
                     if(data.no_phase == false) {

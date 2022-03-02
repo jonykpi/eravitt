@@ -81,6 +81,17 @@ class SettingRepository
             if (isset($request->number_of_confirmation)) {
                 AdminSetting::updateOrCreate(['slug' => 'number_of_confirmation'], ['value' => $request->number_of_confirmation]);
             }
+
+            if (isset($request->upi_ids)) {
+                AdminSetting::updateOrCreate(['slug' => 'upi_ids'], ['value' => $request->upi_ids]);
+            }
+
+            if (isset($request->inr_payment_qr_code_text)) {
+                AdminSetting::updateOrCreate(['slug' => 'inr_payment_qr_code_text'], ['value' => $request->inr_payment_qr_code_text]);
+            }
+            if (isset($request->bank_details_inr)) {
+                AdminSetting::updateOrCreate(['slug' => 'bank_details_inr'], ['value' => $request->bank_details_inr]);
+            }
             $response = [
                 'success' => true,
                 'message' => __('General setting updated successfully')

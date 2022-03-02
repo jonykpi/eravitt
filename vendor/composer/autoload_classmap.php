@@ -148,6 +148,7 @@ return array(
     'App\\Providers\\EventServiceProvider' => $baseDir . '/app/Providers/EventServiceProvider.php',
     'App\\Providers\\HorizonServiceProvider' => $baseDir . '/app/Providers/HorizonServiceProvider.php',
     'App\\Providers\\RouteServiceProvider' => $baseDir . '/app/Providers/RouteServiceProvider.php',
+    'App\\ReferralBonusFromMultiLevelChild' => $baseDir . '/app/ReferralBonusFromMultiLevelChild.php',
     'App\\Repository\\AdminCoinRepository' => $baseDir . '/app/Repository/AdminCoinRepository.php',
     'App\\Repository\\AffiliateRepository' => $baseDir . '/app/Repository/AffiliateRepository.php',
     'App\\Repository\\BankRepository' => $baseDir . '/app/Repository/BankRepository.php',

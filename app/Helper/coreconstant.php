@@ -25,7 +25,8 @@ const CARD = 2;
 const PAYPAL = 3;
 const BANK_DEPOSIT = 4;
 const STRIPE = 5;
-const EPV = 6;
+const EVP = 6;
+const INR = 7;
 
 
 const  SEND_FEES_FIXED  = 1;
@@ -117,3 +118,5 @@ const CHECK_WITHDRAWAL_STATUS = 2;
 const CHECK_WITHDRAWAL_FEES = 3;
 const CHECK_MINIMUM_WITHDRAWAL = 4;
 const CHECK_MAXIMUM_WITHDRAWAL = 5;
+const REFERRAL_BONUS_SIGNUP = "SIGN UP";
+const REFERRAL_BONUS_BUY = "BUY COIN";

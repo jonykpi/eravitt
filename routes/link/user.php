@@ -41,12 +41,17 @@ Route::group(['prefix'=>'user','namespace'=>'user','middleware'=> ['auth','user'
     Route::get('bank-details', 'CoinController@bankDetails')->name('bankDetails');
     Route::post('buy-coin', 'CoinController@buyCoin')->name('buyCoinProcess');
     Route::get('buy-coin-by-{address}', 'CoinController@buyCoinByAddress')->name('buyCoinByAddress');
+    Route::get('buy-coin-inr-{id}', 'CoinController@buyCoinByInr')->name('buyCoinByInr');
+    Route::post('pay-confirm-inr', 'CoinController@paymentConfirmInr')->name('paymentConfirmInr');
+
+
+
     Route::get('buy-coin-history', 'CoinController@buyCoinHistory')->name('buyCoinHistory');
-    Route::post('login-with-epv', 'EPVController@LoginWithEpv')->name('LoginWithEpv');
-    Route::get('confirm-payment', 'EPVController@confirmPaymentWithEpv')->name('confirmPaymentWithEpv');
-    Route::post('check-epv-balance', 'EPVController@checkEpvBalance')->name('checkEpvBalance');
-    Route::get('confirm-payment-process', 'EPVController@confirmPaymentWithEpvProcess')->name('confirmPaymentWithEpvProcess');
-    Route::post('confirm-payment-with-epv', 'EPVController@confirmPaymentProcessWithEpv')->name('confirmPaymentProcessWithEpv');
+    Route::post('login-with-evp', 'EVPController@LoginWithEpv')->name('LoginWithEpv');
+    Route::get('confirm-payment', 'EVPController@confirmPaymentWithEpv')->name('confirmPaymentWithEpv');
+    Route::post('check-evp-balance', 'EVPController@checkEpvBalance')->name('checkEpvBalance');
+    Route::get('confirm-payment-process', 'EVPController@confirmPaymentWithEpvProcess')->name('confirmPaymentWithEpvProcess');
+    Route::post('confirm-payment-with-evp', 'EVPController@confirmPaymentProcessWithEpv')->name('confirmPaymentProcessWithEpv');
 
     Route::get('my-membership', 'ClubController@myMembership')->name('myMembership');
     Route::get('membership-club-plans', 'ClubController@membershipClubPlan')->name('membershipClubPlan');

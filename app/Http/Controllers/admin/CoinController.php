@@ -5,10 +5,13 @@ namespace App\Http\Controllers\admin;
 use App\Http\Requests\Admin\CoinRequest;
 use App\Http\Requests\Admin\GiveCoinRequest;
 use App\Http\Services\CoinService;
+use App\Http\Services\CommonService;
 use App\Jobs\AdjustWalletJob;
 use App\Model\AdminGiveCoinHistory;
 use App\Model\BuyCoinHistory;
 use App\Model\Coin;
+use App\Model\Notification;
+use App\Model\ReferralUser;
 use App\Model\Wallet;
 use App\Repository\AffiliateRepository;
 use App\Services\CoinPaymentsAPI;
@@ -142,9 +145,22 @@ class CoinController extends Controller
                 $transaction->status = STATUS_SUCCESS;
                 $transaction->save();
 
-                if (!empty($transaction->phase_id)) {
-                    $bonus = $affiliate_servcice->storeAffiliationHistoryForBuyCoin($transaction);
+
+                $referral = ReferralUser::where("user_id",$transaction->user_id)->first();
+
+                if (!empty($referral)){
+                    $signUpBonus = isset(allsetting()['referral_signup_reward']) ? allsetting()['referral_signup_reward'] : 0;
+                    $commonService = new CommonService();
+                    $commonService->referralBonus($referral,$transaction->coin,REFERRAL_BONUS_BUY);
                 }
+                Notification::create(['user_id'=>$transaction->user_id, 'title'=>allsetting('coin_name')." deposited", 'notification_body'=>$transaction->coin." ".allsetting('coin_name')." deposited successfully"]);
+
+
+
+
+//                if (!empty($transaction->phase_id)) {
+//                    $bonus = $affiliate_servcice->storeAffiliationHistoryForBuyCoin($transaction);
+//                }
             } catch (\Exception $e) {
                 DB::rollBack();
                 return redirect()->back()->with('dismiss', 'Something went wrong');

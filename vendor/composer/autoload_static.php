@@ -980,6 +980,7 @@ class ComposerStaticInitbefa022bf50258454f8338b618fdfeec
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\HorizonServiceProvider' => __DIR__ . '/../..' . '/app/Providers/HorizonServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
+        'App\\ReferralBonusFromMultiLevelChild' => __DIR__ . '/../..' . '/app/ReferralBonusFromMultiLevelChild.php',
         'App\\Repository\\AdminCoinRepository' => __DIR__ . '/../..' . '/app/Repository/AdminCoinRepository.php',
         'App\\Repository\\AffiliateRepository' => __DIR__ . '/../..' . '/app/Repository/AffiliateRepository.php',
         'App\\Repository\\BankRepository' => __DIR__ . '/../..' . '/app/Repository/BankRepository.php',

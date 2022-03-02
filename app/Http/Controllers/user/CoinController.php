@@ -44,9 +44,15 @@ class CoinController extends Controller
             }
 
             $url = file_get_contents('https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=BTC');
+            $inr_url = file_get_contents('https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=INR');
             $data['coin_price'] = settings('coin_price');
             $data['btc_dlr'] = (settings('coin_price') * json_decode($url,true)['BTC']);
             $data['btc_dlr'] = custom_number_format($data['btc_dlr']);
+
+
+            $data['inr_dlr'] = (settings('coin_price') * json_decode($inr_url,true)['INR']);
+            $data['inr_dlr'] = custom_number_format($data['inr_dlr']);
+
 
             $activePhases = checkAvailableBuyPhase();
 
@@ -69,6 +75,7 @@ class CoinController extends Controller
 
             return view('user.buy_coin.index',$data);
         } catch (\Exception $e) {
+
             return redirect()->back();
         }
 
@@ -122,6 +129,11 @@ class CoinController extends Controller
                 $data['btc_dlr'] = $data['coin_price'] * (json_decode($url,true)['BTC']);
             }
 
+            $inr_call = file_get_contents('https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=INR');
+            $data['inr_dlr'] = $data['coin_price'] * (json_decode($inr_call,true)['INR']);
+
+
+
             $data['btc_dlr'] = custom_number_format($data['btc_dlr']);
 
             return response()->json($data);
@@ -132,9 +144,11 @@ class CoinController extends Controller
     // buy coin process
     public function buyCoin(btcDepositeRequest $request)
     {
+
         try {
             $coinRepo = new CoinRepository();
             $url = file_get_contents('https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=BTC');
+            $inr_url = file_get_contents('https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=INR');
 
             if (isset(json_decode($url, true)['BTC'])) {
                 $phase_fees = 0;
@@ -162,17 +176,20 @@ class CoinController extends Controller
 
                         $coin_price_doller = bcmul($coin_amount, $phase->rate,8);
                         $coin_price_btc = bcmul(custom_number_format(json_decode($url, true)['BTC']), $coin_price_doller,8);
+                        $coin_price_inr = bcmul(custom_number_format(json_decode($inr_url, true)['INR']), $coin_price_doller,8);
 //                    $coin_price_btc = custom_number_format($coin_price_btc);
 
                     } else {
                         $coin_price_doller = bcmul($request->coin, settings('coin_price'),8);
                         $coin_price_btc = bcmul(custom_number_format(json_decode($url, true)['BTC']), $coin_price_doller,8);
+                        $coin_price_inr = bcmul(custom_number_format(json_decode($inr_url, true)['INR']), $coin_price_doller,8);
 //                    $coin_price_btc = custom_number_format($coin_price_btc);
                     }
 
                 } else {
                     $coin_price_doller = bcmul($request->coin, settings('coin_price'),8);
                     $coin_price_btc = bcmul(custom_number_format(json_decode($url, true)['BTC']), $coin_price_doller,8);
+                    $coin_price_inr = bcmul(custom_number_format(json_decode($inr_url, true)['INR']), $coin_price_doller,8);
 //                $coin_price_btc = custom_number_format($coin_price_btc);
                 }
 
@@ -206,9 +223,22 @@ class CoinController extends Controller
                     }
                 } elseif($request->payment_type == CARD) {
                     return redirect()->route('buyCoinByAddress', 'card')->with('success', __('Payment with card'));
-                } elseif($request->payment_type == EPV) {
+                }
+
+                elseif($request->payment_type == INR) {
+                    $buyCoinWithStripe = $coinRepo->buyCoinWithInr($request, $coin_amount, $coin_price_doller,$coin_price_inr, $coin_price_btc, $phase_id, $referral_level, $phase_fees, $bonus, $affiliation_percentage);
+
+                    if ($buyCoinWithStripe['success'] = true) {
+                        return redirect()->route('buyCoinByInr', encrypt($buyCoinWithStripe["data"]->id))->with('success', __('Payment with INR'));
+
+                    } else {
+                        return redirect()->back()->with('dismiss', $buyCoinWithStripe['message']);
+                    }
+                }
+
+                elseif($request->payment_type == EVP) {
                     Cookie::queue('requestedAmount', $request->coin);
-                    return redirect()->route('buyCoinByAddress', 'epv')->with('success', __('Payment with epv'));
+                    return redirect()->route('buyCoinByAddress', 'evp')->with('success', __('Payment with evp'));
                 } else {
                     return redirect()->back()->with('dismiss', "Something went wrong");
                 }
@@ -217,6 +247,7 @@ class CoinController extends Controller
                 return redirect()->back()->with('dismiss', "Something went wrong");
             }
         } catch (\Exception $e) {
+            dd($e);
             return redirect()->back()->with('dismiss', "Something went wrong");
         }
     }
@@ -255,8 +286,8 @@ class CoinController extends Controller
                 $data['title'] = __('Payment With Card');
 
                 return view('user.buy_coin.payment_success', $data);
-            } elseif($address == 'epv') {
-                $data['title'] = __('Payment With EPV');
+            } elseif($address == 'evp') {
+                $data['title'] = __('Payment With EVP');
 
                 return view('user.buy_coin.payment_success', $data);
             } else {
@@ -276,6 +307,26 @@ class CoinController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->with('dismiss', $e->getMessage());
         }
+    }
+
+    public function buyCoinByInr($id){
+       $data["item"] = BuyCoinHistory::find(decrypt($id));
+
+        return view("user.buy_coin.confirm_inr_payment",$data);
+
+    }
+
+    public function paymentConfirmInr(Request $request){
+        if (!empty($request->transaction_id)){
+
+            $tr = BuyCoinHistory::find($request->id);
+            $tr->transaction_id = $request->transaction_id;
+            $tr->save();
+            return redirect()->route("buyCoin")->with('success', __('Payment submitted successfully, please wait for admin approval'));
+        }else{
+            return redirect()->back()->with('dismiss', __('Transaction required'));
+        }
+
     }
 
     // buy coin history
