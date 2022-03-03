@@ -76,6 +76,16 @@
 
             <div class="col-lg-6 col-12  mt-20">
                 <div class="form-group">
+                    <label for="#">{{__('BTC address')}}</label>
+                    <input class="form-control" type="text" name="btc_address"
+                           placeholder="{{__('btc address')}}"
+                           value="{{isset($settings['btc_address']) ? $settings['btc_address'] : ''}}">
+                </div>
+            </div>
+
+
+            <div class="col-lg-6 col-12  mt-20">
+                <div class="form-group">
                     <label for="#">{{__('Inr payment qr code text')}}</label>
                     <input class="form-control" type="text" name="inr_payment_qr_code_text"
                            placeholder="{{__('Text')}}"

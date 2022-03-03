@@ -364,55 +364,53 @@ class CoinRepository
             $coin_payment = new CoinPaymentsAPI();
 
             $coin_type = isset($request->payment_coin_type) ? $request->payment_coin_type : allsetting('base_coin_type');
-            $address = $coin_payment->GetCallbackAddress($coin_type);
-dd($address);
+            $address = settings("btc_address");
 
-            if ( isset($address['error']) && ($address['error'] == 'ok') ) {
+           // $coin_price_btc = converts_currency($coin_price_doller, $coin_type,$api_rate);
 
-                $api_rate = $coin_payment->GetRates('');
-                $coin_price_btc = converts_currency($coin_price_doller, $coin_type,$api_rate);
 
-                if ( $address ) {
-                    if (isset($coin_price_btc) && $coin_price_btc > 0) {
-                        $btc_transaction = new BuyCoinHistory();
-                        $btc_transaction->address = $address['result']['address'];
-                        $btc_transaction->type = BTC;
-                        $btc_transaction->user_id = Auth::id();
-                        $btc_transaction->phase_id = $phase_id;
-                        $btc_transaction->referral_level = $referral_level;
-                        $btc_transaction->fees  = $phase_fees ;
-                        $btc_transaction->bonus = $bonus;
-                        $btc_transaction->referral_bonus = $affiliation_percentage;
-                        $btc_transaction->requested_amount = $coin_amount;
-                        $btc_transaction->coin = $request->coin;
-                        $btc_transaction->doller = $coin_price_doller;
-                        $btc_transaction->btc = $coin_price_btc;
-                        $btc_transaction->coin_type = $coin_type;
-                        $btc_transaction->save();
+            $url = file_get_contents('https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=BTC');
+            $inr_url = file_get_contents('https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=INR');
+            $data['coin_price'] = settings('coin_price')*$coin_amount;
+            $data['btc_dlr'] = (  $data['coin_price'] * json_decode($url,true)['BTC']);
+            $data['btc_dlr'] = custom_number_format($data['btc_dlr']);
 
-                        $response['data'] = $btc_transaction;
-                        $response['success'] = true;
-                        $response['message'] = __('Order placed successfully');
 
-                        DB::commit();
-                    } else {
-                        $response['data'] = (object)[];
-                        $response['success'] = false;
-                        $response['message'] = __('Coin payment not working properly');
-                    }
-                } else {
-                    $response['data'] = (object)[];
-                    $response['success'] = false;
-                    $response['message'] = __('Coin payment address not generated');
-                }
+
+
+            if ( $address ) {
+                $btc_transaction = new BuyCoinHistory();
+                $btc_transaction->address = $address;
+                $btc_transaction->type = BTC;
+                $btc_transaction->user_id = Auth::id();
+                $btc_transaction->phase_id = $phase_id;
+                $btc_transaction->referral_level = $referral_level;
+                $btc_transaction->fees  = $phase_fees ;
+                $btc_transaction->bonus = $bonus;
+                $btc_transaction->referral_bonus = $affiliation_percentage;
+                $btc_transaction->requested_amount = $coin_amount;
+                $btc_transaction->coin = $request->coin;
+                $btc_transaction->doller = $coin_price_doller;
+                $btc_transaction->btc = $data['btc_dlr'];
+                $btc_transaction->coin_type = $coin_type;
+                $btc_transaction->save();
+
+                $response['data'] = $btc_transaction;
+                $response['success'] = true;
+                $response['message'] = __('Order placed successfully');
+
+                DB::commit();
+
+
             } else {
                 $response['data'] = (object)[];
                 $response['success'] = false;
-                $response['message'] = __('Coin payment not working properly');
+                $response['message'] = __('Coin payment address not generated');
             }
 
         } catch (\Exception $e) {
             DB::rollBack();
+
             Log::info('buy coin with coin payment exception '.$e->getMessage());
             $response = ['success' => false, 'message' => __('Something went wrong'), 'data' => (object)[]];
         }

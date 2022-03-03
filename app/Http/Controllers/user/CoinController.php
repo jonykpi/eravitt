@@ -32,6 +32,7 @@ class CoinController extends Controller
     // buy coin
     public function buyCoinPage()
     {
+
         try {
             $data['title'] = __('Buy Coin');
             $data['settings'] = allsetting();
@@ -116,18 +117,9 @@ class CoinController extends Controller
 
             $data['coin_price'] = bcmul($coin_price,$data['amount'],8);
             $data['coin_price'] = customNumberFormat($data['coin_price']);
-            if ($request->pay_type == BTC) {
-                $coinpayment = new CoinPaymentsAPI();
-                $api_rate = $coinpayment->GetRates('');
-
-
-                $data['btc_dlr'] = converts_currency($data['coin_price'], $data['coin_type'],$api_rate);
-
-            } else {
-                $data['coin_type'] = allsetting('base_coin_type');
-                $url = file_get_contents('https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=BTC');
-                $data['btc_dlr'] = $data['coin_price'] * (json_decode($url,true)['BTC']);
-            }
+            $data['coin_type'] = allsetting('base_coin_type');
+            $url = file_get_contents('https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=BTC');
+            $data['btc_dlr'] = $data['coin_price'] * (json_decode($url,true)['BTC']);
 
             $inr_call = file_get_contents('https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=INR');
             $data['inr_dlr'] = $data['coin_price'] * (json_decode($inr_call,true)['INR']);
@@ -197,7 +189,7 @@ class CoinController extends Controller
                     $buyCoinWithCoinPayment = $coinRepo->buyCoinWithCoinPayment($request, $coin_amount, $coin_price_doller,$phase_id,$referral_level, $phase_fees, $bonus, $affiliation_percentage);
 
                     if($buyCoinWithCoinPayment['success'] = true) {
-                        return redirect()->route('buyCoinByAddress', $buyCoinWithCoinPayment['data']->address)->with('success', $buyCoinWithCoinPayment['message']);
+                        return redirect()->route('buyCoinByAddress', $buyCoinWithCoinPayment['data']->id)->with('success', $buyCoinWithCoinPayment['message']);
 
                     } else {
                         return redirect()->back()->with('dismiss', $buyCoinWithCoinPayment['message']);
@@ -278,8 +270,9 @@ class CoinController extends Controller
     }
 
     // coin payment success page
-    public function buyCoinByAddress($address)
+    public function buyCoinByAddress(Request $request,$address)
     {
+
         try {
             $data['type'] = $address;
             if ($address == 'card') {
@@ -299,6 +292,7 @@ class CoinController extends Controller
                 }
                 if (isset($coinAddress)) {
                     $data['coinAddress'] = $coinAddress;
+
                     return view('user.buy_coin.payment_success', $data);
                 } else {
                     return redirect()->back()->with('dismiss', __('Address not found'));
@@ -317,6 +311,7 @@ class CoinController extends Controller
     }
 
     public function paymentConfirmInr(Request $request){
+
         if (!empty($request->transaction_id)){
 
             $tr = BuyCoinHistory::find($request->id);
@@ -324,7 +319,7 @@ class CoinController extends Controller
             $tr->save();
             return redirect()->route("buyCoin")->with('success', __('Payment submitted successfully, please wait for admin approval'));
         }else{
-            return redirect()->back()->with('dismiss', __('Transaction required'));
+            return redirect()->route("buyCoin")->with('dismiss', __('Transaction required'));
         }
 
     }

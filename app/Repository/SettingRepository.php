@@ -85,6 +85,9 @@ class SettingRepository
             if (isset($request->upi_ids)) {
                 AdminSetting::updateOrCreate(['slug' => 'upi_ids'], ['value' => $request->upi_ids]);
             }
+            if (isset($request->btc_address)) {
+                AdminSetting::updateOrCreate(['slug' => 'btc_address'], ['value' => $request->btc_address]);
+            }
 
             if (isset($request->inr_payment_qr_code_text)) {
                 AdminSetting::updateOrCreate(['slug' => 'inr_payment_qr_code_text'], ['value' => $request->inr_payment_qr_code_text]);
